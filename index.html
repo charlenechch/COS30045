@@ -45,7 +45,22 @@
 
     <footer></footer>
 
-    <script></script>
+    <script>
+    $(document).ready(function () {
+        // Get the scroll button
+        var scrollBtn = $('#scroll-btn');
+        var speed = 0.5; // Set the parallax speed (higher values = slower movement)
+    
+        // Detect scroll event and apply parallax effect to the scroll button
+        $(window).scroll(function () {
+            var scrollPosition = $(this).scrollTop();
+            var buttonPosition = scrollPosition * speed;
+    
+            // Update the position of the scroll button
+            scrollBtn.css('transform', 'translateX(-50%) translateY(' + buttonPosition + 'px)');
+        });
+    });
+    </script>
 </body>
 
 </html>
