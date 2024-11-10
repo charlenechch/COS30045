@@ -1,28 +1,4 @@
-/* body {
-    background-color: #faf3eb;
-}
 
-h2 {
-   animation: appear 3.2s;
-   text-align:center;
-}
-
-@keyframes shift {
-   0% {opacity:0;}
-   33% {margin-top:0px;opacity:0;}
-   100% {margin-top:125px;opacity:1;text-shadow: 
-     4px 4px 0px #d5d5d5, 
-     7px 7px 0px rgba(0, 0, 0, 0.2);}
-}
-
-@keyframes appear {
-   0% {opacity:0;}
-   50% {opacity:0;}
-   100% {opacity:1;}
-} */
-
-
-/* Basic Styles */
 body {
     background-color: #faf3eb;
     font-family: sans-serif;
