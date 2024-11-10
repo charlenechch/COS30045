@@ -1,0 +1,37 @@
+body {
+    background-color: #d5d5d5;
+}
+
+.text {
+    color: #2c2c2c;
+  
+   letter-spacing: .05em;
+   text-shadow: 
+     4px 4px 0px #d5d5d5, 
+     7px 7px 0px rgba(0, 0, 0, 0.2);
+   font-size:2.3em;
+   font-family:  sans-serif;
+   -webkit-animation: shift 2s ;
+ animation: shift 2s ;
+   margin-top:125px;
+   text-align:center;
+   text-transform:uppercase;
+}
+h2 {
+   animation: appear 3.2s;
+   text-align:center;
+}
+
+@keyframes shift {
+   0% {opacity:0;}
+   33% {margin-top:0px;opacity:0;}
+   100% {margin-top:125px;opacity:1;text-shadow: 
+     4px 4px 0px #d5d5d5, 
+     7px 7px 0px rgba(0, 0, 0, 0.2);}
+}
+
+@keyframes appear {
+   0% {opacity:0;}
+   50% {opacity:0;}
+   100% {opacity:1;}
+}
