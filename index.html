@@ -5,28 +5,25 @@
     <meta charset="UTF-8">
     <meta name="description" content="Explore insights into greenhouse gas emissions trends across countries and sectors.">
     <meta name="keywords" content="Greenhouse Gas Emissions, Data Visualization, D3, Sustainability">
-    <meta name="author" content="Charlene Chai, Sherman Tan">
+    <meta name="author" content="Charlene Chai">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Greenhouse Gas Emissions Insights</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Include jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <header>
+    <!-- <header>
         <div class="text">
             <h1>Greenhouse Gas Emissions Insights</h1>
         </div>
-    </header>
+    </header> -->
 
     <main id="contents">
         <section id="section1">
             <div class="container">
-                <h2>Explore Emissions Data</h2>
-                <p>Scroll down to learn more about greenhouse gas emissions and their impact across various sectors and countries.</p>
-                <a href="#section2" class="scroll">Scroll <span>&#8595;</span></a>
+                <h1>Greenhouse Gas Emissions Insights</h1>
+                <a href="#section2" class="scroll" id="scroll-btn">Scroll <span>&#8595;</span></a>
             </div>
         </section>
 
@@ -46,20 +43,9 @@
         </section>
     </main>
 
-    <footer>
-        
-    </footer>
+    <footer></footer>
 
-    <script>
-        $('a[href^="#"]').on("click", function(e) {
-            e.preventDefault();
-            var target = $( $(this).attr("href") );
-            
-            if (target.length) {
-                $("html, body").animate({ scrollTop: target.offset().top }, 400, "easeInOutQuad");
-            }
-        });
-    </script>
+    <script></script>
 </body>
 
 </html>
