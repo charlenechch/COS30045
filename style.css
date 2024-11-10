@@ -1,6 +1,6 @@
 /* Basic Styles */
 body {
-    background-color: #faf3eb;
+    background-color: #faf3eb;  /* Keeps the overall background color */
     font-family: sans-serif;
     margin: 0;
     padding: 0;
@@ -44,28 +44,15 @@ body {
     }
 }
 
-/* Full Height Sections */
+/* Full Height Sections without background color */
 #section1, #section2, #section3 {
-    height: 100vh;
+    height: 100vh;  /* Takes up full viewport height */
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     position: relative;
     padding: 0;
-}
-
-/* Section Backgrounds */
-#section1 {
-    background: radial-gradient(ellipse farthest-corner at center top, #A3A1FF, #3A3897);
-}
-
-#section2 {
-    background: radial-gradient(ellipse farthest-corner at center bottom, #3AA17E, #00537E);
-}
-
-#section3 {
-    background: radial-gradient(ellipse farthest-corner at center top, #FBB03B, #D4145A);
 }
 
 /* Container */
@@ -79,7 +66,7 @@ body {
 /* Title and Text */
 h1 {
     font-size: 4em;
-    color: #fff;
+    color: #333;  /* Change to darker color for better visibility */
     letter-spacing: 1px;
     text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
     text-align: center;
@@ -88,7 +75,7 @@ h1 {
 
 p {
     font-size: 1.2rem;
-    color: #fff;
+    color: #333;  /* Same darker color for readability */
     margin-top: 20px;
     text-align: center;
 }
