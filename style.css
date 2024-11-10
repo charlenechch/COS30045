@@ -35,7 +35,7 @@ body {
     bottom: 20px;
     transform: translateX(-50%);
     font-size: 2rem;
-    color: #ccc;
+    color: #fff;
     display: inline-block;
     cursor: pointer;
     z-index: 10;
@@ -89,7 +89,7 @@ body {
     color: #2c2c2c;
     letter-spacing: .05em;
     text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
-    font-size:2.3em;
+    font-size: 4em;
     -webkit-animation: shift 2s ;
     animation: shift 2s ;
     margin-top:125px;
