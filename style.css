@@ -1,4 +1,4 @@
-body {
+/* body {
     background-color: #faf3eb;
 }
 
@@ -33,117 +33,118 @@ h2 {
    0% {opacity:0;}
    50% {opacity:0;}
    100% {opacity:1;}
+} */
+
+
+/* Basic Styles */
+body {
+    background-color: #faf3eb;
+    font-family: sans-serif;
 }
 
+/* Scroll button */
+#scroll-btn {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    color: #fff;
+    display: inline-block;
+    cursor: pointer;
+    z-index: 10;
+    transition: opacity 0.3s;
+}
 
-/* contents
-#contents {text-align: center; color: #fff;}
-#contents > div {height: 100vh; display: flex; justify-content : center; align-items : center; position: relative;}
-#contents > div h2 {font-size: 4vw; font-weight: 200;  text-transform: uppercase;}
-#contents > div h2 strong {font-weight: 700; font-style: italic; display: block;} */
+#scroll-btn span {
+    font-size: 2.5rem;
+    display: block;
+    margin-top: 5px;
+    animation: scroll-arrow 1.5s infinite;
+}
 
-/* section */
-#section1 {background:radial-gradient(ellipse farthest-corner at center top, #A3A1FF, #3A3897);}
-#section2 {background:radial-gradient(ellipse farthest-corner at center bottom, #3AA17E, #00537E);}
-#section3 {background:radial-gradient(ellipse farthest-corner at center top, #FBB03B, #D4145A);}
+#scroll-btn:hover {
+    opacity: 0.7;
+}
 
-/* container */
-.container {width: 1200px; margin: 0 auto;}
+@keyframes scroll-arrow {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
 
-/* scroll */
+/* Parallax effect section */
+#section1, #section2, #section3 {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 50px;
+    z-index: 2;
+}
+
+/* Title and Text */
+.text h1 {
+    font-size: 4em;
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Scroll button styles */
 .scroll {
-  position: absolute; bottom: 20px; left: 50%; 
-  transform: translatex(-50%);
-  z-index: 2;
-  display: inline-block;
-  color: #fff;
-  transition: opacity .3s;
-}
-.scroll:hover {opacity:.5;}
-
-#section1 a {padding-top: 60px;}
-#section1 a span {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 24px;
-  height: 24px;
-  margin-left: -12px;
-  border-left: 1px solid #fff;
-  border-bottom: 1px solid #fff;
-  transform: rotate(-45deg);
-  box-sizing: border-box;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: inline-block;
+    color: #fff;
+    transition: opacity .3s;
 }
 
-#section2 a {padding-top: 60px;}
-#section2 a span {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 46px;
-  height: 46px;
-  margin-left: -23px;
-  border: 1px solid #fff;
-  border-radius: 100%;
-  box-sizing: border-box;
-}
-#section2 a span::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  content: '';
-  width: 16px;
-  height: 16px;
-  margin: -12px 0 0 -8px;
-  border-left: 1px solid #fff;
-  border-bottom: 1px solid #fff;
-  transform: rotate(-45deg);
-  box-sizing: border-box;
+.scroll:hover {
+    opacity: .5;
 }
 
-#section3 a {padding-top: 60px;}
-#section3 a span {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 46px;
-  height: 46px;
-  margin-left: -23px;
-  border: 1px solid #fff;
-  border-radius: 100%;
-  box-sizing: border-box;
+/* Section Heading */
+h2 {
+    animation: appear 3.2s;
+    text-align: center;
 }
-#section3 a span::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  content: '';
-  width: 16px;
-  height: 16px;
-  margin: -12px 0 0 -8px;
-  border-left: 1px solid #fff;
-  border-bottom: 1px solid #fff;
-  -webkit-transform: rotate(-45deg);
-  transform: rotate(-45deg);
-  box-sizing: border-box;
+
+/* Text Animation */
+@keyframes shift {
+    0% {opacity: 0;}
+    33% {
+        margin-top: 0px;
+        opacity: 0;
+    }
+    100% {
+        margin-top: 125px;
+        opacity: 1;
+        text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
+    }
 }
-#section3 a span::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  content: '';
-  width: 44px;
-  height: 44px;
-  box-shadow: 0 0 0 0 rgba(255,255,255,.1);
-  border-radius: 100%;
-  opacity: 0;
-  animation: sdb03 3s infinite;
-  box-sizing: border-box;
-}
-@keyframes sdb03 {
-  0% {opacity: 0;}
-  30% {opacity: 1;}
-  60% {box-shadow: 0 0 0 60px rgba(255,255,255,.1); opacity: 0;}
-  100% {opacity: 0;}
+
+@keyframes appear {
+    0% {opacity: 0;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
 }
