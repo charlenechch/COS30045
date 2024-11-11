@@ -83,7 +83,6 @@ h2 {
 
 /* Scroll Button Styles */
 .center {
-    bottom: 5px; 
     position: fixed; 
     left: 50%;
     transform: translateX(-50%);
