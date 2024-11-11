@@ -15,6 +15,20 @@ body {
     transform: translate(-50%, -50%);
     z-index: 10;
     cursor: pointer;
+    opacity: 0; /* Start as invisible */
+    animation: fadeInUp 2s ease-out 2s forwards; /* Fade in and slide up with a delay */
+}
+
+/* Add animation for smooth visibility */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Animation for the Scroll Button (Rect) */
@@ -70,7 +84,6 @@ body {
 .center:hover #circle--shape {
     fill: #fff;
 }
-
 
 /* Full Height Sections without background color */
 #section1, #section2, #section3 {
