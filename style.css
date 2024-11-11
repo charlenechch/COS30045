@@ -83,15 +83,14 @@ h2 {
 
 /* Scroll Button Styles */
 .center {
-    position: fixed;  /* Keep the button fixed at the bottom */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
     cursor: pointer;
     opacity: 0;  /* Start as invisible */
     animation: fadeIn 3s ease-out 2s forwards;  /* Fade-in with delay */
-    width: 20px;  /* Set smaller width for the button */
-    height: 40px;  /* Set smaller height for the button */
+    width: 10px;  /* Set smaller width for the button */
+    height: 30px;  /* Set smaller height for the button */
 }
 
 /* Fade-In Animation for the Scroll Button */
