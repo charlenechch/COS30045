@@ -7,7 +7,6 @@ body {
     overflow-x: hidden;
 }
 
-
 /* Full Height Sections without background color */
 #section1, #section2, #section3 {
     height: 100vh;  /* Takes up full viewport height */
@@ -30,14 +29,16 @@ body {
 /* Title and Text */
 h1 {
     position: fixed;
-    font-size: 4em;
-    color: #333;  /* Change to darker color for better visibility */
+    top: 10%;  /* Move heading higher */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3em;  /* Adjust font size */
+    color: #333;  /* Darker color for better visibility */
     letter-spacing: 1px;
     text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
     text-align: center;
     margin: 0;
-    -webkit-animation: shift 2s ;
-    animation: shift 2s ;
+    animation: shift 2s;
 }
 
 p {
@@ -84,13 +85,15 @@ h2 {
 /* Scroll Button Styles */
 .center {
     position: fixed;  /* Keep the button fixed at the bottom */
-    bottom: 50px;  /* Adjust vertical position */
+    bottom: 30px;  /* Adjust vertical position for a smaller button */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
     cursor: pointer;
     opacity: 0;  /* Start as invisible */
     animation: fadeIn 3s ease-out 2s forwards;  /* Fade-in with delay */
+    width: 35px;  /* Set smaller width for the button */
+    height: 70px;  /* Set smaller height for the button */
 }
 
 /* Fade-In Animation for the Scroll Button */
