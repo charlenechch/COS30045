@@ -15,11 +15,9 @@
 <body>
 
     <main id="contents">
-        <!-- Heading with fixed position -->
         <section id="section1">
             <div class="container">
                 <h1>Greenhouse Gas Emissions Insights</h1>
-                <!-- Scroll button with SVG -->
                 <div class="center">
                     <svg width="50" height="130" viewBox="0 0 50 130">
                         <rect id="scroll" x="0" y="5" rx="25" ry="25" width="50" height="120" stroke="#1E90FF" fill="#FFF" stroke-width="4"></rect>
@@ -50,16 +48,23 @@
 
     <script>
         $(document).ready(function () {
-            // When scroll button is clicked
+            // Log to check if the button click event is firing
             $('svg').on("click", function (e) {
-                e.preventDefault();
+                e.preventDefault();  // Prevent default action
+
+                console.log('Scroll button clicked!');  // Debugging click event
+
                 var target = $("#section2");
+
+                // Log target to ensure it's correctly found
+                console.log(target);
 
                 if (target.length) {
                     // Disable scrolling
                     $('body').css('overflow', 'hidden');
+                    console.log('Scroll animation will start!');
                     // Scroll to the next section
-                    $("html, body").animate({ scrollTop: target.offset().top }, 1000, "easeInOutQuad");
+                    $('html, body').animate({ scrollTop: target.offset().top }, 1000, "easeInOutQuad");
                 }
 
                 // Show back button
@@ -68,10 +73,11 @@
 
             // Back button functionality
             $('#backBtn').on("click", function () {
+                console.log('Back button clicked!');  // Debugging back button
                 // Re-enable scrolling
                 $('body').css('overflow', 'auto');
                 // Scroll back to section 1
-                $("html, body").animate({ scrollTop: $('#section1').offset().top }, 1000, "easeInOutQuad");
+                $('html, body').animate({ scrollTop: $('#section1').offset().top }, 1000, "easeInOutQuad");
 
                 // Hide back button
                 $('#backBtn').fadeOut();
