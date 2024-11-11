@@ -89,7 +89,7 @@
         opacity: 0;  /* Start as invisible */
         animation: fadeIn 3s ease-out 2s forwards;  /* Fade-in with delay */
         width: 15px;  /* Smaller width for the button */
-        height: 30px;  /* Smaller height for the button */
+        height: 50px;  /* Smaller height for the button */
     }
 
     /* Fade-In Animation for the Scroll Button */
