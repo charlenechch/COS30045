@@ -8,64 +8,68 @@ body {
 }
 
 /* Scroll Button Styles */
-.scroll {
-    position: fixed;
-    bottom: 50px; /* Adjust to desired vertical position */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 10;
-    animation: fadeInUp 2s ease-out;
-}
-
-/* Rounded Rectangle */
-.rounded-rect {
-    width: 80px;
-    height: 40px;
-    border-radius: 30px;  /* Creates the rounded rectangle */
-    border: 2px solid #f06; /* Pink border color */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    transition: transform 0.3s;
-}
-
-/* Circle Inside Rounded Rectangle */
-.circle {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background-color: #f06; /* Pink circle */
+.center {
     position: absolute;
-    transition: transform 0.3s;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    cursor: pointer;
 }
 
-/* Hover Effect for Rectangle */
-.scroll:hover .rounded-rect {
-    transform: scale(1.1); /* Slightly increase the size of the rectangle */
+/* Animation for the Scroll Button (Rect) */
+#scroll {
+    animation: animateHeight 1.4s linear .3s infinite;
 }
 
-/* Hover Effect for Circle */
-.scroll:hover .circle {
-    transform: translateY(5px); /* Move the circle down when hovering */
+/* Animation for the Circle Inside */
+#circle--shape {
+    animation: animateShape 1.6s ease-in-out infinite;
 }
 
-/* Animation for the Button */
-@keyframes fadeInUp {
+/* Keyframes for the Scroll Button (Rect) Animation */
+@keyframes animateHeight {
     0% {
-        opacity: 0;
-        transform: translateY(30px);
+        height: 120px;
+    }
+    70% {
+        height: 105px; /* Shrink the height */
     }
     100% {
-        opacity: 1;
-        transform: translateY(0);
+        height: 120px; /* Restore the height */
     }
 }
 
+/* Keyframes for the Circle Animation */
+@keyframes animateShape {
+    0%, 100% {
+        cy: 32; /* Initial position of the circle */
+        opacity: 1; /* Full opacity */
+    }
+    50% {
+        cy: 100; /* Move the circle down */
+        opacity: .1; /* Fade the circle */
+    }
+}
+
+/* Optional: Add transition to smooth the hover effects */
+#scroll, #circle--shape {
+    transition: transform 0.3s, fill 0.3s;
+}
+
+/* Optional: Hover effects */
+.center:hover #scroll {
+    transform: scale(1.1); /* Slightly enlarge the rectangle on hover */
+}
+
+.center:hover #circle--shape {
+    transform: translateY(5px); /* Move the circle down on hover */
+}
+
+/* Optional: Change the fill color of the circle on hover */
+.center:hover #circle--shape {
+    fill: #fff;
+}
 
 
 /* Full Height Sections without background color */
