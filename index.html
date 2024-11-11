@@ -18,7 +18,7 @@
         <section id="section1">
             <div class="container">
                 <h1>Greenhouse Gas Emissions Insights</h1>
-                <a href="#section2">
+                <a href="#section2" id="scrollBtn">
                     <div class="center">
                         <svg width="50" height="130" viewBox="0 0 50 130">
                             <rect id="scroll" x="0" y="5" rx="25" ry="25" width="50" height="120" stroke="#1E90FF" fill="#FFF" stroke-width="4"></rect>
@@ -49,13 +49,30 @@
     <footer></footer>
 
     <script>
-        $('a[href^="#"]').on("click",function(e){
-        e.preventDefault();
-        var target = $( $(this).attr("href") );
-        
-        if(target.length){
-            $("html, body").animate({ scrollTop: target.offset().top },400,"easeInOutQuad");
-        }
+        // Scroll to next section and disable scrolling
+        $('#scrollBtn').on("click", function(e) {
+            e.preventDefault();
+            $('body').css('overflow', 'hidden');  // Disable scrolling
+
+            var target = $($(this).attr("href"));
+            if (target.length) {
+                $("html, body").animate({ scrollTop: target.offset().top }, 400, "easeInOutQuad", function() {
+                    $('body').css('overflow', 'auto');  // Re-enable scrolling after animation
+                });
+            }
+        });
+
+        // Optional: Handle back button to scroll back and disable scrolling again
+        $('#backBtn').on("click", function(e) {
+            e.preventDefault();
+            $('body').css('overflow', 'hidden');  // Disable scrolling
+
+            var target = $('#section1');
+            if (target.length) {
+                $("html, body").animate({ scrollTop: target.offset().top }, 400, "easeInOutQuad", function() {
+                    $('body').css('overflow', 'auto');  // Re-enable scrolling after animation
+                });
+            }
         });
     </script>
 
