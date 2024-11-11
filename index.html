@@ -49,37 +49,13 @@
     <footer></footer>
 
     <script>
-        $(document).ready(function () {
-            // Log to check if the button click event is firing
-            $('svg').on("click", function (e) {
-                e.preventDefault();  // Prevent default action
-
-                // Log target to ensure it's correctly found
-                console.log(target);
-
-                if (target.length) {
-                    // Disable scrolling
-                    $('body').css('overflow', 'hidden');
-                    console.log('Scroll animation will start!');
-                    // Scroll to the next section
-                    $('html, body').animate({ scrollTop: target.offset().top }, 1000, "easeInOutQuad");
-                }
-
-                // Show back button
-                $('#backBtn').fadeIn();
-            });
-
-            // Back button functionality
-            $('#backBtn').on("click", function () {
-                console.log('Back button clicked!');  // Debugging back button
-                // Re-enable scrolling
-                $('body').css('overflow', 'auto');
-                // Scroll back to section 1
-                $('html, body').animate({ scrollTop: $('#section1').offset().top }, 1000, "easeInOutQuad");
-
-                // Hide back button
-                $('#backBtn').fadeOut();
-            });
+        $('a[href^="#"]').on("click",function(e){
+        e.preventDefault();
+        var target = $( $(this).attr("href") );
+        
+        if(target.length){
+            $("html, body").animate({ scrollTop: target.offset().top },400,"easeInOutQuad");
+        }
         });
     </script>
 
