@@ -54,13 +54,15 @@
             e.preventDefault();
             $('body').css('overflow', 'hidden');  // Disable scrolling
 
-            var target = $($(this).attr("href"));
+            // Smoothly scroll to the section
+            var target = $("#section2");
             if (target.length) {
                 $("html, body").animate({ scrollTop: target.offset().top }, 400, "easeInOutQuad", function() {
                     $('body').css('overflow', 'auto');  // Re-enable scrolling after animation
                 });
             }
         });
+
 
         // Optional: Handle back button to scroll back and disable scrolling again
         $('#backBtn').on("click", function(e) {
