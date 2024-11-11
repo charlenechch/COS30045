@@ -71,8 +71,9 @@ h1 {
     text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
     text-align: center;
     margin: 0;
-    -webkit-animation: shift 2s ;
-    animation: shift 2s ;
+    /* -webkit-animation: shift 2s ;
+    animation: shift 2s ; */
+    animation: typing 4s steps(30) 1s forwards, blink-caret 0.75s step-end infinite;
 }
 
 p {
@@ -117,6 +118,15 @@ h2 {
         margin-top: 125px;
         opacity: 1;
         text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
+    }
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
     }
 }
 
