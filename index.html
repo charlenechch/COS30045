@@ -15,15 +15,17 @@
 <body>
 
     <main id="contents">
+        <!-- Heading with fixed position -->
         <section id="section1">
             <div class="container">
                 <h1>Greenhouse Gas Emissions Insights</h1>
-                    <div class="center">
-                        <svg width="40" height="90" viewBox="0 0 50 130">
-                            <rect id="scroll" x="0" y="5" rx="25" ry="25" width="50" height="120" stroke="#F06" fill="#FFF" stroke-width="4"></rect>
-                            <circle id="circle--shape" cx="25" cy="32" r="8" fill="#F06"></circle>
-                        </svg>
-                    </div>
+                <!-- Scroll button with SVG -->
+                <div class="center">
+                    <svg width="50" height="130" viewBox="0 0 50 130">
+                        <rect id="scroll" x="0" y="5" rx="25" ry="25" width="50" height="120" stroke="#F06" fill="#FFF" stroke-width="4"></rect>
+                        <circle id="circle--shape" cx="25" cy="32" r="8" fill="#F06"></circle>
+                    </svg>
+                </div>
             </div>
         </section>
 
@@ -31,7 +33,6 @@
             <div class="container">
                 <h2>Sector Contributions</h2>
                 <p>Explore the sector-wise contributions to global emissions.</p>
-                <a href="#section3" class="scroll">Scroll <span>&#8595;</span></a>
             </div>
         </section>
 
@@ -46,29 +47,17 @@
     <footer></footer>
 
     <script>
-    $(document).ready(function () {
-        // Detect scroll event and apply parallax effect to the scroll button
-        $(window).scroll(function () {
-            var scrollBtn = $('#scroll-btn');
-            var speed = 0.5; // Set the parallax speed (higher values = slower movement)
-            var scrollPosition = $(this).scrollTop();
-            var buttonPosition = scrollPosition * speed;
-
-            // Update the position of the scroll button
-            scrollBtn.css('transform', 'translateX(-50%) translateY(' + buttonPosition + 'px)');
+        $(document).ready(function () {
+            // Smooth scroll to the next section when the button is clicked
+            $('svg').on("click", function(e) {
+                e.preventDefault();
+                var target = $("#section2");
+                
+                if (target.length) {
+                    $("html, body").animate({ scrollTop: target.offset().top }, 400, "easeInOutQuad");
+                }
+            });
         });
-
-        // Smooth scroll to the next section when the button is clicked
-        $('a[href^="#"]').on("click", function(e) {
-            e.preventDefault();
-            var target = $( $(this).attr("href") );
-            
-            if (target.length) {
-                $("html, body").animate({ scrollTop: target.offset().top }, 400, "easeInOutQuad");
-            }
-        });
-    });
-
     </script>
 </body>
 
