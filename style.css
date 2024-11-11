@@ -21,35 +21,37 @@ body {
     animation: fadeInUp 2s ease-out;
 }
 
-/* Circle Container */
-.circle {
-    width: 50px;
-    height: 50px;
+/* Rounded Rectangle */
+.rounded-rect {
+    width: 80px;
+    height: 40px;
+    border-radius: 30px;  /* Creates the rounded rectangle */
     border: 2px solid #f06; /* Pink border color */
-    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
     transition: transform 0.3s;
 }
 
-/* Dot Inside Circle */
-.dot {
-    width: 12px;
-    height: 12px;
+/* Circle Inside Rounded Rectangle */
+.circle {
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    background-color: #f06; /* Pink dot */
+    background-color: #f06; /* Pink circle */
+    position: absolute;
     transition: transform 0.3s;
+}
+
+/* Hover Effect for Rectangle */
+.scroll:hover .rounded-rect {
+    transform: scale(1.1); /* Slightly increase the size of the rectangle */
 }
 
 /* Hover Effect for Circle */
 .scroll:hover .circle {
-    transform: scale(1.1); /* Slightly increase the size of the circle */
-}
-
-/* Hover Effect for Dot */
-.scroll:hover .dot {
-    transform: translateY(5px); /* Move the dot down when hovering */
+    transform: translateY(5px); /* Move the circle down when hovering */
 }
 
 /* Animation for the Button */
@@ -63,6 +65,7 @@ body {
         transform: translateY(0);
     }
 }
+
 
 
 /* Full Height Sections without background color */
