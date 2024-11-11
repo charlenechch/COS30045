@@ -14,7 +14,6 @@ body {
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -22,52 +21,38 @@ body {
     animation: fadeInUp 2s ease-out;
 }
 
-.icon {
-    width: 40px;
-    height: 40px;
-    border: 2px solid #333;
-    position: relative;
-    margin-bottom: 10px;
-    transition: 0.3s;
+/* Circle Container */
+.circle {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #f06; /* Pink border color */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s;
 }
 
-.icon-line {
-    width: 100%;
-    height: 4px;
-    background-color: #333;
-    position: absolute;
-    left: 0;
-    transition: 0.3s;
+/* Dot Inside Circle */
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #f06; /* Pink dot */
+    transition: transform 0.3s;
 }
 
-.icon-line:nth-child(1) {
-    top: 8px;
+/* Hover Effect for Circle */
+.scroll:hover .circle {
+    transform: scale(1.1); /* Slightly increase the size of the circle */
 }
 
-.icon-line:nth-child(2) {
-    bottom: 8px;
+/* Hover Effect for Dot */
+.scroll:hover .dot {
+    transform: translateY(5px); /* Move the dot down when hovering */
 }
 
-.icon-text {
-    font-size: 14px;
-    color: #333;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.scroll:hover .icon {
-    transform: rotate(90deg);
-}
-
-.scroll:hover .icon-line:nth-child(1) {
-    transform: translateY(10px) rotate(45deg);
-}
-
-.scroll:hover .icon-line:nth-child(2) {
-    transform: translateY(-10px) rotate(-45deg);
-}
-
+/* Animation for the Button */
 @keyframes fadeInUp {
     0% {
         opacity: 0;
@@ -78,6 +63,7 @@ body {
         transform: translateY(0);
     }
 }
+
 
 /* Full Height Sections without background color */
 #section1, #section2, #section3 {
