@@ -28,6 +28,7 @@ body {
 /* Title and Text */
 h1 {
     position: fixed; 
+    top: 20%;  /* Fine-tune position higher for better balance */
     left: 50%;
     transform: translateX(-50%);
     font-size: 3em;  /* Adjust font size */
@@ -62,7 +63,7 @@ h2 {
         opacity: 0;
     }
     100% {
-        margin-top: 80px;
+        margin-top: 70px;
         opacity: 1;
         text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
     }
