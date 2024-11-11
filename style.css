@@ -86,7 +86,6 @@ h2 {
     animation: fadeIn 3s ease-out 2s forwards;  /* Fade-in with delay */
     width: 15px;  /* Smaller width for the button */
     height: 30px;  /* Smaller height for the button */
-    bottom: 20px;  /* Position the button 20px from the bottom */
 }
 
 /* Fade-In Animation for the Scroll Button */
