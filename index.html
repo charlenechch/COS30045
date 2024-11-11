@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="Explore insights into greenhouse gas emissions trends across countries and sectors.">
@@ -10,68 +11,74 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
 
-<main id="contents">
-    <!-- Heading with fixed position -->
-    <section id="section1">
-        <div class="container">
-            <h1>Greenhouse Gas Emissions Insights</h1>
-            <!-- Scroll button with SVG -->
-            <div class="center">
-                <svg width="50" height="130" viewBox="0 0 50 130">
-                    <rect id="scroll" x="0" y="5" rx="25" ry="25" width="50" height="120" stroke="#1E90FF" fill="#FFF" stroke-width="4"></rect>
-                    <circle id="circle--shape" cx="25" cy="32" r="8" fill="#1E90FF"></circle>
-                </svg>
+    <main id="contents">
+        <!-- Heading with fixed position -->
+        <section id="section1">
+            <div class="container">
+                <h1>Greenhouse Gas Emissions Insights</h1>
+                <!-- Scroll button with SVG -->
+                <div class="center">
+                    <svg width="50" height="130" viewBox="0 0 50 130">
+                        <rect id="scroll" x="0" y="5" rx="25" ry="25" width="50" height="120" stroke="#1E90FF" fill="#FFF" stroke-width="4"></rect>
+                        <circle id="circle--shape" cx="25" cy="32" r="8" fill="#1E90FF"></circle>
+                    </svg>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="section2">
-        <div class="container">
-            <h2>Sector Contributions</h2>
-            <p>Explore the sector-wise contributions to global emissions.</p>
-            <button id="backBtn" class="back-btn">Back</button>
-        </div>
-    </section>
+        <section id="section2">
+            <div class="container">
+                <h2>Sector Contributions</h2>
+                <p>Explore the sector-wise contributions to global emissions.</p>
+                <button id="backBtn" class="back-btn">Back</button>
+            </div>
+        </section>
 
-    <section id="section3">
-        <div class="container">
-            <h2>Country-Level Emissions</h2>
-            <p>See how different countries contribute to global emissions.</p>
-        </div>
-    </section>
-</main>
+        <section id="section3">
+            <div class="container">
+                <h2>Country-Level Emissions</h2>
+                <p>See how different countries contribute to global emissions.</p>
+            </div>
+        </section>
 
-<footer></footer>
+    </main>
 
-<script>
-    $(document).ready(function () {
-        // Disable scroll when scroll button is clicked
-        $('svg').on("click", function(e) {
-            e.preventDefault();
-            var target = $("#section2");
+    <footer></footer>
 
-            if (target.length) {
-                // Disable scrolling
-                $('body').css('overflow', 'hidden');
-                $("html, body").animate({ scrollTop: target.offset().top }, 1000, "easeInOutQuad");
-            }
+    <script>
+        $(document).ready(function () {
+            // When scroll button is clicked
+            $('svg').on("click", function (e) {
+                e.preventDefault();
+                var target = $("#section2");
 
-            // Show back button
-            $('#backBtn').fadeIn();
+                if (target.length) {
+                    // Disable scrolling
+                    $('body').css('overflow', 'hidden');
+                    // Scroll to the next section
+                    $("html, body").animate({ scrollTop: target.offset().top }, 1000, "easeInOutQuad");
+                }
+
+                // Show back button
+                $('#backBtn').fadeIn();
+            });
+
+            // Back button functionality
+            $('#backBtn').on("click", function () {
+                // Re-enable scrolling
+                $('body').css('overflow', 'auto');
+                // Scroll back to section 1
+                $("html, body").animate({ scrollTop: $('#section1').offset().top }, 1000, "easeInOutQuad");
+
+                // Hide back button
+                $('#backBtn').fadeOut();
+            });
         });
+    </script>
 
-        // Back button to return to section 1
-        $('#backBtn').on("click", function() {
-            // Re-enable scrolling
-            $('body').css('overflow', 'auto');
-            $("html, body").animate({ scrollTop: $('#section1').offset().top }, 1000, "easeInOutQuad");
-            
-            // Hide back button
-            $('#backBtn').fadeOut();
-        });
-    });
-</script>
 </body>
+
 </html>
