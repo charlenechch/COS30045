@@ -28,7 +28,6 @@ body {
 
 /* Title and Text */
 h1 {
-    position: fixed;
     top: 10%;  /* Move heading higher */
     left: 50%;
     transform: translateX(-50%);
