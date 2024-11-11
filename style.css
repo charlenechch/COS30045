@@ -73,7 +73,7 @@ h1 {
     margin: 0;
     /* -webkit-animation: shift 2s ;
     animation: shift 2s ; */
-    animation: typing 4s steps(30) 1s forwards, blink-caret 0.75s step-end infinite;
+    animation: flyIn 2s ease-out forwards; /* Fly-in animation */
 }
 
 p {
@@ -121,12 +121,14 @@ h2 {
     }
 }
 
-@keyframes typing {
-    from {
-        width: 0;
+@keyframes flyIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-100%);  /* Start off-screen from the left */
     }
-    to {
-        width: 100%;
+    100% {
+        opacity: 1;
+        transform: translateX(0);  /* End in the normal position */
     }
 }
 
