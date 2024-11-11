@@ -63,7 +63,7 @@ h2 {
         opacity: 0;
     }
     100% {
-        margin-top: 105px;
+        margin-top: 80px;
         opacity: 1;
         text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
     }
@@ -83,6 +83,7 @@ h2 {
 
 /* Scroll Button Styles */
 .center {
+    bottom: 5px; 
     position: fixed; 
     left: 50%;
     transform: translateX(-50%);
@@ -142,18 +143,4 @@ h2 {
 /* Optional: Add transition to smooth the hover effects */
 #scroll, #circle--shape {
     transition: transform 0.3s, fill 0.3s;
-}
-
-/* Optional: Hover effects */
-.center:hover #scroll {
-    transform: scale(1.1);  /* Slightly enlarge the rectangle on hover */
-}
-
-.center:hover #circle--shape {
-    transform: translateY(5px);  /* Move the circle down on hover */
-}
-
-/* Optional: Change the fill color of the circle on hover */
-.center:hover #circle--shape {
-    fill: #fff;
 }
