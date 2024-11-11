@@ -7,6 +7,79 @@ body {
     overflow-x: hidden;
 }
 
+
+/* Full Height Sections without background color */
+#section1, #section2, #section3 {
+    height: 100vh;  /* Takes up full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 50px;
+    z-index: 2;
+}
+
+/* Title and Text */
+h1 {
+    font-size: 4em;
+    color: #333;  /* Change to darker color for better visibility */
+    letter-spacing: 1px;
+    text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 0;
+    -webkit-animation: shift 2s ;
+    animation: shift 2s ;
+}
+
+p {
+    font-size: 1.2rem;
+    color: #333;  /* Same darker color for readability */
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Section Heading */
+h2 {
+    animation: appear 3.2s;
+    text-align: center;
+}
+
+/* Text Animation */
+@keyframes shift {
+    0% {
+        opacity: 0;
+    }
+    33% {
+        margin-top: 0px;
+        opacity: 0;
+    }
+    100% {
+        margin-top: 125px;
+        opacity: 1;
+        text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
+    }
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 /* Scroll Button Styles */
 .center {
     position: absolute;
@@ -85,90 +158,3 @@ body {
     fill: #fff;
 }
 
-/* Full Height Sections without background color */
-#section1, #section2, #section3 {
-    height: 100vh;  /* Takes up full viewport height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    padding: 0;
-}
-
-/* Container */
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 50px;
-    z-index: 2;
-}
-
-/* Title and Text */
-h1 {
-    font-size: 4em;
-    color: #333;  /* Change to darker color for better visibility */
-    letter-spacing: 1px;
-    text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    margin: 0;
-    -webkit-animation: shift 2s ;
-    animation: shift 2s ;
-}
-
-p {
-    font-size: 1.2rem;
-    color: #333;  /* Same darker color for readability */
-    margin-top: 20px;
-    text-align: center;
-}
-
-/* Scroll button styles */
-.scroll {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    display: inline-block;
-    color: #000000;
-    transition: opacity .3s;
-}
-
-.scroll:hover {
-    opacity: .5;
-}
-
-/* Section Heading */
-h2 {
-    animation: appear 3.2s;
-    text-align: center;
-}
-
-/* Text Animation */
-@keyframes shift {
-    0% {
-        opacity: 0;
-    }
-    33% {
-        margin-top: 0px;
-        opacity: 0;
-    }
-    100% {
-        margin-top: 125px;
-        opacity: 1;
-        text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
-    }
-}
-
-@keyframes appear {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
