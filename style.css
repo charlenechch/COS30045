@@ -133,7 +133,7 @@ h2 {
         opacity: 1;  /* Full opacity */
     }
     50% {
-        cy: 100;  /* Move the circle down */
+        cy: 80;  /* Move the circle down */
         opacity: .1;  /* Fade the circle */
     }
 }
