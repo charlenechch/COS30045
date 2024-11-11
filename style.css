@@ -81,7 +81,6 @@ h2 {
     }
 }
 
-
 /* Scroll Button Styles */
 .center {
     position: fixed;  /* Keep the button fixed at the bottom */
@@ -91,18 +90,16 @@ h2 {
     z-index: 10;
     cursor: pointer;
     opacity: 0;  /* Start as invisible */
-    animation: fadeInUp 2s ease-out 2s forwards;  /* Fade-in animation with a delay */
+    animation: fadeIn 3s ease-out 2s forwards;  /* Fade-in with delay */
 }
 
-/* Animation for smooth visibility and slide up */
-@keyframes fadeInUp {
+/* Fade-In Animation for the Scroll Button */
+@keyframes fadeIn {
     0% {
-        opacity: 0;
-        transform: translateY(30px);  /* Start below */
+        opacity: 0;  /* Start as invisible */
     }
     100% {
-        opacity: 1;
-        transform: translateY(0);  /* End in normal position */
+        opacity: 1;  /* Fade in to full opacity */
     }
 }
 
