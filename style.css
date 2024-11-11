@@ -34,7 +34,7 @@ h1 {
     font-size: 3em;  /* Adjust font size */
     color: #333;  /* Darker color for better visibility */
     letter-spacing: 1px;
-    text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 0, 0, 0.2);
+    text-shadow: 4px 4px 0px #d5d5d5, 7px 7px 0px rgba(0, 128, 0, 0.2);
     text-align: center;
     margin: 0;
     animation: shift 2s ease-in-out forwards;  /* Smooth animation for the heading */
