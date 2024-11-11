@@ -28,7 +28,7 @@ body {
 /* Title and Text */
 h1 {
     position: fixed; 
-    top: 8%;  /* Fine-tune position higher for better balance */
+    top: 15%;  /* Fine-tune position higher for better balance */
     left: 50%;
     transform: translateX(-50%);
     font-size: 3em;  /* Adjust font size */
