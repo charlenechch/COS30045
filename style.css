@@ -84,7 +84,6 @@ h2 {
 /* Scroll Button Styles */
 .center {
     position: fixed;  /* Keep the button fixed at the bottom */
-    bottom: 20px;  /* Adjust vertical position for a smaller button */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
