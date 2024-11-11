@@ -115,13 +115,13 @@
     /* Keyframes for the Scroll Button (Rect) Animation */
     @keyframes animateHeight {
         0% {
-            height: 80px;
+            height: 100px;
         }
         70% {
-            height: 65px;  /* Shrink the height */
+            height: 85px;  /* Shrink the height */
         }
         100% {
-            height: 80px;  /* Restore the height */
+            height: 100px;  /* Restore the height */
         }
     }
 
