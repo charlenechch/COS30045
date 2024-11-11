@@ -132,22 +132,3 @@ h2 {
         opacity: .1;  /* Fade the circle */
     }
 }
-
-/* Optional: Add transition to smooth the hover effects */
-#scroll, #circle--shape {
-    transition: transform 0.3s, fill 0.3s;
-}
-
-/* Optional: Hover effects */
-.center:hover #scroll {
-    transform: scale(1.1);  /* Slightly enlarge the rectangle on hover */
-}
-
-.center:hover #circle--shape {
-    transform: translateY(5px);  /* Move the circle down on hover */
-}
-
-/* Optional: Change the fill color of the circle on hover */
-.center:hover #circle--shape {
-    fill: #fff;
-}
