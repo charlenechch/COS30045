@@ -20,11 +20,9 @@
                 <h1>Greenhouse Gas Emissions Insights</h1>
                 <!-- Replacing the scroll button with the CodePen button -->
                 <a href="#section2" class="scroll" id="scroll-btn">
-                    <div class="icon">
-                        <div class="icon-line"></div>
-                        <div class="icon-line"></div>
+                    <div class="circle">
+                        <div class="dot"></div>
                     </div>
-                    <div class="icon-text">Scroll</div>
                 </a>
             </div>
         </section>
@@ -49,12 +47,10 @@
 
     <script>
     $(document).ready(function () {
-        // Get the scroll button
-        var scrollBtn = $('#scroll-btn');
-        var speed = 0.5; // Set the parallax speed (higher values = slower movement)
-        
         // Detect scroll event and apply parallax effect to the scroll button
         $(window).scroll(function () {
+            var scrollBtn = $('#scroll-btn');
+            var speed = 0.5; // Set the parallax speed (higher values = slower movement)
             var scrollPosition = $(this).scrollTop();
             var buttonPosition = scrollPosition * speed;
 
