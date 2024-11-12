@@ -68,6 +68,24 @@ h1 {
     opacity: 0; /* Start hidden */
 }
 
+.styled-button2 {
+    background-color: #60c0ea; /* Updated light blue button color */
+    color: white; /* Text color */
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px 30px;
+    top: 70%; 
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+    /*text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);*/
+    box-shadow: -3px 6px 0px #4298C1, 3px 6px 0px #4298C1; /* Darker blue shadow on both sides */
+    transition: all 0.2s ease;
+    animation: fadeIn 0.5s forwards 1s, bounce 2s infinite 2s; /* Adds fadeIn and bounce with 2s delay */
+    opacity: 0; /* Start hidden */
+}
+
 /* Fade-in animation for button */
 @keyframes fadeIn {
     0% {
@@ -79,14 +97,14 @@ h1 {
 }
 
 /* Hover and Focus Effects */
-.styled-button:hover, .styled-button:focus {
+.styled-button:hover, .styled-button:focus, .styled-button2:hover, .styled-button2:focus {
     background-color: #52B5E0; /* Slightly darker blue for hover */
     box-shadow: -2px 5px 0px #4298C1, 2px 5px 0px #4298C1; /* Raised shadow on hover */
     transform: translateY(-2px); /* Lift button slightly on hover */
     outline: none;
 }
 
-.styled-button:active {
+.styled-button:active, .styled-button2:active {
     background-color: #4298C1; /* Darker shade on click */
     box-shadow: -1px 3px 0px #4298C1, 1px 3px 0px #4298C1; /* Lower shadow on click */
     transform: translateY(2px); /* Press button down slightly */
