@@ -135,6 +135,12 @@ h1 {
     }
 }
 
+#section2 h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
 /* Content Layout in Section 2 */
 .content {
     display: flex;
@@ -148,13 +154,6 @@ h1 {
     flex: 1;
     padding-right: 20px;
     text-align: left;
-}
-
-.text-content h2 {
-    font-size: 2em;
-    color: #333;
-    margin-bottom: 10px;
-    text-align: center; 
 }
 
 .text-content p {
