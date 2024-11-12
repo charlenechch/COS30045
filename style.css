@@ -11,8 +11,6 @@ html, body {
 #section1, #section2, #section3 {
     height: 100vh;  /* Takes up full viewport height */
     display: flex;
-    justify-content: center;
-    align-items: center;
     text-align: center;
     position: relative;
     padding: 0;
@@ -134,18 +132,13 @@ h1 {
         opacity: 1;  /* Fade in to full opacity */
     }
 }
-/* Section Styling */
-#section2 {
-    padding: 50px;
-    background-color: #fbfbfb;
-    text-align: left;
-}
 
+/* Section Styling */
 #section2 h2 {
     font-size: 2em;
     color: #333;
     margin-bottom: 20px; /* Space below heading */
-    text-align: center; /* Center align if needed */
+    text-align: center;
 }
 
 /* Two-Column Layout */
