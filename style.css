@@ -1,13 +1,13 @@
     /* Basic Styles */
     html, body {
         overflow-x: hidden; /* Prevent horizontal scroll */
+        margin: 0;
+        padding: 0;
     }
     
     body {
         background-color: #fbfbfb;  /* Keeps the overall background color */
         font-family: sans-serif;
-        margin: 0;
-        padding: 0;
     }
 
     /* Full Height Sections without background color */
@@ -136,3 +136,23 @@
             opacity: .1;  /* Fade the circle */
         }
     }
+
+
+/* Back Button Styles */
+#backBtn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #1E90FF;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    display: none;
+}
+
+#backBtn:hover {
+    opacity: 0.8;
+}
