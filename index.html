@@ -49,39 +49,17 @@
     <footer></footer>
 
     <script>
-        $(document).ready(function () {
-        // Scroll to section 2 when the scroll button is clicked
-        $('#scrollBtn').on('click', function(e) {
-            e.preventDefault();  // Prevent default anchor behavior
-            var target = $('#section2');
-            
-            // Scroll to section 2 smoothly
-            $('html, body').animate({ scrollTop: target.offset().top }, 1000, "easeInOutQuad");
-
-            // Hide heading and button after scroll
-            $('#mainHeading').fadeOut();
-            $('#scrollBtn').fadeOut();
-
-            // Show the back button
-            $('#backBtn').fadeIn();
+         // Smooth scroll when clicking the button
+        $(document).ready(function() {
+            // Ensure the scroll behavior is smooth
+            $('#scrollBtn').on('click', function(e) {
+                e.preventDefault(); // Prevent default anchor click behavior
+                var target = $(this).attr('href'); // Get the target section
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top
+                }, 1000); // Scroll with animation
+            });
         });
-
-        // Back button functionality
-        $('#backBtn').on('click', function () {
-            var target = $('#section1');
-
-            // Scroll back to section 1 smoothly
-            $('html, body').animate({ scrollTop: target.offset().top }, 1000, "easeInOutQuad");
-
-            // Show heading and scroll button again
-            $('#mainHeading').fadeIn();
-            $('#scrollBtn').fadeIn();
-
-            // Hide the back button
-            $('#backBtn').fadeOut();
-        });
-    });
-
     </script>
 
 </body>
