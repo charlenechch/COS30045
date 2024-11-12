@@ -87,7 +87,7 @@
         z-index: 10;
         cursor: pointer;
         opacity: 0;  /* Start as invisible */
-        animation: fadeIn 3s ease-out 1s forwards;  /* Fade-in with delay */
+        animation: fadeIn 3s ease-out;  /* Fade-in with delay */
         width: 15px;  /* Smaller width for the button */
         height: 50px;  /* Smaller height for the button */
     }
