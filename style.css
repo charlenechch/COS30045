@@ -78,8 +78,8 @@ h2 {
 
 /* Styled Button */
 .styled-button {
-    background-color: #FFA500; /* Orange color */
-    color: #fff;
+    background-color: #1BB3F5; /* Orange color */
+    color: black;
     font-size: 24px;
     font-weight: bold;
     padding: 15px 30px;
@@ -88,7 +88,7 @@ h2 {
     position: relative;
     cursor: pointer;
     text-shadow: 1px 1px 0px #000;
-    box-shadow: 5px 5px 0px #8B4513; /* Darker shadow for 3D effect */
+    box-shadow: 5px 5px 0px #0e688e; /* Darker shadow for 3D effect */
     transition: all 0.2s ease;
 }
 
