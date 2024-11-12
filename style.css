@@ -11,7 +11,6 @@ html, body {
 #section1, #section2, #section3 {
     height: 100vh;  /* Takes up full viewport height */
     display: flex;
-    align-items: center;
     text-align: center;
     position: relative;
     padding: 0;
@@ -57,6 +56,7 @@ h1 {
     font-size: 24px;
     font-weight: bold;
     padding: 15px 30px;
+    top: 30%; 
     border: none;
     border-radius: 5px;
     position: relative;
