@@ -1,5 +1,5 @@
 html, body {
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow: hidden; /* Prevent horizontal scroll */
     background-color: #fbfbfb;  /* Keeps the overall background color */
     font-family: sans-serif;
     margin: 0;
