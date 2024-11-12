@@ -68,8 +68,8 @@ h1 {
 }
 
 .styled-button2 {
-    background-color: #60c0ea; /* Updated light blue button color */
-    color: white; /* Text color */
+    background-color: #60c0ea; 
+    color: white; 
     font-size: 24px;
     font-weight: bold;
     padding: 10px 25px;
