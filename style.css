@@ -135,3 +135,57 @@ h1 {
     }
 }
 
+/* Content Layout in Section 2 */
+.content {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    gap: 20px; /* Space between columns */
+}
+
+/* Left Column: Text Content Styling */
+.text-content {
+    flex: 1;
+    padding-right: 20px;
+    text-align: left;
+}
+
+.text-content h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.text-content p {
+    font-size: 1em;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Right Column: Video Content Styling */
+.video-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Video Styling */
+.video-content video {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .text-content,
+    .video-content {
+        max-width: 100%;
+    }
+}
+
