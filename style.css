@@ -78,8 +78,8 @@ h2 {
 
 /* Styled Button */
 .styled-button {
-    background-color: #1BB3F5; /* Orange color */
-    color: black;
+    background-color: #00aaff; /* Vibrant blue */
+    color: white;
     font-size: 24px;
     font-weight: bold;
     padding: 15px 30px;
@@ -87,21 +87,25 @@ h2 {
     border-radius: 8px;
     position: relative;
     cursor: pointer;
-    text-shadow: 1px 1px 0px #000;
-    box-shadow: 5px 5px 0px #0e688e; /* Darker shadow for 3D effect */
-    transition: all 0.2s ease;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 5px 0px #0078a0, 10px 10px 0px rgba(0, 120, 160, 0.4); /* Enhanced shadow for 3D effect */
+    transition: all 0.3s ease;
 }
 
-/* Shadow effect on hover */
-.styled-button:hover {
-    box-shadow: 3px 3px 0px #8B4513; /* Smaller shadow */
-    transform: translateY(2px); /* Move button slightly down */
+/* Hover and Focus Effects */
+.styled-button:hover, .styled-button:focus {
+    background-color: #0099dd; /* Slightly darker blue */
+    box-shadow: 3px 3px 0px #0078a0, 7px 7px 0px rgba(0, 120, 160, 0.4); /* Smaller shadow */
+    transform: scale(1.05); /* Scale up slightly on hover */
+    outline: none;
 }
 
 .styled-button:active {
-    box-shadow: none;
-    transform: translateY(5px); /* Simulate pressing the button */
+    background-color: #0078a0; /* Darker color on click */
+    box-shadow: 0px 0px 0px #0078a0; /* Remove shadow */
+    transform: translateY(3px); /* Move button slightly down */
 }
+
 /* Back Button Styles */
 #backBtn {
     position: fixed;
