@@ -109,7 +109,7 @@
 
     /* Animation for the Circle Inside */
     #circle--shape {
-        animation: animateShape 1.6s ease-in-out 4;
+        animation: animateShape 1.6s ease-in-out infinite;
     }
 
     /* Keyframes for the Scroll Button (Rect) Animation */
