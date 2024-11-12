@@ -49,29 +49,33 @@
     <footer></footer>
 
     <script>
-         // Smooth scroll when clicking the button
-        $(document).ready(function() {
-            // Ensure the scroll behavior is smooth
-            $('#scrollBtn').on('click', function(e) {
-                e.preventDefault(); // Prevent default anchor click behavior
-                var target = $(this).attr('href'); // Get the target section
-                $('html, body').animate({
-                    scrollTop: $(target).offset().top
-                }, 1000); // Scroll with animation
+ $(document).ready(function() {
+        // Smooth scroll when clicking the scroll button
+        $('#scrollBtn').on('click', function(e) {
+            e.preventDefault(); // Prevent default anchor click behavior
+            var target = $(this).attr('href'); // Get the target section
+            $('html, body').animate({
+                scrollTop: $(target).offset().top
+            }, 1000, function() {
+                // Show the back button after scrolling to section2
+                $('#backBtn').fadeIn();
             });
         });
 
-         // Scroll back to section1 when clicking the back button
-         $('#backBtn').on('click', function(e) {
+        // Scroll back to section1 when clicking the back button
+        $('#backBtn').on('click', function(e) {
             e.preventDefault();
             $('html, body').animate({
                 scrollTop: $('#section1').offset().top
-            }, 1000); // Scroll with animation
-
-            // Hide the back button after returning to section1
-            $('#backBtn').fadeOut();
+            }, 1000, function() {
+                // Hide the back button after returning to section1
+                $('#backBtn').fadeOut();
+            });
         });
 
+        // Optional: Hide the back button initially
+        $('#backBtn').hide();
+        });
     </script>
 
 </body>
