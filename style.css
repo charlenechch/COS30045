@@ -53,7 +53,7 @@ h1 {
 
 /* Styled Button */
 .styled-button {
-    background-color: #64CAF6; /* Updated light blue button color */
+    background-color: #60c0ea; /* Updated light blue button color */
     color: white; /* Text color */
     font-size: 24px;
     font-weight: bold;
@@ -105,3 +105,33 @@ h1 {
         transform: translateY(-4px); /* Move up slightly again */
     }
 }
+
+/* Back Button Styles */
+#backBtn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px; 
+    background-color: #fbfbfb;
+    color: black;
+    border: 1px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 25px;
+    display: none;
+}
+
+#backBtn:hover {
+    opacity: 0.8;
+}
+
+/* Fade-In Animation for the Scroll Button */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;  /* Start as invisible */
+    }
+    100% {
+        opacity: 1;  /* Fade in to full opacity */
+    }
+}
+
