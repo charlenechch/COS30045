@@ -134,36 +134,42 @@ h1 {
         opacity: 1;  /* Fade in to full opacity */
     }
 }
+/* Section Styling */
+#section2 {
+    padding: 50px;
+    background-color: #fbfbfb;
+    text-align: left;
+}
 
 #section2 h2 {
     font-size: 2em;
     color: #333;
-    margin-bottom: 5px;
+    margin-bottom: 20px; /* Space below heading */
+    text-align: center; /* Center align if needed */
 }
 
-/* Content Layout in Section 2 */
+/* Two-Column Layout */
 .content {
     display: flex;
+    gap: 40px; /* Adjust the space here */
     max-width: 1200px;
     width: 100%;
-    gap: 40px; /* Space between columns */
+    margin-top: 20px; /* Space between heading and content */
 }
 
-/* Left Column: Text Content Styling */
+/* Text Content Styling */
 .text-content {
     flex: 1;
     padding-right: 20px;
-    text-align: left;
 }
 
 .text-content p {
     font-size: 1em;
     color: #333;
     line-height: 1.6;
-    text-align: justify; 
 }
 
-/* Right Column: Video Content Styling */
+/* Video Content Styling */
 .video-content {
     flex: 1;
     display: flex;
@@ -171,7 +177,6 @@ h1 {
     align-items: center;
 }
 
-/* Video Styling */
 .video-content video {
     max-width: 100%;
     border-radius: 8px;
@@ -182,6 +187,7 @@ h1 {
 @media (max-width: 768px) {
     .content {
         flex-direction: column;
+        gap: 20px; /* Smaller gap for mobile screens */
     }
 
     .text-content,
@@ -189,4 +195,5 @@ h1 {
         max-width: 100%;
     }
 }
+
 
