@@ -15,20 +15,6 @@
 <body>
 
     <main id="contents">
-        <!-- <section id="section1">
-            <div class="container">
-                <h1>Greenhouse Gas Emissions Insights</h1>
-                <a href="#section2" id="scrollBtn">
-                    <div class="center">
-                        <svg width="50" height="130" viewBox="0 0 50 130">
-                            <rect id="scroll" x="5" y="5" rx="25" ry="25" width="40" height="120" stroke="#1E90FF" fill="#FFF" stroke-width="4"></rect>
-                            <circle id="circle--shape" cx="25" cy="32" r="8" fill="#1E90FF"></circle>
-                        </svg>
-                    </div>
-                </a>
-            </div>
-        </section> -->
-
         <section id="section1">
             <div class="container">
                 <h1>Greenhouse Gas Emissions Insights</h1>
@@ -66,7 +52,7 @@
                         </div>
                     </div>
                     <a href="#section3" id="scrollBtn2">
-                        <button class="styled-button2">Explore Insights</button>
+                        <button class="styled-button2">Explore visualisation</button>
                     </a>
                 </div>
         </section>
@@ -84,7 +70,7 @@
     <footer></footer>
 
     <script>
- $(document).ready(function() {
+    $(document).ready(function() {
         // Smooth scroll when clicking the scroll button
         $('#scrollBtn').on('click', function(e) {
             e.preventDefault(); // Prevent default anchor click behavior
@@ -95,6 +81,14 @@
                 // Show the back button after scrolling to section2
                 $('#backBtn').fadeIn();
             });
+        });
+
+        // Smooth scroll for the second button in section2
+        $('#scrollBtn2').on('click', function(e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: $('#section3').offset().top
+            }, 1000);
         });
 
         // Scroll back to section1 when clicking the back button
