@@ -60,6 +60,18 @@
                 }, 1000); // Scroll with animation
             });
         });
+
+         // Scroll back to section1 when clicking the back button
+         $('#backBtn').on('click', function(e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: $('#section1').offset().top
+            }, 1000); // Scroll with animation
+
+            // Hide the back button after returning to section1
+            $('#backBtn').fadeOut();
+        });
+
     </script>
 
 </body>
