@@ -78,8 +78,8 @@ h2 {
 
 /* Styled Button */
 .styled-button {
-    background-color: #5BC0EB; /* Light blue color */
-    color: white;
+    background-color: #1BB3F5; /* Primary light blue color */
+    color: white; /* Text color */
     font-size: 24px;
     font-weight: bold;
     padding: 15px 30px;
@@ -88,23 +88,38 @@ h2 {
     position: relative;
     cursor: pointer;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
-    box-shadow: -3px 6px 0px #357ABD, 3px 6px 0px #357ABD; /* Shadows on both sides with darker blue */
+    box-shadow: -3px 6px 0px #0E88C1, 3px 6px 0px #0E88C1; /* Darker blue shadow on both sides */
     transition: all 0.2s ease;
+    animation: bounce 2s infinite; /* Adds a bounce animation */
 }
 
 /* Hover and Focus Effects */
 .styled-button:hover, .styled-button:focus {
-    background-color: #3DA5D9; /* Slightly darker blue */
-    box-shadow: -2px 5px 0px #357ABD, 2px 5px 0px #357ABD; /* Raise shadow on hover */
+    background-color: #199ED4; /* Slightly darker blue for hover */
+    box-shadow: -2px 5px 0px #0E88C1, 2px 5px 0px #0E88C1; /* Raised shadow on hover */
     transform: translateY(-2px); /* Lift button slightly on hover */
     outline: none;
 }
 
 .styled-button:active {
-    background-color: #2D89C6; /* Darker shade on click */
-    box-shadow: -1px 3px 0px #357ABD, 1px 3px 0px #357ABD; /* Lower shadow when clicked */
+    background-color: #0E88C1; /* Darker blue on click */
+    box-shadow: -1px 3px 0px #0E88C1, 1px 3px 0px #0E88C1; /* Lower shadow on click */
     transform: translateY(2px); /* Press button down slightly */
 }
+
+/* Bounce Animation Keyframes */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0); /* Start and end at the original position */
+    }
+    40% {
+        transform: translateY(-8px); /* Move up slightly */
+    }
+    60% {
+        transform: translateY(-4px); /* Move up slightly again */
+    }
+}
+
 
 
 /* Back Button Styles */
