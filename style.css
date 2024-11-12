@@ -61,7 +61,6 @@ h1 {
     border-radius: 5px;
     position: relative;
     cursor: pointer;
-    /*text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);*/
     box-shadow: -3px 6px 0px #4298C1, 3px 6px 0px #4298C1; /* Darker blue shadow on both sides */
     transition: all 0.2s ease;
     animation: fadeIn 0.5s forwards 1s, bounce 2s infinite 2s; /* Adds fadeIn and bounce with 2s delay */
@@ -74,16 +73,15 @@ h1 {
     font-size: 24px;
     font-weight: bold;
     padding: 15px 30px;
-    top: 70%; 
+    /*top: 70%;*/
     border: none;
     border-radius: 5px;
     position: relative;
     cursor: pointer;
-    /*text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);*/
     box-shadow: -3px 6px 0px #4298C1, 3px 6px 0px #4298C1; /* Darker blue shadow on both sides */
     transition: all 0.2s ease;
     animation: fadeIn 0.5s forwards 1s, bounce 2s infinite 2s; /* Adds fadeIn and bounce with 2s delay */
-    opacity: 0; /* Start hidden */
+    opacity: 1; 
 }
 
 /* Fade-in animation for button */
