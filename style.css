@@ -76,84 +76,38 @@ h2 {
     }
 }
 
-/* Horizontal Scroll Button Styles */
-.horizontal-center {
-    position: absolute;  /* Fixed position for the button */
-    top: 60%;            /* Adjust position as needed */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+/* Styled Button */
+.styled-button {
+    background-color: #FFA500; /* Orange color */
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    position: relative;
     cursor: pointer;
-    opacity: 0;  /* Start as invisible */
-    animation: fadeIn 3s ease-out 1s forwards;  /* Fade-in with delay */
-    width: 50px;  /* Smaller width for the button */
-    height: 15px; /* Smaller height for the button */
+    text-shadow: 1px 1px 0px #000;
+    box-shadow: 5px 5px 0px #8B4513; /* Darker shadow for 3D effect */
+    transition: all 0.2s ease;
 }
 
-/* Horizontal Scroll Button Rectangle Animation */
-#scroll-horizontal {
-    animation: animateWidth 1.4s linear .3s infinite;
+/* Shadow effect on hover */
+.styled-button:hover {
+    box-shadow: 3px 3px 0px #8B4513; /* Smaller shadow */
+    transform: translateY(2px); /* Move button slightly down */
 }
 
-/* Horizontal Scroll Button Circle Animation */
-#circle-horizontal {
-    animation: animateCircleHorizontal 1.6s ease-in-out infinite;
+.styled-button:active {
+    box-shadow: none;
+    transform: translateY(5px); /* Simulate pressing the button */
 }
-
-/* Keyframes for Horizontal Button Animation */
-@keyframes animateWidth {
-    0% {
-        width: 100px;
-    }
-    70% {
-        width: 85px;  /* Shrink the width */
-    }
-    100% {
-        width: 100px;  /* Restore the width */
-    }
-}
-
-/* Keyframes for Circle Animation (Horizontal) */
-@keyframes animateCircleHorizontal {
-    0%, 100% {
-        cx: 32;  /* Initial position of the circle */
-        opacity: 1;  /* Full opacity */
-    }
-    50% {
-        cx: 85;  /* Move the circle to the right */
-        opacity: .1;  /* Fade the circle */
-    }
-}
-
-/* Animated Text Style */
-#exploreText {
-    font-size: 1.2em;
-    color: #333;
-    text-align: center;
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: textAppear 2s ease-in-out 1.5s forwards;  /* Fade-in text with delay */
-    opacity: 0;  /* Start as invisible */
-}
-
-/* Keyframes for Text Animation */
-@keyframes textAppear {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
 /* Back Button Styles */
 #backBtn {
     position: fixed;
     top: 20px;
     left: 20px;
-    padding: 10px 20px;
+    padding: 10px 20px; 
     background-color: #fbfbfb;
     color: black;
     border: 1px;
