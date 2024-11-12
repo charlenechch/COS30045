@@ -54,7 +54,7 @@ h1 {
 /* Styled Button */
 .styled-button {
     background-color: #64CAF6; /* Updated light blue button color */
-    color: white; /* Text color */
+    color: black; /* Text color */
     font-size: 24px;
     font-weight: bold;
     padding: 15px 30px;
