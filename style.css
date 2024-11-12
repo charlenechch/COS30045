@@ -138,7 +138,7 @@ h1 {
 #section2 h2 {
     font-size: 2em;
     color: #333;
-    margin-bottom: 20px; /* Space below heading */
+    margin-bottom: 60px; /* Space below heading */
     text-align: center;
 }
 
@@ -148,7 +148,7 @@ h1 {
     gap: 40px; /* Adjust the space here */
     max-width: 1200px;
     width: 100%;
-    margin-top: 40px; /* Space between heading and content */
+    margin-top: 60px; /* Space between heading and content */
 }
 
 /* Text Content Styling */
