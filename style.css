@@ -41,19 +41,6 @@ h1 {
     animation: shift 2s ease-in-out forwards;  /* Smooth animation for the heading */
 }
 
-p {
-    font-size: 1.2rem;
-    color: #333;  /* Same darker color for readability */
-    margin-top: 20px;
-    text-align: center;
-}
-
-/* Section Heading */
-h2 {
-    animation: appear 3.2s;
-    text-align: center;
-}
-
 /* Text Animation */
 @keyframes shift {
     0% {
@@ -64,21 +51,9 @@ h2 {
     }
 }
 
-@keyframes appear {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
 /* Styled Button */
 .styled-button {
-    background-color: #1BB3F5; /* Primary light blue color */
+    background-color: #64CAF6; /* Updated light blue button color */
     color: white; /* Text color */
     font-size: 24px;
     font-weight: bold;
@@ -88,22 +63,33 @@ h2 {
     position: relative;
     cursor: pointer;
     text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
-    box-shadow: -3px 6px 0px #0E88C1, 3px 6px 0px #0E88C1; /* Darker blue shadow on both sides */
+    box-shadow: -3px 6px 0px #4298C1, 3px 6px 0px #4298C1; /* Darker blue shadow on both sides */
     transition: all 0.2s ease;
-    animation: bounce 2s infinite; /* Adds a bounce animation */
+    animation: fadeIn 0.5s forwards 2s, bounce 2s infinite 2s; /* Adds fadeIn and bounce with 2s delay */
+    opacity: 0; /* Start hidden */
+}
+
+/* Fade-in animation for button */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 /* Hover and Focus Effects */
 .styled-button:hover, .styled-button:focus {
-    background-color: #199ED4; /* Slightly darker blue for hover */
-    box-shadow: -2px 5px 0px #0E88C1, 2px 5px 0px #0E88C1; /* Raised shadow on hover */
+    background-color: #52B5E0; /* Slightly darker blue for hover */
+    box-shadow: -2px 5px 0px #4298C1, 2px 5px 0px #4298C1; /* Raised shadow on hover */
     transform: translateY(-2px); /* Lift button slightly on hover */
     outline: none;
 }
 
 .styled-button:active {
-    background-color: #0E88C1; /* Darker blue on click */
-    box-shadow: -1px 3px 0px #0E88C1, 1px 3px 0px #0E88C1; /* Lower shadow on click */
+    background-color: #4298C1; /* Darker shade on click */
+    box-shadow: -1px 3px 0px #4298C1, 1px 3px 0px #4298C1; /* Lower shadow on click */
     transform: translateY(2px); /* Press button down slightly */
 }
 
@@ -117,36 +103,5 @@ h2 {
     }
     60% {
         transform: translateY(-4px); /* Move up slightly again */
-    }
-}
-
-
-
-/* Back Button Styles */
-#backBtn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    padding: 10px 20px; 
-    background-color: #fbfbfb;
-    color: black;
-    border: 1px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 25px;
-    display: none;
-}
-
-#backBtn:hover {
-    opacity: 0.8;
-}
-
-/* Fade-In Animation for the Scroll Button */
-@keyframes fadeIn {
-    0% {
-        opacity: 0;  /* Start as invisible */
-    }
-    100% {
-        opacity: 1;  /* Fade in to full opacity */
     }
 }
