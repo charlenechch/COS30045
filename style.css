@@ -1,9 +1,5 @@
-/* Basic Styles */
 html, body {
     overflow-x: hidden; /* Prevent horizontal scroll */
-}
-    
-body {
     background-color: #fbfbfb;  /* Keeps the overall background color */
     font-family: sans-serif;
     margin: 0;
@@ -145,7 +141,7 @@ h2 {
     left: 20px;
     padding: 10px 20px;
     background-color: #1E90FF;
-    color: white;
+    color: black;
     border: none;
     font-size: 16px;
     cursor: pointer;
