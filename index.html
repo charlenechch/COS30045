@@ -49,32 +49,16 @@
     <footer></footer>
 
     <script>
-        // Scroll to next section and disable scrolling
-        $('#scrollBtn').on("click", function(e) {
-            e.preventDefault();
-            $('body').css('overflow', 'hidden');  // Disable scrolling
-
-            // Smoothly scroll to the section
-            var target = $("#section2");
-            if (target.length) {
-                $("html, body").animate({ scrollTop: target.offset().top }, 400, "easeInOutQuad", function() {
-                    $('body').css('overflow', 'auto');  // Re-enable scrolling after animation
-                });
-            }
-        });
-
-
-        // Optional: Handle back button to scroll back and disable scrolling again
-        $('#backBtn').on("click", function(e) {
-            e.preventDefault();
-            $('body').css('overflow', 'hidden');  // Disable scrolling
-
-            var target = $('#section1');
-            if (target.length) {
-                $("html, body").animate({ scrollTop: target.offset().top }, 400, "easeInOutQuad", function() {
-                    $('body').css('overflow', 'auto');  // Re-enable scrolling after animation
-                });
-            }
+         // Smooth scroll when clicking the button
+        $(document).ready(function() {
+            // Ensure the scroll behavior is smooth
+            $('#scrollBtn').on('click', function(e) {
+                e.preventDefault(); // Prevent default anchor click behavior
+                var target = $(this).attr('href'); // Get the target section
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top
+                }, 1000); // Scroll with animation
+            });
         });
     </script>
 
