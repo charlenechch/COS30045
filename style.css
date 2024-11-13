@@ -1,7 +1,7 @@
 /* General Styles */
 html, body {
     overflow: hidden; /* Prevent horizontal scroll */
-    background-color: #f5f7fa;  /* Keeps the overall background color */
+    background-color: #e7eef5;  /* Keeps the overall background color */
     font-family: sans-serif;
     margin: 0;
     padding: 0;
@@ -134,7 +134,7 @@ h1 {
     top: 20px;
     left: 20px;
     padding: 5px 10px; 
-    background-color: #f5f7fa ;
+    background-color: #e7eef5;
     color: black;
     border: 2px solid #333;
     font-size: 16px;
