@@ -13,6 +13,21 @@
 </head>
 
 <body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="#section1" class="nav-link">Project Overview</a>
+            <div class="dropdown">
+                <a href="javascript:void(0)" class="nav-link dropbtn">Visualisations</a>
+                <div class="dropdown-content">
+                    <a href="#section3">Visualisation 1</a>
+                    <a href="#section4">Visualisation 2</a>
+                    <a href="#section5">Visualisation 3</a>
+                </div>
+            </div>
+
+            <a href="#aboutus" class="nav-link">About Us</a>
+        </div>
+    </nav>
 
     <main id="contents">
         <section id="section1">
@@ -59,8 +74,20 @@
         
         <section id="section3">
             <div class="container">
-                <h2>visualisation</h2>
+                <h2>visualisation 1</h2>
                 <button id="backBtn" class="back-btn">Return to Homepage</button>
+            </div>
+        </section>
+
+        <section id="section4">
+            <div class="container">
+                <h2>visualisation 2</h2>
+            </div>
+        </section>
+
+        <section id="section5">
+            <div class="container">
+                <h2>visualisation 3</h2>
             </div>
         </section>
 
@@ -103,6 +130,15 @@
 
         // Optional: Hide the back button initially
         $('#backBtn').hide();
+
+        $('.nav-link').on('click', function(e) {
+            e.preventDefault();
+            var target = $(this).attr('href');
+            $('html, body').animate({
+                scrollTop: $(target).offset().top
+            }, 1000);
+        });
+        
         });
     </script>
 
