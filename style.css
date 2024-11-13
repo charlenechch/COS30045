@@ -15,7 +15,7 @@ main {
 }
 
 /* Full Height Sections without background color */
-#section1, #section2, #section3 {
+#section1, #section2, #section3, #section4, #section5 {
     height: 100vh;  /* Takes up full viewport height */
     display: flex;
     text-align: center;
@@ -230,15 +230,19 @@ footer {
     margin: 5px 0;
 }
 
-
-
         /* Navbar Styles */
         .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: #333;
-            padding: 10px;
+            height: 40px; 
+            padding: 0 8px; 
+        
         }
 
         .navbar .nav-link {
@@ -249,7 +253,6 @@ footer {
             position: relative;
         }
 
-        /* Dropdown Styles */
         .dropdown {
             position: relative;
             display: inline-block;
@@ -271,8 +274,9 @@ footer {
             display: block;
         }
 
-        .dropdown-content a:hover {
-            background-color: #555;
+        .nav-link:hover, .dropdown-content a:hover {
+            background-color: white;
+            color: #333;
         }
 
         .dropdown:hover .dropdown-content {
@@ -281,4 +285,5 @@ footer {
 
         .dropdown:hover .dropbtn {
             background-color: #555;
+            color: #333;
         }
