@@ -74,20 +74,19 @@
         
         <section id="section3">
             <div class="container">
-                <h2>visualisation 1</h2>
-                <button id="backBtn" class="back-btn">Return to Homepage</button>
+                <h2>Visualisation 1</h2>
             </div>
         </section>
-
+        
         <section id="section4">
             <div class="container">
-                <h2>visualisation 2</h2>
+                <h2>Visualisation 2</h2>
             </div>
         </section>
-
+        
         <section id="section5">
             <div class="container">
-                <h2>visualisation 3</h2>
+                <h2>Visualisation 3</h2>
             </div>
         </section>
 
@@ -96,15 +95,24 @@
     <footer></footer>
 
     <script>
+    // Disable automatic scroll restoration
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
+    window.onload = function() {
+        // Scroll to the top of the page on load
+        window.scrollTo(0, 0);
+    };
+
     $(document).ready(function() {
         // Smooth scroll when clicking the scroll button
         $('#scrollBtn').on('click', function(e) {
-            e.preventDefault(); // Prevent default anchor click behavior
-            var target = $(this).attr('href'); // Get the target section
+            e.preventDefault();
+            var target = $(this).attr('href');
             $('html, body').animate({
                 scrollTop: $(target).offset().top
             }, 1000, function() {
-                // Show the back button after scrolling to section2
                 $('#backBtn').fadeIn();
             });
         });
@@ -138,7 +146,37 @@
                 scrollTop: $(target).offset().top
             }, 1000);
         });
-        
+
+        // Show/hide navbar based on scroll position
+        $(window).on('scroll', function() {
+            const section3Top = $('#section3').offset().top;
+            if ($(window).scrollTop() >= section3Top) {
+                $('.navbar').fadeIn();
+            } else {
+                $('.navbar').fadeOut();
+            }
+        });
+
+        // Initially hide the navbar
+        $('.navbar').hide();
+
+        // Show/hide back button based on scroll position for section 2
+        $(window).on('scroll', function() {
+            const section2Top = $('#section2').offset().top;
+            const section3Top = $('#section3').offset().top;
+            const scrollPosition = $(window).scrollTop();
+
+            // Show the back button only in section 2
+            if (scrollPosition >= section2Top && scrollPosition < section3Top) {
+                $('#backBtn').fadeIn();
+            } else {
+                $('#backBtn').fadeOut();
+            }
+        });
+
+        // Initially hide the back button
+        $('#backBtn').hide();
+            
         });
     </script>
 
