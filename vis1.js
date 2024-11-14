@@ -1,126 +1,123 @@
-var w = 1200; //set the wdith
-var h = 600; //set the height
-var padding = 55; 
+var w = 1200; // Set the width
+var h = 600; // Set the height
+var padding = 55;
 
-var dataset, xScale, yScale, line; 
+var dataset, xScale, yScale, line;
 
-function init () {
-
-    //load the historical .csv file
-    d3.csv("resource/Historical data global.csv", function(d){
-
+function init() {
+    // Load the CSV data
+    d3.csv("resource/Historical data global.csv", function(d) {
         return {
-            date: d.Year, 
+            date: new Date(d.Year), // Convert to Date object for proper scaling
             number: +d.Emissions
-        };        
-
+        };
     }).then(function(data) {
+        dataset = data;
 
-        dataset = data; 
-
+        // Set up scales
         xScale = d3.scaleTime()
-        .domain([
-             d3.min(dataset, function(d) {return d.date}),       //min date
-             d3.max(dataset, function(d) {return d.date})        //max date
-        ])
-        .range([padding, w - padding]);
+            .domain(d3.extent(dataset, function(d) { return d.date; })) // Use d3.extent for min and max date
+            .range([padding, w - padding]);
 
         yScale = d3.scaleLinear()
-                .domain([0, d3.max(dataset, function(d) {return d.number; }) ])
-                .range([h, 0]);                                         //set the range of y values to display larger value on top
+            .domain([0, d3.max(dataset, function(d) { return d.number; })])
+            .range([h - padding, padding]); // Adjust range for proper axis direction
 
         line = d3.line()
-                .x(function(d) {return xScale(d.date); })               //x coordinates
-                .y(function(d) {return yScale(d.number); })             //y coordinates
+            .x(function(d) { return xScale(d.date); })
+            .y(function(d) { return yScale(d.number); });
 
-        lineChart(dataset)
-        console.table(dataset, ["date", "number"]); 
-    }); 
+        // Create the line chart with animations
+        lineChart(dataset);
+    });
 }
 
-function lineChart() {
+function lineChart(dataset) {
     var svg = d3.select("#chart")
-                .append("svg")
-                .attr("width", w)
-                .attr("height", h + 50);
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h + 50);
 
     // Define tooltip
     var tooltip = d3.select("body").append("div")
-                    .attr("id", "tooltip")
-                    .style("position", "absolute")
-                    .style("opacity", 0)
-                    .style("background-color", "#f9f9f9")
-                    .style("border", "1px solid #333")
-                    .style("padding", "8px")
-                    .style("border-radius", "4px")
-                    .style("pointer-events", "none")
-                    .style("font-size", "12px");
+        .attr("id", "tooltip")
+        .style("position", "absolute")
+        .style("opacity", 0)
+        .style("background-color", "#f9f9f9")
+        .style("border", "1px solid #333")
+        .style("padding", "8px")
+        .style("border-radius", "4px")
+        .style("pointer-events", "none")
+        .style("font-size", "12px");
 
     // Draw the line with transition
     var path = svg.append("path")
-                  .datum(dataset)
-                  .attr("fill", "none")
-                  .attr("stroke", "steelblue")
-                  .attr("stroke-width", 2)
-                  .attr("d", line);
+        .datum(dataset)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 2)
+        .attr("d", line);
 
     // Animate the line drawing
     var totalLength = path.node().getTotalLength();
-                      path.attr("stroke-dasharray", totalLength + " " + totalLength)
-                          .attr("stroke-dashoffset", totalLength)
-                          .transition()
-                          .duration(2000)
-                          .ease(d3.easeLinear)
-                          .attr("stroke-dashoffset", 0);
+    path.attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition()
+        .duration(2000)
+        .ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0);
 
-    var xAxis = d3.axisBottom().scale(xScale);
-    var yAxis = d3.axisLeft().ticks(10).scale(yScale);
-
+    // Add x-axis with custom styling
+    var xAxis = d3.axisBottom(xScale).ticks(10);
     svg.append("g")
-       .attr("transform", "translate(0, " + h + ")")
-       .call(xAxis);
+        .attr("transform", "translate(0, " + h + ")")
+        .call(xAxis)
+        .style("font-size", "12px");
 
+    // Add y-axis with custom styling
+    var yAxis = d3.axisLeft(yScale).ticks(10);
     svg.append("g")
-       .attr("transform", "translate(55, 0)")
-       .call(yAxis);
+        .attr("transform", "translate(" + padding + ", 0)")
+        .call(yAxis)
+        .style("font-size", "12px");
 
-   // Add circles for each data point with interactivity
-   svg.selectAll("circle")
-    .data(dataset)
-    .enter()
-    .append("circle")
-    .attr("cx", function(d) { return xScale(d.date); })
-    .attr("cy", function(d) { return yScale(d.emissions); })
-    .attr("r", 3)
-    .attr("fill", "steelblue")
-    .attr("opacity", 0)
-    .transition()
-    .delay(function(d, i) { return i * 50; }) // Stagger animation for points
-    .attr("opacity", 1)
-    .on("mouseover", function(event, d) {
-        d3.select(this)
-            .transition()
-            .duration(200)
-            .attr("r", 6); // Enlarge point on hover
+    // Add circles for each data point with interactivity
+    svg.selectAll("circle")
+        .data(dataset)
+        .enter()
+        .append("circle")
+        .attr("cx", function(d) { return xScale(d.date); })
+        .attr("cy", function(d) { return yScale(d.number); }) // Use d.number for emissions
+        .attr("r", 3)
+        .attr("fill", "steelblue")
+        .attr("opacity", 0)
+        .on("mouseover", function(event, d) {
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .attr("r", 6); // Enlarge point on hover
 
-        tooltip.transition().duration(200).style("opacity", 1);
-        tooltip.html("Year: " + d.date.getFullYear() + "<br>Emissions: " + d.emissions)
-            .style("left", (event.pageX + 10) + "px")
-            .style("top", (event.pageY - 10) + "px");
-    })
-    .on("mouseout", function() {
-        d3.select(this)
-            .transition()
-            .duration(200)
-            .attr("r", 3); // Reset point size
+            tooltip.transition().duration(200).style("opacity", 1);
+            tooltip.html("Year: " + d.date.getFullYear() + "<br>Emissions: " + d.number)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px");
+        })
+        .on("mouseout", function() {
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .attr("r", 3); // Reset point size
 
-        tooltip.transition().duration(200).style("opacity", 0);
-    });
+            tooltip.transition().duration(200).style("opacity", 0);
+        })
+        .transition()
+        .delay(function(d, i) { return i * 50; }) // Stagger animation for points
+        .attr("opacity", 1);
 
     // Add x-axis label
     svg.append("text")
         .attr("x", w / 2)
-        .attr("y", h - 20)
+        .attr("y", h + 40)
         .attr("text-anchor", "middle")
         .style("font-size", "14px")
         .style("font-weight", "bold")
@@ -136,7 +133,5 @@ function lineChart() {
         .style("font-weight", "bold")
         .text("Emissions");
 }
-
-
 
 init();
