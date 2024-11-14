@@ -135,8 +135,8 @@ h1 {
     left: 20px;
     padding: 5px 10px; 
     background-color: #e0e0e0 ;
-    color: black;
-    border: 2px solid #333;
+    color: #333333 ;
+    border: 2px solid #60a3d9 ;
     font-size: 16px;
     cursor: pointer;
     border-radius: 25px;
