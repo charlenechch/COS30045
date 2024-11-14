@@ -10,9 +10,9 @@ function init () {
     d3.csv("Historical data global.csv", function(d){
 
         return {
-            year: d.Year, 
-            value: +d.Emissions
-        };
+            date: d.Year, 
+            number: +d.Emissions
+        };        
 
     }).then(function(data) {
 
