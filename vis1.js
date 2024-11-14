@@ -1,6 +1,6 @@
 var w = 1200; // Set the width
 var h = 600; // Set the height
-var padding = 80;
+var padding = 45;
 
 var dataset, xScale, yScale, line;
 
