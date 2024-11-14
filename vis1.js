@@ -58,32 +58,49 @@ function lineChart(dataset) {
         .attr("stroke-width", 2)
         .attr("d", line);
 
-    // Animate the line drawing
-    var totalLength = path.node().getTotalLength();
-    path.attr("stroke-dasharray", totalLength + " " + totalLength)
-        .attr("stroke-dashoffset", totalLength)
-        .transition()
-        .duration(2000) // Duration of 2 seconds for the line animation
-        .ease(d3.easeLinear)
-        .attr("stroke-dashoffset", 0)
-        .on("end", function() {  // Once the line animation is complete
-            // Add circles for each data point
-            svg.selectAll("circle")
-                .data(dataset)
-                .enter()
-                .append("circle")
-                .attr("cx", function(d) { return xScale(d.date); })
-                .attr("cy", function(d) { return yScale(d.number); })
-                .attr("r", 3)
-                .attr("fill", "steelblue")
-                .attr("opacity", 0)
-                .transition()
-                .duration(500)  // Make circles fade in simultaneously after the line animation
-                .attr("opacity", 1);
-        });
+        var totalLength = path.node().getTotalLength();
+        path.attr("stroke-dasharray", totalLength + " " + totalLength)
+            .attr("stroke-dashoffset", totalLength)
+            .transition()
+            .duration(2000)
+            .ease(d3.easeLinear)
+            .attr("stroke-dashoffset", 0);
+    
+        // Add circles for each data point with interactivity
+        svg.selectAll("circle")
+            .data(dataset)
+            .enter()
+            .append("circle")
+            .attr("cx", function(d) { return xScale(d.date); })
+            .attr("cy", function(d) { return yScale(d.emissions); })
+            .attr("r", 3)
+            .attr("fill", "steelblue")
+            .attr("opacity", 0)
+            .transition()
+            .delay(function(d, i) { return i * 50; }) // Stagger animation for points
+            .attr("opacity", 1)
+            .on("mouseover", function(event, d) {
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .attr("r", 6); // Enlarge point on hover
+    
+                tooltip.transition().duration(200).style("opacity", 1);
+                tooltip.html("Year: " + d.date.getFullYear() + "<br>Emissions: " + d.emissions)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 10) + "px");
+            })
+            .on("mouseout", function() {
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .attr("r", 3); // Reset point size
+    
+                tooltip.transition().duration(200).style("opacity", 0);
+            });
 
     // Add x-axis with custom styling
-    var xAxis = d3.axisBottom(xScale).ticks(100);
+    var xAxis = d3.axisBottom(xScale).ticks(10);
     svg.append("g")
         .attr("transform", "translate(0, " + h + ")")
         .call(xAxis)
