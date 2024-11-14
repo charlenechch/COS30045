@@ -41,30 +41,49 @@ function init () {
 function lineChart() {
     var svg = d3.select("#chart")
                 .append("svg")
-                .attr("width", w)        //set attributes 
-                .attr("height", h + 50); //set attributes 
+                .attr("width", w)
+                .attr("height", h + 50);
 
-    //add x axis 
-    var xAxis = d3.axisBottom()                         //add an axis at the bottom of the chart
-                  .scale(xScale); 
+    var xAxis = d3.axisBottom().scale(xScale);
+    var yAxis = d3.axisLeft().ticks(10).scale(yScale);
 
-    //add y axis 
-    var yAxis = d3.axisLeft()                           //add an axis at the left side of the chart
-                  .ticks(10)
-                  .scale(yScale);   
+    svg.append("path")
+       .datum(dataset)
+       .attr("class", "line")
+       .attr("d", line)
+       .attr("fill", "none")
+       .attr("stroke", "steelblue")
+       .attr("stroke-width", 2);
 
-              svg.append("path")
-                 .datum(dataset)            //bind each single data 
-                 .attr("class", "line")
-                 .attr("d", line);          //generate the line
+    svg.append("g")
+       .attr("transform", "translate(0, " + h + ")")
+       .call(xAxis);
 
-              svg.append("g")
-                 .attr("transform", "translate(0, " + h + ")") // Position x-axis 
-                 .call(xAxis); 
-             
-              svg.append("g")
-                 .attr("transform", "translate(55, 0)") // Position y-axis to the left of the bars
-                 .call(yAxis);
+    svg.append("g")
+       .attr("transform", "translate(55, 0)")
+       .call(yAxis);
+
+    // Add circles for each data point
+    svg.selectAll("circle")
+       .data(dataset)
+       .enter()
+       .append("circle")
+       .attr("cx", function(d) { return xScale(d.date); })
+       .attr("cy", function(d) { return yScale(d.number); })
+       .attr("r", 4)
+       .attr("fill", "steelblue")
+       .on("mouseover", function(event, d) {
+           d3.select("#tooltip")
+             .style("opacity", 1)
+             .html("Year: " + d.date + "<br>Emissions: " + d.number)
+             .style("left", (event.pageX + 10) + "px")
+             .style("top", (event.pageY - 10) + "px");
+       })
+       .on("mouseout", function() {
+           d3.select("#tooltip").style("opacity", 0);
+       });
 }
+
+
 
 init();
