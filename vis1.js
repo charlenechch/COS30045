@@ -1,4 +1,4 @@
-var w = 1200; // Set the width
+var w = 1300; // Set the width
 var h = 600; // Set the height
 var padding = 40;
 
@@ -83,7 +83,7 @@ function lineChart(dataset) {
         });
 
     // Add x-axis with custom styling
-    var xAxis = d3.axisBottom(xScale).ticks(10);
+    var xAxis = d3.axisBottom(xScale).ticks(100);
     svg.append("g")
         .attr("transform", "translate(0, " + h + ")")
         .call(xAxis)
