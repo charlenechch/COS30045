@@ -7,7 +7,7 @@ var dataset, xScale, yScale, line;
 function init () {
 
     //load the historical .csv file
-    d3.csv("Historical data global.csv", function(d){
+    d3.csv("resource/Historical data global.csv", function(d){
 
         return {
             date: d.Year, 
