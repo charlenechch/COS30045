@@ -1,6 +1,6 @@
 var w = 1200; // Set the width
 var h = 600; // Set the height
-var padding = 45;
+var padding = 40;
 
 var dataset, xScale, yScale, line;
 
@@ -63,7 +63,7 @@ function lineChart(dataset) {
     path.attr("stroke-dasharray", totalLength + " " + totalLength)
         .attr("stroke-dashoffset", totalLength)
         .transition()
-        .duration(2000)
+        .duration(2000) // Duration of 2 seconds for the line animation
         .ease(d3.easeLinear)
         .attr("stroke-dashoffset", 0)
         .on("end", function() {  // Once the line animation is complete
@@ -116,4 +116,5 @@ function lineChart(dataset) {
         .text("Emissions");
 }
 
+// Call init to render the visualization
 init();
