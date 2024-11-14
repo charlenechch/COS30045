@@ -14,7 +14,7 @@
 
 <body>
     <nav class="navbar">
-        <div class="container">
+        <div class="nav-links">
             <a href="#section1" class="nav-link">Project Overview</a>
             <div class="dropdown">
                 <a href="javascript:void(0)" class="nav-link dropbtn">Visualisations</a>
@@ -24,10 +24,10 @@
                     <a href="#section5">Visualisation 3</a>
                 </div>
             </div>
-
             <a href="#aboutus" class="nav-link">About Us</a>
         </div>
     </nav>
+    
 
     <main id="contents">
         <section id="section1">
@@ -74,19 +74,19 @@
         
         <section id="section3">
             <div class="container">
-                <h2>Visualisation 1</h2>
+                <h2 class="section-heading">Visualisation 1</h2>
             </div>
         </section>
         
         <section id="section4">
             <div class="container">
-                <h2>Visualisation 2</h2>
+                <h2 class="section-heading">Visualisation 2</h2>
             </div>
         </section>
         
         <section id="section5">
             <div class="container">
-                <h2>Visualisation 3</h2>
+                <h2 class="section-heading">Visualisation 3</h2>
             </div>
         </section>
 
@@ -106,6 +106,14 @@
     };
 
     $(document).ready(function() {
+        // Function to check if an element is in view
+        function isInView(elem) {
+            var elementTop = $(elem).offset().top;
+            var elementBottom = elementTop + $(elem).outerHeight();
+            var viewportTop = $(window).scrollTop();
+            var viewportBottom = viewportTop + $(window).height();
+            return elementBottom > viewportTop && elementTop < viewportBottom;
+        }
         // Smooth scroll when clicking the scroll button
         $('#scrollBtn').on('click', function(e) {
             e.preventDefault();
@@ -147,23 +155,12 @@
             }, 1000);
         });
 
-        // Show/hide navbar based on scroll position
-        $(window).on('scroll', function() {
-            const section3Top = $('#section3').offset().top;
-            if ($(window).scrollTop() >= section3Top) {
-                $('.navbar').fadeIn();
-            } else {
-                $('.navbar').fadeOut();
-            }
-        });
-
-        // Initially hide the navbar
-        $('.navbar').hide();
-
         // Show/hide back button based on scroll position for section 2
         $(window).on('scroll', function() {
             const section2Top = $('#section2').offset().top;
             const section3Top = $('#section3').offset().top;
+            const section4Top = $('#section4').offset().top;
+            const section5Top = $('#section5').offset().top;
             const scrollPosition = $(window).scrollTop();
 
             // Show the back button only in section 2
@@ -172,7 +169,22 @@
             } else {
                 $('#backBtn').fadeOut();
             }
+            // Show/hide navbar based on scroll position
+            if ($(window).scrollTop() >= section3Top) {
+                $('.navbar').fadeIn();
+            } else {
+                $('.navbar').fadeOut();
+            }
+            // Apply fade-in effect to section headings
+            $('.section-heading').each(function() {
+                if (isInView(this)) {
+                    $(this).addClass('visible');
+                }
+            });
         });
+
+        // Initially hide the navbar
+        $('.navbar').hide();
 
         // Initially hide the back button
         $('#backBtn').hide();
