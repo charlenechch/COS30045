@@ -5,25 +5,23 @@
     <meta charset="UTF-8">
     <meta name="description" content="Explore insights into greenhouse gas emissions trends across countries and sectors.">
     <meta name="keywords" content="Greenhouse Gas Emissions, Data Visualization, D3, Sustainability">
-    <meta name="author" content="Charlene Chai">
+    <meta name="author" content="Charlene Chai and Sherman Tan">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Greenhouse Gas Emissions Insights</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
-
 </head>
 
 <body>
     <nav class="navbar">
         <div class="nav-links">
-            <a href="#section1" class="nav-link">Project Overview</a>
+            <a href="index.html#section1" class="nav-link">Project Overview</a>
             <div class="dropdown">
                 <a href="javascript:void(0)" class="nav-link dropbtn">Visualisations</a>
                 <div class="dropdown-content">
-                    <a href="#section3">Visualisation 1</a>
-                    <a href="#section4">Visualisation 2</a>
-                    <a href="#section5">Visualisation 3</a>
+                    <a href="index.html#section3">Visualisation 1</a>
+                    <a href="index.html#section4">Visualisation 2</a>
+                    <a href="index.html#section5">Visualisation 3</a>
                 </div>
             </div>
             <a href="aboutus.html" class="nav-link">About Us</a>
@@ -83,16 +81,15 @@
             </div>
         </section>
         
-        
         <section id="section4">
             <div class="container">
-                <h2>Visualisation 2</h2>
+                <h2 class="section-heading">Visualisation 2</h2>
             </div>
         </section>
         
         <section id="section5">
             <div class="container">
-                <h2>Visualisation 3</h2>
+                <h2 class="section-heading">Visualisation 3</h2>
             </div>
         </section>
 
@@ -101,16 +98,6 @@
     <footer></footer>
 
     <script>
-    // Disable automatic scroll restoration
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-
-    window.onload = function() {
-        // Scroll to the top of the page on load
-        window.scrollTo(0, 0);
-    };
-
     $(document).ready(function() {
         // Function to check if an element is in view
         function isInView(elem) {
@@ -154,11 +141,19 @@
         $('#backBtn').hide();
 
         $('.nav-link').on('click', function(e) {
-            e.preventDefault();
             var target = $(this).attr('href');
-            $('html, body').animate({
-                scrollTop: $(target).offset().top
-            }, 1000);
+            
+            // Allow the browser to handle navigation naturally for external links
+            if (!target.includes("#")) {
+                window.location.href = target;
+            } else {
+                // Smooth scroll for internal links only within the same page
+                e.preventDefault();
+                var targetSection = target.split("#")[1];
+                $('html, body').animate({
+                    scrollTop: $("#" + targetSection).offset().top
+                }, 1000);
+            }
         });
 
         // Show/hide back button based on scroll position for section 2
@@ -187,10 +182,19 @@
                     $(this).addClass('visible');
                 }
             });
+            // Show/hide navbar based on scroll position
+            if ($(window).scrollTop() >= section3Top) {
+                $('.section-heading').fadeIn();
+            } else {
+                $('.section-heading').fadeOut();
+            }
         });
 
         // Initially hide the navbar
         $('.navbar').hide();
+
+        // Initially hide the navbar
+        $('.section-heading').hide();
 
         // Initially hide the back button
         $('#backBtn').hide();
