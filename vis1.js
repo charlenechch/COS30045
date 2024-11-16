@@ -118,7 +118,7 @@ function lineChart(dataset) {
         .style("visibility", "hidden")
         .style("font-size", "14px");
 
-    // Add data points
+    // Add data points with hover functionality
     svg.selectAll(".dot")
         .data(dataset)
         .enter()
@@ -128,6 +128,7 @@ function lineChart(dataset) {
         .attr("cy", function (d) { return yScale(d.emissions); })
         .attr("r", 5)
         .attr("fill", "steelblue")
+        .style("opacity", 0) // Initially hidden
         .on("mouseover", function (event, d) {
             tooltip.style("visibility", "visible")
                 .html(
@@ -146,6 +147,12 @@ function lineChart(dataset) {
             tooltip.style("visibility", "hidden");
             d3.select(this).attr("fill", "steelblue"); // Reset circle color
         });
+
+    // Reveal data points after line animation
+    svg.selectAll(".dot")
+        .transition()
+        .delay(2000) // Matches the line animation duration
+        .style("opacity", 1);
 }
 
 // Initialize the visualization
