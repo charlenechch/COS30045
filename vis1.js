@@ -97,8 +97,8 @@ function lineChart(dataset) {
         .attr("transform", "rotate(-90)") // Rotated to align vertically
         .attr("x", -h / 2) // Centered along the height
         .attr("y",  15) // Positioned slightly to the left of the y-axis
-        .text("Emissions (Billion Tons)")
-        .style("font-size", "16px");
+        .text("Total Greenhouse Gas Emissions")
+        .style("font-size", "14px");
 
     // Create a tooltip
     var tooltip = d3.select("body")
