@@ -49,22 +49,18 @@ function init() {
 function lineChart(dataset) {
     d3.select("#chart").select("svg").remove();
 
-     // Calculate dynamic horizontal offset to center the chart
-     var horizontalOffset = (w - (w - padding * 2)) / 2;
-
-     // Create a group element to wrap all chart elements
-     var chartGroup = svg.append("g")
-                         .attr("transform", `translate(${horizontalOffset}, 0)`); // Move the chart horizontally to center
-
     var svg = d3.select("#chart")
         .append("svg")
         .attr("width", w)
         .attr("height", h);
 
-     // Create a group element for shifting the entire chart to the right
-    var chartGroup = svg.append("g")
-                        .attr("transform", "translate(50,0)"); // Move the chart 50px to the right
+      // Calculate dynamic horizontal offset to center the chart
+    var horizontalOffset = (w - (w - padding * 2)) / 2;
 
+    // Create a group element to wrap all chart elements
+    var chartGroup = svg.append("g")
+        .attr("transform", `translate(${horizontalOffset}, 0)`); // Move the chart horizontally to center
+        
     // Draw the emissions line
     var pathEmissions = chartGroup.append("path")
     .datum(dataset)
