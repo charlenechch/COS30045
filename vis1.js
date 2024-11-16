@@ -31,14 +31,9 @@ function init() {
             .x(function (d) { return xScale(d.date); })
             .y(function (d) { return yScale(d.emissions); });
 
-        // Add click listener to #chart
-        document.querySelector("#chart").addEventListener("click", function () {
-            if (!d3.select("#chart svg").empty()) return; // Prevent re-rendering
-            console.log("Rendering visualization...");
-            lineChart(dataset);
-        });
-    }).catch(function (error) {
-        console.error("Error loading dataset:", error); // Log errors
+        
+     // Create the line chart with animations
+     lineChart(dataset);
     });
 }
 
