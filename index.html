@@ -10,6 +10,7 @@
     <title>Greenhouse Gas Emissions Insights</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 
 <body>
@@ -27,59 +28,50 @@
             <a href="aboutus.html" class="nav-link">About Us</a>
         </div>
     </nav>
-    
 
     <main id="contents">
         <section id="section1">
             <div class="container">
                 <h1>Greenhouse Gas Emissions Insights</h1>
-                    <!-- Styled Scroll Button -->
-                    <a href="#section2" id="scrollBtn">
-                        <button class="styled-button">Explore Insights</button>
-                    </a>
+                <a href="#section2" id="scrollBtn">
+                    <button class="styled-button">Explore Insights</button>
+                </a>
             </div>
         </section>
 
         <section id="section2">
             <div class="container">
-                <!-- Heading at the Top -->
                 <h2>Purpose of the Insights</h2>
-                    <div class="content">
-                        <!-- Left Column: Text Content -->
-                        <div class="text-content">
-                            <p>
-                                Greenhouse gas emissions continue to rise globally even though actions are taken to reduce the impact of climate change. Industrial activities such as 
-                                agriculture, deforestation and fossil fuels are the main contributors to global warming. Some countries have taken actions to reduce greenhouse gas 
-                                emissions, but along with economic development, energy demand rises as well as greenhouse gas emissions. Although carbon dioxide is the most significant 
-                                contributor to greenhouse gas emissions, other gases such as methane, nitrous, and sulphur oxide severely impact global warming. The visualisation in 
-                                this project aims to provide clear visualisations to raise awareness to the public regarding the rise of greenhouse gas emissions and provide data such 
-                                as emissions trends to researchers and policymakers to better enforce policies that reduce greenhouse gas emissions.  
-                            </p>
-                            <button id="backBtn" class="back-btn">Back</button>
-                        </div>
-                        
-                        <!-- Right Column: Video Content -->
-                        <div class="video-content">
-                            <video autoplay loop muted playsinline style="width: 100%; border-radius: 8px;">
-                                <source src="resource/ice-on-lake.mp4 " type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
+                <div class="content">
+                    <div class="text-content">
+                        <p>
+                            Greenhouse gas emissions continue to rise globally even though actions are taken to reduce the impact of climate change. Industrial activities such as 
+                            agriculture, deforestation, and fossil fuels are the main contributors to global warming. Some countries have taken actions to reduce greenhouse gas 
+                            emissions, but along with economic development, energy demand rises as well as greenhouse gas emissions. Although carbon dioxide is the most significant 
+                            contributor to greenhouse gas emissions, other gases such as methane, nitrous, and sulfur oxide severely impact global warming. The visualisation in 
+                            this project aims to provide clear visualisations to raise awareness among the public regarding the rise of greenhouse gas emissions and provide data such 
+                            as emissions trends to researchers and policymakers to better enforce policies that reduce greenhouse gas emissions.
+                        </p>
+                        <button id="backBtn" class="back-btn">Back</button>
                     </div>
-                    <a href="#section3" id="scrollBtn2">
-                        <button class="styled-button2">Explore visualisation</button>
-                    </a>
+
+                    <div class="video-content">
+                        <video autoplay loop muted playsinline style="width: 100%; border-radius: 8px;">
+                            <source src="resource/ice-on-lake.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
                 </div>
+                <a href="#section3" id="scrollBtn2">
+                    <button class="styled-button2">Explore Visualisation</button>
+                </a>
+            </div>
         </section>
 
         <section id="section3">
             <div class="container">
                 <h2 class="section-heading">Visualisation 1</h2>
                 <div id="chart"></div> <!-- Chart container -->
-                <script src="https://d3js.org/d3.v7.min.js"></script> 
-                <script src="vis1.js"></script>
-
-                <div id="tooltip"></div>
             </div>
         </section>
         
@@ -94,115 +86,7 @@
                 <h2 class="section-heading">Visualisation 3</h2>
             </div>
         </section>
-
     </main>
-
-    <footer></footer>
-
-    <script>
-    $(document).ready(function() {
-        // Function to check if an element is in view
-        function isInView(elem) {
-            var elementTop = $(elem).offset().top;
-            var elementBottom = elementTop + $(elem).outerHeight();
-            var viewportTop = $(window).scrollTop();
-            var viewportBottom = viewportTop + $(window).height();
-            return elementBottom > viewportTop && elementTop < viewportBottom;
-        }
-        // Smooth scroll when clicking the scroll button
-        $('#scrollBtn').on('click', function(e) {
-            e.preventDefault();
-            var target = $(this).attr('href');
-            $('html, body').animate({
-                scrollTop: $(target).offset().top
-            }, 1000, function() {
-                $('#backBtn').fadeIn();
-            });
-        });
-
-        // Smooth scroll for the second button in section2
-        $('#scrollBtn2').on('click', function(e) {
-            e.preventDefault();
-            $('html, body').animate({
-                scrollTop: $('#section3').offset().top
-            }, 1000);
-        });
-
-        // Scroll back to section1 when clicking the back button
-        $('#backBtn').on('click', function(e) {
-            e.preventDefault();
-            $('html, body').animate({
-                scrollTop: $('#section1').offset().top
-            }, 1000, function() {
-                // Hide the back button after returning to section1
-                $('#backBtn').fadeOut();
-            });
-        });
-
-        // Optional: Hide the back button initially
-        $('#backBtn').hide();
-
-        $('.nav-link').on('click', function(e) {
-            var target = $(this).attr('href');
-            
-            // Allow the browser to handle navigation naturally for external links
-            if (!target.includes("#")) {
-                window.location.href = target;
-            } else {
-                // Smooth scroll for internal links only within the same page
-                e.preventDefault();
-                var targetSection = target.split("#")[1];
-                $('html, body').animate({
-                    scrollTop: $("#" + targetSection).offset().top
-                }, 1000);
-            }
-        });
-
-        // Show/hide back button based on scroll position for section 2
-        $(window).on('scroll', function() {
-            const section2Top = $('#section2').offset().top;
-            const section3Top = $('#section3').offset().top;
-            const section4Top = $('#section4').offset().top;
-            const section5Top = $('#section5').offset().top;
-            const scrollPosition = $(window).scrollTop();
-
-            // Show the back button only in section 2
-            if (scrollPosition >= section2Top && scrollPosition < section3Top) {
-                $('#backBtn').fadeIn();
-            } else {
-                $('#backBtn').fadeOut();
-            }
-            // Show/hide navbar based on scroll position
-            if ($(window).scrollTop() >= section3Top) {
-                $('.navbar').fadeIn();
-            } else {
-                $('.navbar').fadeOut();
-            }
-            // Apply fade-in effect to section headings
-            $('.section-heading').each(function() {
-                if (isInView(this)) {
-                    $(this).addClass('visible');
-                }
-            });
-            // Show/hide navbar based on scroll position
-            if ($(window).scrollTop() >= section3Top) {
-                $('.section-heading').fadeIn();
-            } else {
-                $('.section-heading').fadeOut();
-            }
-        });
-
-        // Initially hide the navbar
-        $('.navbar').hide();
-
-        // Initially hide the navbar
-        $('.section-heading').hide();
-
-        // Initially hide the back button
-        $('#backBtn').hide();
-            
-        });
-    </script>
 
     <footer>
         <div class="footer-content">
@@ -210,6 +94,68 @@
             <p>by Charlene Chai &amp; Sherman Tan</p>
         </div>
     </footer>
-</body>
 
+    <script src="vis1.js"></script> <!-- Include the JavaScript for Visualization 1 -->
+
+    <script>
+        $(document).ready(function () {
+            // Function to check if an element is in view
+            function isInView(elem) {
+                var elementTop = $(elem).offset().top;
+                var elementBottom = elementTop + $(elem).outerHeight();
+                var viewportTop = $(window).scrollTop();
+                var viewportBottom = viewportTop + $(window).height();
+                return elementBottom > viewportTop && elementTop < viewportBottom;
+            }
+
+            // Smooth scroll when clicking the scroll button
+            $('#scrollBtn').on('click', function (e) {
+                e.preventDefault();
+                var target = $(this).attr('href');
+                $('html, body').animate({
+                    scrollTop: $(target).offset().top
+                }, 1000, function () {
+                    $('#backBtn').fadeIn();
+                });
+            });
+
+            // Smooth scroll for the second button in section2
+            $('#scrollBtn2').on('click', function (e) {
+                e.preventDefault();
+                $('html, body').animate({
+                    scrollTop: $('#section3').offset().top
+                }, 1000);
+            });
+
+            // Scroll back to section1 when clicking the back button
+            $('#backBtn').on('click', function (e) {
+                e.preventDefault();
+                $('html, body').animate({
+                    scrollTop: $('#section1').offset().top
+                }, 1000, function () {
+                    $('#backBtn').fadeOut();
+                });
+            });
+
+            // Optional: Hide the back button initially
+            $('#backBtn').hide();
+
+            $('.nav-link').on('click', function (e) {
+                var target = $(this).attr('href');
+
+                // Allow the browser to handle navigation naturally for external links
+                if (!target.includes("#")) {
+                    window.location.href = target;
+                } else {
+                    // Smooth scroll for internal links only within the same page
+                    e.preventDefault();
+                    var targetSection = target.split("#")[1];
+                    $('html, body').animate({
+                        scrollTop: $("#" + targetSection).offset().top
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body>
 </html>
