@@ -20,8 +20,9 @@ function init() {
 
         // Set up scales
         xScale = d3.scaleTime()
-            .domain(d3.extent(dataset, function (d) { return d.date; }))
-            .range([padding, w - padding]);
+        .domain(d3.extent(dataset, function (d) { return d.date; }))
+        .range([padding + 20, w - padding]); // Added 20 to padding for more right-shift
+    
 
         yScaleEmissions = d3.scaleLinear()
             .domain([0, d3.max(dataset, function (d) { return d.emissions; })])
@@ -117,9 +118,10 @@ function lineChart(dataset) {
     .ticks(10)
     .tickFormat(d => `${d} billion t`);
     
-    chartGroup.append("g")
-    .attr("transform", "translate(" + padding + ",0)") // Adjust to position the y-axis to the left
+    svg.append("g")
+    .attr("transform", "translate(" + (padding + 20) + ",0)") // Add 20 to padding
     .call(yAxisEmissions);
+
 
     chartGroup.append("text")
     .attr("text-anchor", "middle")
@@ -134,9 +136,9 @@ function lineChart(dataset) {
     .ticks(10)
     .tickFormat(d => `${d}°C`);
 
-    chartGroup.append("g")
-    .attr("transform", "translate(" + (w - padding - 50) + ",0)") // Adjust x position due to the shift
-    .call(yAxisTemperature);
+    svg.append("g")
+    .attr("transform", "translate(" + (padding + 20) + ",0)") // Add 20 to padding
+    .call(yAxisEmissions);
 
     chartGroup.append("text")
     .attr("text-anchor", "middle")
