@@ -95,10 +95,11 @@ function lineChart(dataset) {
     svg.append("text")
         .attr("text-anchor", "middle")
         .attr("transform", "rotate(-90)") // Rotate to make it vertical
-        .attr("x", -h / 2)
-        .attr("y", 20) // Position to the left of the y-axis
-        .text("Total Greenhouse Gas Emissions")
-        .style("font-size", "16px");
+        .attr("x", -h / 2) // Centered along the height
+        .attr("y", 15) // Position closer to the Y-axis
+        .text("Total Greenhouse Gas Emissions (Billion t)")
+        .style("font-size", "14px") // Adjust font size for readability
+        .style("font-family", "Arial, sans-serif"); // Optional: Set font family
 
     // Create a tooltip
     var tooltip = d3.select("body")
