@@ -403,13 +403,22 @@ footer {
             animation-delay: 1s;
         }
 
-#tooltip {
-    position: absolute;
-    background-color: white;
-    border: 1px solid black;
-    padding: 5px;
-    pointer-events: none;
-    font-size: 12px;
+.section-heading {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
 }
+
+#chart {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
     
