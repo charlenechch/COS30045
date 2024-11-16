@@ -1,6 +1,6 @@
-var w = 1400; // Width
+var w = 1300; // Width
 var h = 650; // Height
-var padding = 100;
+var padding = 70;
 
 var dataset, xScale, yScale, line;
 
@@ -91,17 +91,14 @@ function lineChart(dataset) {
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
 
-// Add y-axis label
+    // Add y-axis label
     svg.append("text")
         .attr("text-anchor", "middle")
-        .attr("transform", "rotate(-90)") // Rotate to align vertically
-        .attr("x", -(h - padding) / 2) // Center vertically along the Y-axis
-        .attr("y", 0 - padding + 10) // Move left of the Y-axis
+        .attr("transform", "rotate(-90)") // Rotated to align vertically
+        .attr("x", -h / 2) // Centered along the height
+        .attr("y",  15) // Positioned slightly to the left of the y-axis
         .text("Emissions (Billion Tons)")
-        .style("font-size", "16px") // Font size for readability
-        .style("font-family", "Arial, sans-serif") // Clean font
-        .style("fill", "black"); // Ensure visibility
-
+        .style("font-size", "16px");
 
     // Create a tooltip
     var tooltip = d3.select("body")
