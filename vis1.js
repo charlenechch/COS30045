@@ -54,125 +54,130 @@ function lineChart(dataset) {
         .attr("width", w)
         .attr("height", h);
 
+     // Create a group element for shifting the entire chart to the right
+    var chartGroup = svg.append("g")
+                        .attr("transform", "translate(50,0)"); // Move the chart 50px to the right
+                        
     // Draw the emissions line
-    var pathEmissions = svg.append("path")
-        .datum(dataset)
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-width", 2)
-        .attr("d", lineEmissions);
+    var pathEmissions = chartGroup.append("path")
+    .datum(dataset)
+    .attr("fill", "none")
+    .attr("stroke", "steelblue")
+    .attr("stroke-width", 2)
+    .attr("d", lineEmissions);
 
     // Animate the emissions line
     var totalLengthEmissions = pathEmissions.node().getTotalLength();
     pathEmissions.attr("stroke-dasharray", totalLengthEmissions + " " + totalLengthEmissions)
-        .attr("stroke-dashoffset", totalLengthEmissions)
-        .transition()
-        .duration(2500)
-        .ease(d3.easeLinear)
-        .attr("stroke-dashoffset", 0);
+    .attr("stroke-dashoffset", totalLengthEmissions)
+    .transition()
+    .duration(2500)
+    .ease(d3.easeLinear)
+    .attr("stroke-dashoffset", 0);
 
     // Draw the temperature line
-    var pathTemperature = svg.append("path")
-        .datum(dataset)
-        .attr("fill", "none")
-        .attr("stroke", "orange")
-        .attr("stroke-width", 2)
-        .attr("d", lineTemperature);
+    var pathTemperature = chartGroup.append("path")
+    .datum(dataset)
+    .attr("fill", "none")
+    .attr("stroke", "orange")
+    .attr("stroke-width", 2)
+    .attr("d", lineTemperature);
 
     // Animate the temperature line
     var totalLengthTemperature = pathTemperature.node().getTotalLength();
     pathTemperature.attr("stroke-dasharray", totalLengthTemperature + " " + totalLengthTemperature)
-        .attr("stroke-dashoffset", totalLengthTemperature)
-        .transition()
-        .duration(2500)
-        .ease(d3.easeLinear)
-        .attr("stroke-dashoffset", 0);
+    .attr("stroke-dashoffset", totalLengthTemperature)
+    .transition()
+    .duration(2500)
+    .ease(d3.easeLinear)
+    .attr("stroke-dashoffset", 0);
 
     // Add x-axis
     var xAxis = d3.axisBottom(xScale)
-        .ticks(10)
-        .tickFormat(d3.timeFormat("%Y"));
+    .ticks(10)
+    .tickFormat(d3.timeFormat("%Y"));
 
-    svg.append("g")
-        .attr("transform", "translate(0," + (h - padding) + ")")
-        .call(xAxis);
+    chartGroup.append("g")
+    .attr("transform", "translate(0," + (h - padding) + ")")
+    .call(xAxis);
 
     // Add x-axis label
-    svg.append("text")
-        .attr("text-anchor", "middle")
-        .attr("x", w / 2)
-        .attr("y", h - 30)
-        .text("Year")
-        .style("font-size", "15px");
+    chartGroup.append("text")
+    .attr("text-anchor", "middle")
+    .attr("x", w / 2 - 50) // Adjust x position due to the shift
+    .attr("y", h - 30)
+    .text("Year")
+    .style("font-size", "15px");
 
     // Add y-axis for emissions
     var yAxisEmissions = d3.axisLeft(yScaleEmissions)
-        .ticks(10)
-        .tickFormat(d => `${d} billion t`);
+    .ticks(10)
+    .tickFormat(d => `${d} billion t`);
 
-    svg.append("g")
-        .attr("transform", "translate(" + padding + ",0)")
-        .call(yAxisEmissions);
+    chartGroup.append("g")
+    .attr("transform", "translate(" + padding + ",0)")
+    .call(yAxisEmissions);
 
-    svg.append("text")
-        .attr("text-anchor", "middle")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -h / 2)
-        .attr("y", 15)
-        .text("Total Greenhouse Gas Emissions (Billion Tons)")
-        .style("font-size", "14px");
+    chartGroup.append("text")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -h / 2)
+    .attr("y", 0 - (padding - 20))
+    .text("Total Greenhouse Gas Emissions (Billion Tons)")
+    .style("font-size", "14px");
 
     // Add y-axis for temperature
     var yAxisTemperature = d3.axisRight(yScaleTemperature)
-        .ticks(10)
-        .tickFormat(d => `${d}°C`);
+    .ticks(10)
+    .tickFormat(d => `${d}°C`);
 
-    svg.append("g")
-        .attr("transform", "translate(" + (w - padding) + ",0)")
-        .call(yAxisTemperature);
+    chartGroup.append("g")
+    .attr("transform", "translate(" + (w - padding - 50) + ",0)") // Adjust x position due to the shift
+    .call(yAxisTemperature);
 
-    svg.append("text")
-        .attr("text-anchor", "middle")
-        .attr("transform", "rotate(-90)")
-        .attr("x", -h / 2)
-        .attr("y", w - padding + 40)
-        .text("Average Temperature Anomaly (°C)")
-        .style("font-size", "15px")
-        .style("fill", "orange");
+    chartGroup.append("text")
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -h / 2)
+    .attr("y", w - padding - 10) // Adjust y position due to the shift
+    .text("Average Temperature Anomaly (°C)")
+    .style("font-size", "15px")
+    .style("fill", "orange");
 
     // Add tooltips for emissions
-    svg.selectAll(".dot-emissions")
-        .data(dataset)
-        .enter()
-        .append("circle")
-        .attr("class", "dot-emissions")
-        .attr("cx", function (d) { return xScale(d.date); })
-        .attr("cy", function (d) { return yScaleEmissions(d.emissions); })
-        .attr("r", 2)
-        .attr("fill", "steelblue")
-        .on("mouseover", function (event, d) {
-            d3.select(this).attr("r", 5).attr("fill", "orange");
-        })
-        .on("mouseout", function () {
-            d3.select(this).attr("r", 2).attr("fill", "steelblue");
-        });
+    chartGroup.selectAll(".dot-emissions")
+    .data(dataset)
+    .enter()
+    .append("circle")
+    .attr("class", "dot-emissions")
+    .attr("cx", function (d) { return xScale(d.date); })
+    .attr("cy", function (d) { return yScaleEmissions(d.emissions); })
+    .attr("r", 2)
+    .attr("fill", "steelblue")
+    .on("mouseover", function (event, d) {
+        d3.select(this).attr("r", 5).attr("fill", "orange");
+    })
+    .on("mouseout", function () {
+        d3.select(this).attr("r", 2).attr("fill", "steelblue");
+    });
 
     // Add tooltips for temperature
-    svg.selectAll(".dot-temperature")
-        .data(dataset)
-        .enter()
-        .append("circle")
-        .attr("class", "dot-temperature")
-        .attr("cx", function (d) { return xScale(d.date); })
-        .attr("cy", function (d) { return yScaleTemperature(d.temperature); })
-        .attr("r", 2)
-        .attr("fill", "orange")
-        .on("mouseover", function (event, d) {
-            d3.select(this).attr("r", 5).attr("fill", "red");
-        })
-        .on("mouseout", function () {
-            d3.select(this).attr("r", 2).attr("fill", "orange");
-        });
+    chartGroup.selectAll(".dot-temperature")
+    .data(dataset)
+    .enter()
+    .append("circle")
+    .attr("class", "dot-temperature")
+    .attr("cx", function (d) { return xScale(d.date); })
+    .attr("cy", function (d) { return yScaleTemperature(d.temperature); })
+    .attr("r", 2)
+    .attr("fill", "orange")
+    .on("mouseover", function (event, d) {
+        d3.select(this).attr("r", 5).attr("fill", "red");
+    })
+    .on("mouseout", function () {
+        d3.select(this).attr("r", 2).attr("fill", "orange");
+    });
 }
+
 
 init();
