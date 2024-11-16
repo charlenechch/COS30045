@@ -96,7 +96,7 @@ function lineChart(dataset) {
         .attr("text-anchor", "middle")
         .attr("transform", "rotate(-90)") // Rotated to align vertically
         .attr("x", -h / 2) // Centered along the height
-        .attr("y", 20) // Positioned slightly to the left of the y-axis
+        .attr("y", 40) // Positioned slightly to the left of the y-axis
         .text("Emissions (Billion Tons)")
         .style("font-size", "16px");
 
