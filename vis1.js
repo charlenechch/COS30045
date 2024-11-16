@@ -10,7 +10,8 @@ function init() {
     d3.csv("resource/Historical data global.csv", function (d) {
         return {
             date: new Date(d.Year), // Convert year to Date object
-            emissions: +d.Emissions / 1e9 // Convert emissions to billion tons
+            emissions: +d.Emissions / 1e9, // Convert emissions to billion tons
+            temperature: +d.Temperature // Parse temperature as a float
         };
     }).then(function (data) {
         // Filter dataset to include only data from 1850 onward
@@ -23,14 +24,24 @@ function init() {
                    .domain(d3.extent(dataset, function (d) { return d.date; })) // Scale based on filtered data
                    .range([padding, w - padding]);
 
-        yScale = d3.scaleLinear()
-                   .domain([0, d3.max(dataset, function (d) { return d.emissions; })])
-                   .range([h - padding, padding]);
+        yScaleEmissions = d3.scaleLinear()
+                            .domain([0, d3.max(dataset, function (d) { return d.emissions; })])
+                            .range([h - padding, padding]);
 
-        // Define the line generator
-        line = d3.line()
-                 .x(function (d) { return xScale(d.date); })
-                 .y(function (d) { return yScale(d.emissions); });
+        
+        yScaleTemperature = d3.scaleLinear()
+                              .domain([d3.min(dataset, function (d) { return d.temperature; }),
+                                d3.max(dataset, function (d) { return d.temperature; })])
+                              .range([h - padding, padding]);
+
+       // Define the line generators
+       lineEmissions = d3.line()
+       .x(function (d) { return xScale(d.date); })
+       .y(function (d) { return yScaleEmissions(d.emissions); });
+
+        lineTemperature = d3.line()
+            .x(function (d) { return xScale(d.date); })
+            .y(function (d) { return yScaleTemperature(d.temperature); });
 
         // Render the chart
         lineChart(dataset);
@@ -48,22 +59,40 @@ function lineChart(dataset) {
                 .attr("height", h);
 
     // Draw the line
-    var path = svg.append("path")
-                  .datum(dataset)
-                  .attr("fill", "none")
-                  .attr("stroke", "steelblue")
-                  .attr("stroke-width", 2)
-                  .attr("d", line);
+    var pathEmissions = svg.append("path")
+                           .datum(dataset)
+                           .attr("fill", "none")
+                           .attr("stroke", "steelblue")
+                           .attr("stroke-width", 2)
+                           .attr("d", line);
 
-    // Animate the line drawing
-    var totalLength = path.node().getTotalLength();
+    // Animate the emissions line
+    var totalLengthEmissions = pathEmissions.node().getTotalLength();
 
-    path.attr("stroke-dasharray", totalLength + " " + totalLength)
-        .attr("stroke-dashoffset", totalLength)
-        .transition()
-        .duration(2500) // Animation duration
-        .ease(d3.easeLinear)
-        .attr("stroke-dashoffset", 0);
+        pathEmissions.attr("stroke-dasharray", totalLengthEmissions + " " + totalLengthEmissions)
+                     .attr("stroke-dashoffset", totalLengthEmissions)
+                     .transition()
+                     .duration(2500)
+                     .ease(d3.easeLinear)
+                     .attr("stroke-dashoffset", 0);
+
+    // Draw the temperature line
+    var pathTemperature = svg.append("path")
+                             .datum(dataset)
+                             .attr("fill", "none")
+                             .attr("stroke", "orange")
+                             .attr("stroke-width", 2)
+                             .attr("d", lineTemperature);
+
+     // Animate the temperature line
+     var totalLengthTemperature = pathTemperature.node().getTotalLength();
+
+     pathTemperature.attr("stroke-dasharray", totalLengthTemperature + " " + totalLengthTemperature)
+                    .attr("stroke-dashoffset", totalLengthTemperature)
+                    .transition()
+                    .duration(2500)
+                    .ease(d3.easeLinear)
+                    .attr("stroke-dashoffset", 0);
 
     // Add x-axis
     var xAxis = d3.axisBottom(xScale)
@@ -80,16 +109,16 @@ function lineChart(dataset) {
         .attr("x", w / 2)
         .attr("y", h - 30) // Position below the x-axis
         .text("Year")
-        .style("font-size", "16px");
+        .style("font-size", "15px");
 
-    // Add y-axis
-    var yAxis = d3.axisLeft(yScale)
-                  .ticks(10)
-                  .tickFormat(d => `${d} billion t`); // Format in billion tons
+    // Add y-axis for emissions
+    var yAxisEmissions = d3.axisLeft(yScaleEmissions)
+        .ticks(10)
+        .tickFormat(d => `${d} billion t`);
 
     svg.append("g")
         .attr("transform", "translate(" + padding + ",0)")
-        .call(yAxis);
+        .call(yAxisEmissions);
 
     // Add y-axis label
     svg.append("text")
@@ -99,6 +128,24 @@ function lineChart(dataset) {
         .attr("y",  15) // Positioned slightly to the left of the y-axis
         .text("Total Greenhouse Gas Emissions")
         .style("font-size", "14px");
+
+     // Add y-axis for temperature
+     var yAxisTemperature = d3.axisRight(yScaleTemperature)
+                              .ticks(10)
+                              .tickFormat(d => `${d}°C`);
+
+    svg.append("g")
+        .attr("transform", "translate(" + (w - padding) + ",0)")
+        .call(yAxisTemperature);
+
+    svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -h / 2)
+        .attr("y", w - padding + 40) // Adjust to position correctly
+        .text("Average Temperature Anomaly (°C)")
+        .style("font-size", "15px")
+        .style("fill", "orange");
 
     // Create a tooltip
     var tooltip = d3.select("body")
