@@ -1,7 +1,6 @@
 /* General Styles */
 html, body {
-    overflow: hidden; /* Prevent horizontal scroll */
-    background-color: #fbfbfb;  /* Keeps the overall background color */
+    background-color: #e0e0e0 ;  /* Keeps the overall background color */
     font-family: sans-serif;
     margin: 0;
     padding: 0;
@@ -58,7 +57,7 @@ h1 {
 
 /* Styled Button */
 .styled-button {
-    background-color: #60c0ea; /* Updated light blue button color */
+    background-color: #2A5D91; /* Updated light blue button color */
     color: white; /* Text color */
     font-size: 24px;
     font-weight: bold;
@@ -68,14 +67,14 @@ h1 {
     border-radius: 5px;
     position: relative;
     cursor: pointer;
-    box-shadow: -3px 6px 0px #4298C1, 3px 6px 0px #4298C1; /* Darker blue shadow on both sides */
+    box-shadow: -3px 6px 0px #1F4670, 3px 6px 0px #1F4670; /* Darker blue shadow on both sides */
     transition: all 0.2s ease;
     animation: fadeIn 0.5s forwards 1s, bounce 2s infinite 2s; /* Adds fadeIn and bounce with 2s delay */
     opacity: 0; /* Start hidden */
 }
 
 .styled-button2 {
-    background-color: #60c0ea; 
+    background-color: #2A5D91; 
     color: white; 
     font-size: 24px;
     font-weight: bold;
@@ -85,7 +84,7 @@ h1 {
     position: relative;
     cursor: pointer;
     margin-top: 65px; /* Adjust this value to control the distance from the content above */
-    box-shadow: -3px 6px 0px #4298C1, 3px 6px 0px #4298C1; /* Darker blue shadow on both sides */
+    box-shadow: -3px 6px 0px #1F4670, 3px 6px 0px #1F4670; /* Darker blue shadow on both sides */
     transition: all 0.2s ease;
     animation: fadeIn 0.5s forwards 1s, bounce 2s infinite 2s; /* Adds fadeIn and bounce with 2s delay */
     opacity: 1; 
@@ -103,15 +102,15 @@ h1 {
 
 /* Hover and Focus Effects */
 .styled-button:hover, .styled-button:focus, .styled-button2:hover, .styled-button2:focus {
-    background-color: #52B5E0; /* Slightly darker blue for hover */
-    box-shadow: -2px 5px 0px #4298C1, 2px 5px 0px #4298C1; /* Raised shadow on hover */
+    background-color: #254F7A; /* Even darker blue for hover */
+    box-shadow: -2px 5px 0px #1F4670, 2px 5px 0px #1F4670; /* Raised shadow on hover */
     transform: translateY(-2px); /* Lift button slightly on hover */
     outline: none;
 }
 
 .styled-button:active, .styled-button2:active {
-    background-color: #4298C1; /* Darker shade on click */
-    box-shadow: -1px 3px 0px #4298C1, 1px 3px 0px #4298C1; /* Lower shadow on click */
+    background-color: #1F4670; /* Darker shade on click */
+    box-shadow: -1px 3px 0px #1F4670, 1px 3px 0px #1F4670; /* Lower shadow on click */
     transform: translateY(2px); /* Press button down slightly */
 }
 
@@ -133,10 +132,10 @@ h1 {
     position: fixed;
     top: 20px;
     left: 20px;
-    padding: 10px 20px; 
-    background-color: #fbfbfb;
-    color: black;
-    border: 1px;
+    padding: 5px 10px; 
+    background-color: #e0e0e0 ;
+    color: #333333 ;
+    border: 2px solid #868585  ;
     font-size: 16px;
     cursor: pointer;
     border-radius: 25px;
