@@ -99,119 +99,125 @@
     <footer></footer>
 
     <script>
-    $(document).ready(function() {
-        // Function to check if an element is in view
-        function isInView(elem) {
-            var elementTop = $(elem).offset().top;
-            var elementBottom = elementTop + $(elem).outerHeight();
-            var viewportTop = $(window).scrollTop();
-            var viewportBottom = viewportTop + $(window).height();
-            return elementBottom > viewportTop && elementTop < viewportBottom;
-        }
-        // Smooth scroll when clicking the scroll button
-        $('#scrollBtn').on('click', function(e) {
-            e.preventDefault();
-            var target = $(this).attr('href');
-            $('html, body').animate({
-                scrollTop: $(target).offset().top
-            }, 1000, function() {
-                $('#backBtn').fadeIn();
-            });
+        document.addEventListener("DOMContentLoaded", () => {
+            const section3 = document.querySelector("#section3");
+            const chartHeading = document.querySelector("#section3 .section-heading");
+            const chartContainer = document.querySelector("#chart");
+        
+            let visInitialized = false;
+        
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting && !visInitialized) {
+                            visInitialized = true;
+        
+                            // Add fade-in effect to heading
+                            chartHeading.classList.add("fade-in");
+        
+                            // Animate the chart (init visualization)
+                            chartContainer.classList.add("fade-in");
+                            init(); // Trigger the visualization animation
+                        }
+                    });
+                },
+                { threshold: 0.5 } // Trigger when 50% of the section is visible
+            );
+        
+            observer.observe(section3);
         });
-
-        // Smooth scroll for the second button in section2
-        $('#scrollBtn2').on('click', function(e) {
-            e.preventDefault();
-            $('html, body').animate({
-                scrollTop: $('#section3').offset().top
-            }, 1000);
-        });
-
-        // Scroll back to section1 when clicking the back button
-        $('#backBtn').on('click', function(e) {
-            e.preventDefault();
-            $('html, body').animate({
-                scrollTop: $('#section1').offset().top
-            }, 1000, function() {
-                // Hide the back button after returning to section1
-                $('#backBtn').fadeOut();
-            });
-        });
-
-        // Optional: Hide the back button initially
-        $('#backBtn').hide();
-
-        $('.nav-link').on('click', function(e) {
-            var target = $(this).attr('href');
-            
-            // Allow the browser to handle navigation naturally for external links
-            if (!target.includes("#")) {
-                window.location.href = target;
-            } else {
-                // Smooth scroll for internal links only within the same page
+        
+        // jQuery for smooth scrolling and additional interactivity
+        $(document).ready(function () {
+            // Function to check if an element is in view
+            function isInView(elem) {
+                var elementTop = $(elem).offset().top;
+                var elementBottom = elementTop + $(elem).outerHeight();
+                var viewportTop = $(window).scrollTop();
+                var viewportBottom = viewportTop + $(window).height();
+                return elementBottom > viewportTop && elementTop < viewportBottom;
+            }
+        
+            // Smooth scroll when clicking the scroll button
+            $('#scrollBtn').on('click', function (e) {
                 e.preventDefault();
-                var targetSection = target.split("#")[1];
-                $('html, body').animate({
-                    scrollTop: $("#" + targetSection).offset().top
-                }, 1000);
-            }
-        });
-
-        // Show/hide back button based on scroll position for section 2
-        $(window).on('scroll', function() {
-            const section2Top = $('#section2').offset().top;
-            const section3Top = $('#section3').offset().top;
-            const section4Top = $('#section4').offset().top;
-            const section5Top = $('#section5').offset().top;
-            const scrollPosition = $(window).scrollTop();
-
-            // Show the back button only in section 2
-            if (scrollPosition >= section2Top && scrollPosition < section3Top) {
-                $('#backBtn').fadeIn();
-            } else {
-                $('#backBtn').fadeOut();
-            }
-            // Show/hide navbar based on scroll position
-            if ($(window).scrollTop() >= section3Top) {
-                $('.navbar').fadeIn();
-            } else {
-                $('.navbar').fadeOut();
-            }
-            // Apply fade-in effect to section headings
-            $('.section-heading').each(function() {
-                if (isInView(this)) {
-                    $(this).addClass('visible');
+                var target = $(this).attr('href');
+                $('html, body').animate(
+                    {
+                        scrollTop: $(target).offset().top,
+                    },
+                    1000,
+                    function () {
+                        $('#backBtn').fadeIn();
+                    }
+                );
+            });
+        
+            // Smooth scroll for the second button in section2
+            $('#scrollBtn2').on('click', function (e) {
+                e.preventDefault();
+                $('html, body').animate(
+                    {
+                        scrollTop: $('#section3').offset().top,
+                    },
+                    1000
+                );
+            });
+        
+            // Scroll back to section1 when clicking the back button
+            $('#backBtn').on('click', function (e) {
+                e.preventDefault();
+                $('html, body').animate(
+                    {
+                        scrollTop: $('#section1').offset().top,
+                    },
+                    1000,
+                    function () {
+                        // Hide the back button after returning to section1
+                        $('#backBtn').fadeOut();
+                    }
+                );
+            });
+        
+            // Optional: Hide the back button initially
+            $('#backBtn').hide();
+        
+            $('.nav-link').on('click', function (e) {
+                var target = $(this).attr('href');
+        
+                // Allow the browser to handle navigation naturally for external links
+                if (!target.includes('#')) {
+                    window.location.href = target;
+                } else {
+                    // Smooth scroll for internal links only within the same page
+                    e.preventDefault();
+                    var targetSection = target.split('#')[1];
+                    $('html, body').animate(
+                        {
+                            scrollTop: $('#' + targetSection).offset().top,
+                        },
+                        1000
+                    );
                 }
             });
-            // Show/hide navbar based on scroll position
-            if ($(window).scrollTop() >= section3Top) {
-                $('.section-heading').fadeIn();
-            } else {
-                $('.section-heading').fadeOut();
-            }
+        
+            // Show/hide back button based on scroll position for section 2
+            $(window).on('scroll', function () {
+                const section2Top = $('#section2').offset().top;
+                const section3Top = $('#section3').offset().top;
+        
+                const scrollPosition = $(window).scrollTop();
+        
+                // Show the back button only in section 2
+                if (scrollPosition >= section2Top && scrollPosition < section3Top) {
+                    $('#backBtn').fadeIn();
+                } else {
+                    $('#backBtn').fadeOut();
+                }
+            });
         });
-
-        // Initially hide the navbar
-        $('.navbar').hide();
-
-        // Initially hide the navbar
-        $('.section-heading').hide();
-
-        // Initially hide the back button
-        $('#backBtn').hide();
-
-
-        let vis1Initialized = false;
-
-        $(window).on('scroll', function () {
-            // Check if section 3 is in view
-            if (isInView('#section3') && !vis1Initialized) {
-                vis1Initialized = true; // Prevent multiple initializations
-                init(); // Call the init function for the visualization
-            }
-        });
-    });
-    </script>
+        </script>
+        
 
     <footer>
         <div class="footer-content">
