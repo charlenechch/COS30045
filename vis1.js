@@ -80,4 +80,4 @@ function lineChart(dataset) {
 }
 
 // Initialize the visualization
-init();
+//init();
