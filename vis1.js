@@ -1,5 +1,5 @@
 var w = 1300; // Width
-var h = 700; // Height
+var h = 650; // Height
 var padding = 70;
 
 var dataset, xScale, yScale, line;
@@ -102,7 +102,7 @@ function lineChart(dataset) {
         .attr("transform", "rotate(-90)") // Rotate to make it vertical
         .attr("x", -h / 2)
         .attr("y", 20) // Position to the left of the y-axis
-        .text("Emissions (Billion Tons)")
+        .text("Total Greenhouse Gas Emissions")
         .style("font-size", "16px");
 }
 
