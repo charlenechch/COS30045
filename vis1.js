@@ -12,7 +12,7 @@ function init() {
         console.log("Loading row:", d); // Log each row
         return {
             date: new Date(d.Year), // Convert to Date object for proper scaling
-            emissions: +d.Emissions
+            emissions: +d.Emissions / 1e9 // Convert emissions to billion tons
         };
     }).then(function (data) {
         console.log("Dataset loaded:", data); // Confirm dataset is loaded
@@ -31,9 +31,8 @@ function init() {
             .x(function (d) { return xScale(d.date); })
             .y(function (d) { return yScale(d.emissions); });
 
-        
-     // Create the line chart with animations
-     lineChart(dataset);
+        // Create the line chart with animations
+        lineChart(dataset);
     });
 }
 
@@ -73,7 +72,7 @@ function lineChart(dataset) {
         .call(xAxis);
 
     // Add y-axis
-    var yAxis = d3.axisLeft(yScale).ticks(10).tickFormat(d3.format(".2s"));
+    var yAxis = d3.axisLeft(yScale).ticks(10).tickFormat(d => `${d}B t`);
     svg.append("g")
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
