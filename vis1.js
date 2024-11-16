@@ -94,14 +94,11 @@ function lineChart(dataset) {
     // Add y-axis label
     svg.append("text")
         .attr("text-anchor", "middle")
-        .attr("transform", "rotate(-90)") // Rotate to align vertically
-        .attr("x", -(h - padding) / 2) // Center vertically along the Y-axis
-        .attr("y", 0 - padding + 20) // Position left of the Y-axis
-        .text("Total Greenhouse Gas Emissions (Billion t)")
-        .style("font-size", "14px") // Font size for better readability
-        .style("font-family", "Arial, sans-serif") // Ensure readable font
-        .style("fill", "black"); // Ensure text is visible
-
+        .attr("transform", "rotate(-90)") // Rotated to align vertically
+        .attr("x", -h / 2) // Centered along the height
+        .attr("y", 20) // Positioned slightly to the left of the y-axis
+        .text("Emissions (Billion Tons)")
+        .style("font-size", "16px");
 
     // Create a tooltip
     var tooltip = d3.select("body")
