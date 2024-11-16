@@ -199,8 +199,18 @@
 
         // Initially hide the back button
         $('#backBtn').hide();
-            
+
+
+        let vis1Initialized = false;
+
+        $(window).on('scroll', function () {
+            // Check if section 3 is in view
+            if (isInView('#section3') && !vis1Initialized) {
+                vis1Initialized = true; // Prevent multiple initializations
+                init(); // Call the init function for the visualization
+            }
         });
+    });
     </script>
 
     <footer>
