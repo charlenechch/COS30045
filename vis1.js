@@ -1,4 +1,4 @@
-var w = 1300; // Width
+var w = 1350; // Width
 var h = 650; // Height
 var padding = 70;
 
