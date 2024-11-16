@@ -76,7 +76,9 @@
             <div class="container">
                 <h2 class="section-heading">Visualisation 1</h2>
                 <div id="chart"></div> <!-- Chart container -->
-                <script src="vis1.js"></script>
+                <script src="https://d3js.org/d3.v7.min.js"></script> <!-- Load D3 first -->
+                <script src="vis1.js"></script> <!-- Load your visualization script after D3 -->
+
                 <div id="tooltip"></div>
             </div>
         </section>
