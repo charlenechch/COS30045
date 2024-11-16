@@ -95,8 +95,8 @@ function lineChart(dataset) {
     svg.append("text")
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)") // Rotate to align with the Y-axis
-    .attr("x", -(h - padding) / 2) // Center vertically along the Y-axis
-    .attr("y", padding / 4 - 20) // Position left of the Y-axis
+    .attr("x", ) // Center vertically along the Y-axis
+    .attr("y", ) // Position left of the Y-axis
     .text("Total Greenhouse Gas Emissions (Billion t)")
     .style("font-size", "14px") // Font size for better visibility
     .style("font-family", "Arial, sans-serif") // Ensure readable font
