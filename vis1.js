@@ -4,36 +4,40 @@ var padding = 70; // Increased padding for better axis spacing
 
 var dataset, xScale, yScale, line;
 
-// Initialize the visualization
 function init() {
     // Load the CSV data
-    d3.csv("resource/Historical data global.csv", function(d) {
+    d3.csv("resource/Historical data global.csv", function (d) {
         return {
             date: new Date(d.Year), // Convert to Date object for proper scaling
             emissions: +d.Emissions
         };
-    }).then(function(data) {
+    }).then(function (data) {
         dataset = data;
 
         // Set up scales
         xScale = d3.scaleTime()
-            .domain(d3.extent(dataset, function(d) { return d.date; }))
+            .domain(d3.extent(dataset, function (d) { return d.date; }))
             .range([padding, w - padding]);
 
         yScale = d3.scaleLinear()
-            .domain([0, d3.max(dataset, function(d) { return d.emissions; })])
+            .domain([0, d3.max(dataset, function (d) { return d.emissions; })])
             .range([h - padding, padding]);
 
         line = d3.line()
-            .x(function(d) { return xScale(d.date); })
-            .y(function(d) { return yScale(d.emissions); });
+            .x(function (d) { return xScale(d.date); })
+            .y(function (d) { return yScale(d.emissions); });
 
-        // Create the line chart with animations
-        lineChart(dataset);
+        // Attach click event to the section
+        document.querySelector("#section3").addEventListener("click", function () {
+            lineChart(dataset);
+        });
     });
 }
 
 function lineChart(dataset) {
+    // Remove existing visualization if it already exists
+    d3.select("#chart").select("svg").remove();
+
     // Create SVG
     var svg = d3.select("#chart")
         .append("svg")
@@ -94,8 +98,8 @@ function lineChart(dataset) {
         .attr("class", "grid-line")
         .attr("x1", padding)
         .attr("x2", w - padding)
-        .attr("y1", function(d) { return yScale(d); })
-        .attr("y2", function(d) { return yScale(d); })
+        .attr("y1", function (d) { return yScale(d); })
+        .attr("y2", function (d) { return yScale(d); })
         .attr("stroke", "#ccc")
         .attr("stroke-dasharray", "2,2");
 
@@ -119,5 +123,5 @@ function lineChart(dataset) {
         .text("Emissions");
 }
 
-// Call init to render the visualization
+// Initialize the script
 init();
