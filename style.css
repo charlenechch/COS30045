@@ -1,5 +1,6 @@
 /* General Styles */
 html, body {
+    overflow: hidden; /* Prevent horizontal scroll */
     background-color: #e0e0e0 ;  /* Keeps the overall background color */
     font-family: sans-serif;
     margin: 0;
