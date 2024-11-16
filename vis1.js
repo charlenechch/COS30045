@@ -7,7 +7,7 @@ var dataset, xScale, yScale, line;
 // Initialize the visualization
 function init() {
     // Load the CSV data
-    d3.csv("Historical data global.csv", function(d) {
+    d3.csv("resource/Historical data global.csv", function(d) {
         return {
             date: new Date(d.Year), // Convert to Date object for proper scaling
             emissions: +d.Emissions
