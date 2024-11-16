@@ -60,7 +60,7 @@ function lineChart(dataset) {
     // Create a group element to wrap all chart elements
     var chartGroup = svg.append("g")
         .attr("transform", `translate(${horizontalOffset}, 0)`); // Move the chart horizontally to center
-        
+
     // Draw the emissions line
     var pathEmissions = chartGroup.append("path")
     .datum(dataset)
@@ -100,9 +100,9 @@ function lineChart(dataset) {
     .ticks(10)
     .tickFormat(d3.timeFormat("%Y"));
 
-    chartGroup.append("g")
-    .attr("transform", "translate(0," + (h - padding) + ")")
-    .call(xAxis);
+     chartGroup.append("g")
+        .attr("transform", "translate(0," + (h - padding) + ")") // Adjust for vertical placement
+        .call(xAxis);
 
     // Add x-axis label
     chartGroup.append("text")
@@ -116,9 +116,9 @@ function lineChart(dataset) {
     var yAxisEmissions = d3.axisLeft(yScaleEmissions)
     .ticks(10)
     .tickFormat(d => `${d} billion t`);
-
+    
     chartGroup.append("g")
-    .attr("transform", "translate(" + padding + ",0)")
+    .attr("transform", "translate(" + padding + ",0)") // Adjust to position the y-axis to the left
     .call(yAxisEmissions);
 
     chartGroup.append("text")
