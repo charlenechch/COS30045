@@ -118,7 +118,7 @@ function lineChart(dataset) {
         .attr("text-anchor", "middle")
         .attr("transform", "rotate(-90)")
         .attr("x", -h / 2)
-        .attr("y", 0 - (padding - 20))
+        .attr("y", 15)
         .text("Total Greenhouse Gas Emissions (Billion Tons)")
         .style("font-size", "14px");
 
