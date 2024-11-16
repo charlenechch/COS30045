@@ -1,6 +1,6 @@
 var w = 1400; // Width
 var h = 650; // Height
-var padding = 100;
+var padding = 150;
 
 var dataset, xScale, yScale, line;
 
@@ -88,8 +88,9 @@ function lineChart(dataset) {
                   .tickFormat(d => `${d} billion t`); // Format in billion tons
 
     svg.append("g")
-        .attr("transform", "translate(" + padding + ",0)")
+        .attr("transform", "translate(" + padding + ",0)") // Match increased padding
         .call(yAxis);
+              
 
     // Add y-axis label
     svg.append("text")
