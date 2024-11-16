@@ -373,9 +373,35 @@ footer {
         .email-icon:hover {
             color: #60c0ea; /* Change color on hover */
         }
-        
+
         #aboutus .container p {
             text-align: justify;
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px); /* Start slightly lower */
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0); /* End at the original position */
+            }
+        }
+
+        /* Apply animation to elements with the fade-in class */
+        .fade-in {
+            opacity: 0; /* Initially hidden */
+            animation: fadeIn 1.5s ease-out forwards; /* Smooth fade-in animation */
+        }
+
+        /* Optional: Add delay for staggered animation effect */
+        .fade-in:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+        .fade-in:nth-child(3) {
+            animation-delay: 1s;
         }
 
 #tooltip {
