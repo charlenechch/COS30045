@@ -90,16 +90,18 @@ function lineChart(dataset) {
     svg.append("g")
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
-        
+
     // Add y-axis label
     svg.append("text")
         .attr("text-anchor", "middle")
-        .attr("transform", "rotate(-90)") // Rotate the text to make it vertical
-        .attr("x", -h / 2) // Center along the Y-axis
-        .attr("y", 0 - padding + 15) // Position slightly left of the Y-axis
+        .attr("transform", "rotate(-90)") // Rotate to align with the Y-axis
+        .attr("x", -h / 2) // Center vertically along the Y-axis
+        .attr("y", 0 - padding + 10) // Position to the left of the Y-axis
         .text("Total Greenhouse Gas Emissions (Billion t)")
-        .style("font-size", "16px") // Increase font size for better visibility
-        .style("font-family", "Arial, sans-serif"); // Optional: Set font family
+        .style("font-size", "14px") // Adjust font size for readability
+        .style("font-family", "Arial, sans-serif") // Ensure consistent styling
+        .style("fill", "black"); // Ensure the text color is visible
+
 
 
     // Create a tooltip
