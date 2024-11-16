@@ -15,8 +15,12 @@ function init() {
             emissions: +d.Emissions / 1e9 // Convert emissions to billion tons
         };
     }).then(function (data) {
-        console.log("Dataset loaded:", data); // Confirm dataset is loaded
-        dataset = data;
+        // Filter dataset to include only data starting from 1850
+        dataset = data.filter(function (d) {
+            return d.date.getFullYear() >= 1850;
+        });
+
+        console.log("Filtered Dataset:", dataset); // Confirm dataset is filtered
 
         // Set up scales
         xScale = d3.scaleTime()
@@ -72,11 +76,9 @@ function lineChart(dataset) {
         .call(xAxis);
 
     // Add y-axis
-    var yAxis = d3.axisLeft(yScale).ticks(10).tickFormat(d => `${d} Billion t`);
+    var yAxis = d3.axisLeft(yScale).ticks(10).tickFormat(d => `${d} billion t`);
     svg.append("g")
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
 }
 
-// Initialize the visualization
-//init();
