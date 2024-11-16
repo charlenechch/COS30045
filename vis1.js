@@ -72,7 +72,7 @@ function lineChart(dataset) {
         .call(xAxis);
 
     // Add y-axis
-    var yAxis = d3.axisLeft(yScale).ticks(10).tickFormat(d => `${d}B t`);
+    var yAxis = d3.axisLeft(yScale).ticks(10).tickFormat(d => `${d}Billion t`);
     svg.append("g")
         .attr("transform", "translate(" + padding + ",0)")
         .call(yAxis);
