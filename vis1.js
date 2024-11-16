@@ -1,5 +1,5 @@
 var w = 1300; // Width
-var h = 650; // Height
+var h = 600; // Height
 var padding = 70;
 
 var dataset, xScale, yScale, line;
@@ -102,8 +102,50 @@ function lineChart(dataset) {
         .attr("transform", "rotate(-90)") // Rotate to make it vertical
         .attr("x", -h / 2)
         .attr("y", 20) // Position to the left of the y-axis
-        .text("Total Greenhouse Gas Emissions")
+        .text("Emissions (Billion Tons)")
         .style("font-size", "16px");
+
+    // Create a tooltip
+    var tooltip = d3.select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("background-color", "#f9f9f9")
+        .style("border", "1px solid #d3d3d3")
+        .style("padding", "8px")
+        .style("border-radius", "4px")
+        .style("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
+        .style("visibility", "hidden")
+        .style("font-size", "14px");
+
+    // Add data points
+    svg.selectAll(".dot")
+        .data(dataset)
+        .enter()
+        .append("circle")
+        .attr("class", "dot")
+        .attr("cx", function (d) { return xScale(d.date); })
+        .attr("cy", function (d) { return yScale(d.emissions); })
+        .attr("r", 5)
+        .attr("fill", "steelblue")
+        .on("mouseover", function (event, d) {
+            tooltip.style("visibility", "visible")
+                .html(
+                    `<strong>Year:</strong> ${d3.timeFormat("%Y")(d.date)}<br>` +
+                    `<strong>Emissions:</strong> ${d.emissions.toFixed(2)}B t`
+                )
+                .style("top", (event.pageY - 10) + "px")
+                .style("left", (event.pageX + 10) + "px");
+            d3.select(this).attr("fill", "orange"); // Highlight the circle
+        })
+        .on("mousemove", function (event) {
+            tooltip.style("top", (event.pageY - 10) + "px")
+                .style("left", (event.pageX + 10) + "px");
+        })
+        .on("mouseout", function () {
+            tooltip.style("visibility", "hidden");
+            d3.select(this).attr("fill", "steelblue"); // Reset circle color
+        });
 }
 
 // Initialize the visualization
