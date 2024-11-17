@@ -206,36 +206,47 @@ legend.append("text")
 .style("font-size", "10px")
 .attr("alignment-baseline", "middle");
 
-// Select the tooltip div
-var tooltip = d3.select("#tooltip");
+// Create a tooltip
+var tooltip = d3.select("body")
+.append("div")
+.attr("class", "tooltip")
+.style("position", "absolute")
+.style("background-color", "#f9f9f9")
+.style("border", "1px solid #d3d3d3")
+.style("padding", "8px")
+.style("border-radius", "4px")
+.style("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
+.style("visibility", "hidden")
+.style("font-size", "14px");
 
-// Add tooltips for emissions
-chartGroup.selectAll(".dot-emissions")
-    .data(dataset)
-    .enter()
-    .append("circle")
-    .attr("class", "dot-emissions")
-    .attr("cx", d => xScale(d.date))
-    .attr("cy", d => yScaleEmissions(d.emissions))
-    .attr("r", 5)
-    .attr("fill", "steelblue")
-    .on("mouseover", function (event, d) {
-        tooltip.style("visibility", "visible")
-            .html(`
-                <strong>Year:</strong> ${d.date.getFullYear()}<br>
-                <strong>Emissions:</strong> ${d.emissions.toFixed(2)} billion t
-            `);
-        d3.select(this).attr("r", 7).attr("fill", "orange");
-    })
-    .on("mousemove", function (event) {
-        tooltip.style("top", (event.pageY - 50) + "px")
-            .style("left", (event.pageX + 20) + "px");
-    })
-    .on("mouseout", function () {
-        tooltip.style("visibility", "hidden");
-        d3.select(this).attr("r", 5).attr("fill", "steelblue");
-    });
-
+// Add data points
+chartGroup.selectAll(".dot")
+.data(dataset)
+.enter()
+.append("circle")
+.attr("class", "dot")
+.attr("cx", function (d) { return xScale(d.date); })
+.attr("cy", function (d) { return yScale(d.emissions); })
+.attr("r", 5)
+.attr("fill", "steelblue")
+.on("mouseover", function (event, d) {
+    tooltip.style("visibility", "visible")
+        .html(
+            `<strong>Year:</strong> ${d3.timeFormat("%Y")(d.date)}<br>` +
+            `<strong>Emissions:</strong> ${d.emissions.toFixed(2)}B t`
+        )
+        .style("top", (event.pageY - 10) + "px")
+        .style("left", (event.pageX + 10) + "px");
+    d3.select(this).attr("fill", "orange"); // Highlight the circle
+})
+.on("mousemove", function (event) {
+    tooltip.style("top", (event.pageY - 10) + "px")
+        .style("left", (event.pageX + 10) + "px");
+})
+.on("mouseout", function () {
+    tooltip.style("visibility", "hidden");
+    d3.select(this).attr("fill", "steelblue"); // Reset circle color
+});
 // Add tooltips for temperature
 chartGroup.selectAll(".dot-temperature")
     .data(dataset)
