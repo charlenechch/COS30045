@@ -148,7 +148,6 @@ function lineChart(dataset) {
     .attr("y", w - padding - 20) // Adjust y position due to the shift
     .text("Average Temperature Anomaly (°C)")
     .style("font-size", "15px")
-    .style("fill", "orange");
 
     // Add tooltips for emissions
     chartGroup.selectAll(".dot-emissions")
