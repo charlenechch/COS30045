@@ -1,6 +1,6 @@
 var w = 1350; // Width
 var h = 650; // Height
-var padding = 80;
+var padding = 100;
 
 var dataset, xScale, yScaleEmissions, yScaleTemperature, lineEmissions, lineTemperature;
 
@@ -21,7 +21,7 @@ function init() {
         // Set up scales
         xScale = d3.scaleTime()
                    .domain(d3.extent(dataset, function (d) { return d.date; }))
-                   .range([padding + 30, w - padding - 30]); // Adjust left and right padding equally
+                   .range([padding - 110, w - padding - 90]); // Adjust left and right padding equally
 
 
         yScaleEmissions = d3.scaleLinear()
@@ -30,7 +30,7 @@ function init() {
 
         yScaleTemperature = d3.scaleLinear()
             .domain([d3.min(dataset, function (d) { return d.temperature; }),
-                     d3.max(dataset, function (d) { return d.temperature; })])
+                     d3.max(dataset, function (d) { return d.temperature; }) * 1.2])
             .range([h - padding, padding]);
 
         // Define the line generators
@@ -108,8 +108,8 @@ function lineChart(dataset) {
     // Add x-axis label
     chartGroup.append("text")
     .attr("text-anchor", "middle")
-    .attr("x", w / 2 - 50) // Adjust x position due to the shift
-    .attr("y", h - 30)
+    .attr("x", w / 2 - 140) // Adjust x position due to the shift
+    .attr("y", h - 40)
     .text("Year")
     .style("font-size", "15px");
 
@@ -119,7 +119,7 @@ function lineChart(dataset) {
     .tickFormat(d => `${d} billion t`);
     
     svg.append("g")
-    .attr("transform", "translate(" + (padding + 30) + ",0)") // Match left padding
+    .attr("transform", "translate(" + (padding - 10) + ",0)") // Match left padding
     .call(yAxisEmissions);
 
 
@@ -127,7 +127,7 @@ function lineChart(dataset) {
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
     .attr("x", -h / 2)
-    .attr("y", 0 - (padding - 20))
+    .attr("y", 0 - (padding - 10))
     .text("Total Greenhouse Gas Emissions (Billion Tons)")
     .style("font-size", "14px");
 
@@ -137,7 +137,7 @@ function lineChart(dataset) {
     .tickFormat(d => `${d}°C`);
 
     svg.append("g")
-    .attr("transform", "translate(" + (w - padding - 30) + ",0)") // Match right padding
+    .attr("transform", "translate(" + (w - padding + 10) + ",0)") // Match right padding
     .call(yAxisTemperature);
 
 
@@ -145,7 +145,7 @@ function lineChart(dataset) {
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
     .attr("x", -h / 2)
-    .attr("y", w - padding - 10) // Adjust y position due to the shift
+    .attr("y", w - padding - 20) // Adjust y position due to the shift
     .text("Average Temperature Anomaly (°C)")
     .style("font-size", "15px")
     .style("fill", "orange");
@@ -167,8 +167,78 @@ function lineChart(dataset) {
         d3.select(this).attr("r", 2).attr("fill", "steelblue");
     });
 
-    // Add tooltips for temperature
-    chartGroup.selectAll(".dot-temperature")
+     // Add the legend
+     var legend = svg.append("g")
+     .attr("class", "legend")
+     .attr("transform", `translate(${w - 250}, ${padding})`); // Adjust position for the legend
+
+ // Adjust the legend positioning (closer to the left axis)
+var legend = svg.append("g")
+.attr("class", "legend")
+.attr("transform", `translate(${padding - 80}, ${padding})`); // Move closer to the left axis
+
+// Add emissions legend
+legend.append("rect")
+.attr("x", 90)
+.attr("y", 0)
+.attr("width", 10)
+.attr("height", 10)
+.attr("fill", "steelblue");
+
+legend.append("text")
+.attr("x", 108)
+.attr("y", 8)
+.text("Total Greenhouse Gas Emissions")
+.style("font-size", "10px")
+.attr("alignment-baseline", "middle");
+
+// Add temperature legend
+legend.append("rect")
+.attr("x", 90)
+.attr("y", 30)
+.attr("width", 10)
+.attr("height", 10)
+.attr("fill", "orange");
+
+legend.append("text")
+.attr("x", 108)
+.attr("y", 37)
+.text("Average Temperature Anomaly")
+.style("font-size", "10px")
+.attr("alignment-baseline", "middle");
+
+// Select the tooltip div
+var tooltip = d3.select("#tooltip");
+
+// Add tooltips for emissions
+chartGroup.selectAll(".dot-emissions")
+    .data(dataset)
+    .enter()
+    .append("circle")
+    .attr("class", "dot-emissions")
+    .attr("cx", d => xScale(d.date))
+    .attr("cy", d => yScaleEmissions(d.emissions))
+    .attr("r", 5)
+    .attr("fill", "steelblue")
+    .on("mouseover", function (event, d) {
+        tooltip.style("visibility", "visible")
+            .html(`
+                <strong>Year:</strong> ${d.date.getFullYear()}<br>
+                <strong>Emissions:</strong> ${d.emissions.toFixed(2)} billion t
+            `);
+        d3.select(this).attr("r", 7).attr("fill", "orange");
+    })
+    .on("mousemove", function (event) {
+        tooltip.style("top", (event.pageY - 50) + "px")
+            .style("left", (event.pageX + 20) + "px");
+    })
+    .on("mouseout", function () {
+        tooltip.style("visibility", "hidden");
+        d3.select(this).attr("r", 5).attr("fill", "steelblue");
+    });
+
+// Add tooltips for temperature
+chartGroup.selectAll(".dot-temperature")
     .data(dataset)
     .enter()
     .append("circle")
@@ -178,11 +248,22 @@ function lineChart(dataset) {
     .attr("r", 2)
     .attr("fill", "orange")
     .on("mouseover", function (event, d) {
-        d3.select(this).attr("r", 5).attr("fill", "red");
+        tooltip.style("visibility", "visible")
+            .html(`
+                <strong>Year:</strong> ${d.date.getFullYear()}<br>
+                <strong>Temperature:</strong> ${d.temperature.toFixed(2)}°C
+            `);
+        d3.select(this).attr("r", 7).attr("fill", "red");
+    })
+    .on("mousemove", function (event) {
+        tooltip.style("top", (event.pageY - 50) + "px")
+            .style("left", (event.pageX + 20) + "px");
     })
     .on("mouseout", function () {
-        d3.select(this).attr("r", 2).attr("fill", "orange");
+        tooltip.style("visibility", "hidden");
+        d3.select(this).attr("r", 5).attr("fill", "orange");
     });
+
 }
 
 
