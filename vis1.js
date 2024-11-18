@@ -217,34 +217,30 @@
 
         // Overlay for hover detection
         chartGroup.append("rect")
-            .attr("width", w - padding * 2)
-            .attr("height", h - padding * 2)
-            .attr("transform", `translate(${padding}, ${padding})`)
-            .attr("fill", "none")
-            .attr("pointer-events", "all")
-            chartGroup.append("rect")
-        .attr("width", w - padding * 2)
-        .attr("height", h - padding * 2)
-        .attr("transform", `translate(${padding}, ${padding})`)
-        .attr("fill", "none")
-        .attr("pointer-events", "all")
         .on("mousemove", function (event) {
             // Get mouse X position relative to the chart
             var mouseX = d3.pointer(event, this)[0];
-
+        
             // Map mouse X position to date using xScale
             var date = xScale.invert(mouseX);
-
+        
+            // If the year is 1919, hide the hover line and tooltip
+            if (d3.timeFormat("%Y")(date) === "1919") {
+                hoverLine.style("visibility", "hidden");
+                tooltip.style("visibility", "hidden");
+                return;
+            }
+        
             // Find the X position for the vertical line using xScale
             var xPosition = xScale(date);
-
+        
             // Update the vertical hover line
             hoverLine
                 .attr("x1", xPosition)
                 .attr("x2", xPosition)
                 .style("visibility", "visible");
-
-            // Update the tooltip position (optional)
+        
+            // Update the tooltip position
             tooltip.style("visibility", "visible")
                 .html(`
                     <strong>Year:</strong> ${d3.timeFormat("%Y")(date)}
@@ -257,8 +253,7 @@
             hoverLine.style("visibility", "hidden");
             tooltip.style("visibility", "hidden");
         });
-
-            
+        
             
     }
 
