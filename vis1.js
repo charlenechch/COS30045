@@ -223,8 +223,7 @@ function lineChart(dataset) {
         .attr("fill", "none")
         .attr("pointer-events", "all")
         .on("mousemove", function (event) {
-            // Get mouse position relative to the chart
-            var mouseX = d3.pointer(event, this)[0];
+            var mouseX = d3.pointer(event, this)[0]; // Mouse position relative to the rect
             var date = xScale.invert(mouseX);
         
             // Find the closest data point
@@ -232,33 +231,28 @@ function lineChart(dataset) {
                 return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
             });
         
-            // Calculate the exact positions for the closest data point
-            var xPosition = xScale(closest.date);
+            // Exact positions based on scales
+            var xPosition = xScale(closest.date) + padding; // Adjust for chart padding
             var yPositionEmissions = yScaleEmissions(closest.emissions);
             var yPositionTemperature = yScaleTemperature(closest.temperature);
         
-            // Align the vertical hover line with the exact data point
+            // Position the vertical hover line
             hoverLine
                 .attr("x1", xPosition)
                 .attr("x2", xPosition)
                 .style("visibility", "visible");
         
-            // Align the tooltip near the exact data point
+            // Position the tooltip
             tooltip.style("visibility", "visible")
                 .html(`
                     <strong>Year:</strong> ${d3.timeFormat("%Y")(closest.date)}<br>
                     <strong>Emissions:</strong> ${closest.emissions.toFixed(2)} billion t<br>
                     <strong>Temperature:</strong> ${closest.temperature.toFixed(2)}°C
                 `)
-                // Position tooltip relative to the data point
-                .style("top", `${yPositionEmissions + padding - 20}px`) // Adjust for padding and tooltip height
-                .style("left", `${xPosition + padding}px`); // Adjust for padding and tooltip width
+                .style("top", `${yPositionEmissions - 30}px`) // Adjust for circle and tooltip size
+                .style("left", `${xPosition + 20}px`);
         })
-        .on("mouseout", function () {
-            // Hide the tooltip and hover line on mouse out
-            hoverLine.style("visibility", "hidden");
-            tooltip.style("visibility", "hidden");
-        });
+        
         
 }
 
