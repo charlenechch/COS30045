@@ -192,28 +192,28 @@ function lineChart(dataset) {
   
     // Add vertical hover line
     var hoverLine = chartGroup.append("line")
-        .attr("class", "hover-line")
-        .attr("y1", padding)
-        .attr("y2", h - padding)
-        .attr("stroke", "gray")
-        .attr("stroke-dasharray", "4 2")
-        .attr("stroke-width", 1.5)
-        .style("visibility", "hidden");
+                              .attr("class", "hover-line")
+                              .attr("y1", padding)
+                              .attr("y2", h - padding)
+                              .attr("stroke", "gray")
+                              .attr("stroke-dasharray", "4 2")
+                              .attr("stroke-width", 1.5)
+                              .style("visibility", "hidden");
 
     // Tooltip box (styled)
     var tooltip = d3.select("body")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("position", "absolute")
-        .style("background-color", "#ffffff")
-        .style("border", "1px solid #ccc")
-        .style("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
-        .style("padding", "10px")
-        .style("border-radius", "8px")
-        .style("font-family", "Arial, sans-serif")
-        .style("font-size", "14px")
-        .style("pointer-events", "none")
-        .style("visibility", "hidden");
+                    .append("div")
+                    .attr("class", "tooltip")
+                    .style("position", "absolute")
+                    .style("background-color", "#ffffff")
+                    .style("border", "1px solid #ccc")
+                    .style("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
+                    .style("padding", "10px")
+                    .style("border-radius", "8px")
+                    .style("font-family", "Arial, sans-serif")
+                    .style("font-size", "14px")
+                    .style("pointer-events", "none")
+                    .style("visibility", "hidden");
 
     // Overlay for hover detection
     chartGroup.append("rect")
@@ -223,6 +223,7 @@ function lineChart(dataset) {
         .attr("fill", "none")
         .attr("pointer-events", "all")
         .on("mousemove", function (event) {
+            // Get mouse position relative to the chart
             var mouseX = d3.pointer(event, this)[0];
             var date = xScale.invert(mouseX);
         
@@ -231,31 +232,30 @@ function lineChart(dataset) {
                 return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
             });
         
-            // Calculate exact positions
+            // Calculate the exact positions for the closest data point
             var xPosition = xScale(closest.date);
             var yPositionEmissions = yScaleEmissions(closest.emissions);
             var yPositionTemperature = yScaleTemperature(closest.temperature);
         
+            // Align the vertical hover line with the exact data point
             hoverLine
                 .attr("x1", xPosition)
                 .attr("x2", xPosition)
                 .style("visibility", "visible");
         
+            // Align the tooltip near the exact data point
             tooltip.style("visibility", "visible")
                 .html(`
                     <strong>Year:</strong> ${d3.timeFormat("%Y")(closest.date)}<br>
                     <strong>Emissions:</strong> ${closest.emissions.toFixed(2)} billion t<br>
                     <strong>Temperature:</strong> ${closest.temperature.toFixed(2)}°C
                 `)
-                // Position tooltip near the exact data point
-                .style("top", (event.pageY - 70) + "px")
-                .style("left", (event.pageX + 15) + "px");
-        
-            // Optionally, you can position the tooltip relative to the chart for better alignment:
-            // .style("top", (yPositionEmissions - 20) + "px")
-            // .style("left", (xPosition + 20) + "px");
+                // Position tooltip relative to the data point
+                .style("top", `${yPositionEmissions + padding - 20}px`) // Adjust for padding and tooltip height
+                .style("left", `${xPosition + padding}px`); // Adjust for padding and tooltip width
         })
         .on("mouseout", function () {
+            // Hide the tooltip and hover line on mouse out
             hoverLine.style("visibility", "hidden");
             tooltip.style("visibility", "hidden");
         });
