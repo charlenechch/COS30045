@@ -152,44 +152,44 @@ function lineChart(dataset) {
     
      // Add the legend
      var legend = svg.append("g")
-     .attr("class", "legend")
-     .attr("transform", `translate(${w - 250}, ${padding})`); // Adjust position for the legend
+                     .attr("class", "legend")
+                     .attr("transform", `translate(${w - 250}, ${padding})`); // Adjust position for the legend
 
- // Adjust the legend positioning (closer to the left axis)
-var legend = svg.append("g")
-.attr("class", "legend")
-.attr("transform", `translate(${padding - 80}, ${padding})`); // Move closer to the left axis
+    // Adjust the legend positioning (closer to the left axis)
+    var legend = svg.append("g")
+                    .attr("class", "legend")
+                    .attr("transform", `translate(${padding - 80}, ${padding})`); // Move closer to the left axis
 
-// Add emissions legend
-legend.append("rect")
-.attr("x", 90)
-.attr("y", 0)
-.attr("width", 10)
-.attr("height", 10)
-.attr("fill", "steelblue");
+    // Add emissions legend
+    legend.append("rect")
+          .attr("x", 90)
+          .attr("y", 0)
+          .attr("width", 10)
+          .attr("height", 10)
+          .attr("fill", "steelblue");
 
-legend.append("text")
-.attr("x", 108)
-.attr("y", 8)
-.text("Total Greenhouse Gas Emissions")
-.style("font-size", "10px")
-.attr("alignment-baseline", "middle");
+    legend.append("text")
+          .attr("x", 108)
+          .attr("y", 8)
+          .text("Total Greenhouse Gas Emissions")
+          .style("font-size", "10px")
+          .attr("alignment-baseline", "middle");
 
-// Add temperature legend
-legend.append("rect")
-.attr("x", 90)
-.attr("y", 30)
-.attr("width", 10)
-.attr("height", 10)
-.attr("fill", "orange");
+    // Add temperature legend
+    legend.append("rect")
+          .attr("x", 90)
+          .attr("y", 30)
+          .attr("width", 10)
+          .attr("height", 10)
+          .attr("fill", "orange");
 
-legend.append("text")
-.attr("x", 108)
-.attr("y", 37)
-.text("Average Temperature Anomaly")
-.style("font-size", "10px")
-.attr("alignment-baseline", "middle");
-
+    legend.append("text")
+          .attr("x", 108)
+          .attr("y", 37)
+          .text("Average Temperature Anomaly")
+          .style("font-size", "10px")
+          .attr("alignment-baseline", "middle");
+  
     // Add vertical hover line
     var hoverLine = chartGroup.append("line")
         .attr("class", "hover-line")
@@ -225,30 +225,41 @@ legend.append("text")
         .on("mousemove", function (event) {
             var mouseX = d3.pointer(event, this)[0];
             var date = xScale.invert(mouseX);
-
-            // Find closest data point
+        
+            // Find the closest data point
             var closest = dataset.reduce((a, b) => {
                 return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
             });
-
+        
+            // Calculate exact positions
+            var xPosition = xScale(closest.date);
+            var yPositionEmissions = yScaleEmissions(closest.emissions);
+            var yPositionTemperature = yScaleTemperature(closest.temperature);
+        
             hoverLine
-                .attr("x1", xScale(closest.date))
-                .attr("x2", xScale(closest.date))
+                .attr("x1", xPosition)
+                .attr("x2", xPosition)
                 .style("visibility", "visible");
-
+        
             tooltip.style("visibility", "visible")
                 .html(`
                     <strong>Year:</strong> ${d3.timeFormat("%Y")(closest.date)}<br>
                     <strong>Emissions:</strong> ${closest.emissions.toFixed(2)} billion t<br>
                     <strong>Temperature:</strong> ${closest.temperature.toFixed(2)}°C
                 `)
-                .style("top", (event.pageY - 60) + "px")
-                .style("left", (event.pageX + 20) + "px");
+                // Position tooltip near the exact data point
+                .style("top", (event.pageY - 70) + "px")
+                .style("left", (event.pageX + 15) + "px");
+        
+            // Optionally, you can position the tooltip relative to the chart for better alignment:
+            // .style("top", (yPositionEmissions - 20) + "px")
+            // .style("left", (xPosition + 20) + "px");
         })
         .on("mouseout", function () {
             hoverLine.style("visibility", "hidden");
             tooltip.style("visibility", "hidden");
         });
+        
 }
 
 
