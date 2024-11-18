@@ -111,7 +111,7 @@ function lineChart(dataset) {
     chartGroup.append("text")
               .attr("text-anchor", "middle")
               .attr("x", w / 2 - 140) // Adjust x position due to the shift
-              .attr("y", h - 40)
+              .attr("y", h - 50)
               .text("Year")
               .style("font-size", "15px");
 
@@ -123,7 +123,6 @@ function lineChart(dataset) {
     svg.append("g")
         .attr("transform", "translate(" + (padding - 10) + ",0)") // Match left padding
         .call(yAxisEmissions);
-
 
     chartGroup.append("text")
               .attr("text-anchor", "middle")
@@ -142,7 +141,6 @@ function lineChart(dataset) {
        .attr("transform", "translate(" + (w - padding + 10) + ",0)") // Match right padding
        .call(yAxisTemperature);
 
-
     chartGroup.append("text")
               .attr("text-anchor", "middle")
               .attr("transform", "rotate(-90)")
@@ -151,131 +149,51 @@ function lineChart(dataset) {
               .text("Average Temperature Anomaly (°C)")
               .style("font-size", "15px")
 
-    // Add tooltips for emissions
-    chartGroup.selectAll(".dot-emissions")
-            .data(dataset)
-            .enter()
-            .append("circle")
-            .attr("class", "dot-emissions")
-            .attr("cx", function (d) { return xScale(d.date); })
-            .attr("cy", function (d) { return yScaleEmissions(d.emissions); })
-            .attr("r", 2)
-            .attr("fill", "steelblue")
-            .on("mouseover", function (event, d) {
-                d3.select(this).attr("r", 5).attr("fill", "orange");
+    // Add vertical line for hover
+    var hoverLine = chartGroup.append("line")
+                              .attr("class", "hover-line")
+                              .attr("y1", padding)
+                              .attr("y2", h - padding)
+                              .attr("stroke", "gray")
+                              .attr("stroke-dasharray", "4 2")
+                              .attr("stroke-width", 1.5)
+                              .style("visibility", "hidden");
+
+
+    // Overlay for hover detection
+    chartGroup.append("rect")
+              .attr("width", w - padding * 2)
+              .attr("height", h - padding * 2)
+              .attr("transform", `translate(${padding}, ${padding})`)
+              .attr("fill", "none")
+              .attr("pointer-events", "all")
+              .on("mousemove", function (event) {
+                  var mouseX = d3.pointer(event, this)[0];
+                  var date = xScale.invert(mouseX);
+
+                 // Find closest data point
+                  var closest = dataset.reduce((a, b) => {
+                    return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
+                  });
+
+                hoverLine
+                    .attr("x1", xScale(closest.date))
+                    .attr("x2", xScale(closest.date))
+                    .style("visibility", "visible");
+
+                tooltip.style("visibility", "visible")
+                    .html(`
+                        <strong>Year:</strong> ${d3.timeFormat("%Y")(closest.date)}<br>
+                        <strong>Emissions:</strong> ${closest.emissions.toFixed(2)} billion t<br>
+                        <strong>Temperature:</strong> ${closest.temperature.toFixed(2)}°C
+                    `)
+                    .style("top", (event.pageY - 40) + "px")
+                    .style("left", (event.pageX + 20) + "px");
             })
             .on("mouseout", function () {
-                d3.select(this).attr("r", 2).attr("fill", "steelblue");
+                hoverLine.style("visibility", "hidden");
+                tooltip.style("visibility", "hidden");
             });
-
-     // Add the legend
-     var legend = svg.append("g")
-     .attr("class", "legend")
-     .attr("transform", `translate(${w - 250}, ${padding})`); // Adjust position for the legend
-
- // Adjust the legend positioning (closer to the left axis)
-var legend = svg.append("g")
-.attr("class", "legend")
-.attr("transform", `translate(${padding - 80}, ${padding})`); // Move closer to the left axis
-
-// Add emissions legend
-legend.append("rect")
-.attr("x", 90)
-.attr("y", 0)
-.attr("width", 10)
-.attr("height", 10)
-.attr("fill", "steelblue");
-
-legend.append("text")
-.attr("x", 108)
-.attr("y", 8)
-.text("Total Greenhouse Gas Emissions")
-.style("font-size", "10px")
-.attr("alignment-baseline", "middle");
-
-// Add temperature legend
-legend.append("rect")
-.attr("x", 90)
-.attr("y", 30)
-.attr("width", 10)
-.attr("height", 10)
-.attr("fill", "orange");
-
-legend.append("text")
-.attr("x", 108)
-.attr("y", 37)
-.text("Average Temperature Anomaly")
-.style("font-size", "10px")
-.attr("alignment-baseline", "middle");
-
-// Create a tooltip
-var tooltip = d3.select("body")
-.append("div")
-.attr("class", "tooltip")
-.style("position", "absolute")
-.style("background-color", "#f9f9f9")
-.style("border", "1px solid #d3d3d3")
-.style("padding", "8px")
-.style("border-radius", "4px")
-.style("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
-.style("visibility", "hidden")
-.style("font-size", "14px");
-
-// Add data points
-chartGroup.selectAll(".dot")
-.data(dataset)
-.enter()
-.append("circle")
-.attr("class", "dot")
-.attr("cx", function (d) { return xScale(d.date); })
-.attr("cy", function (d) { return yScale(d.emissions); })
-.attr("r", 5)
-.attr("fill", "steelblue")
-.on("mouseover", function (event, d) {
-    tooltip.style("visibility", "visible")
-        .html(
-            `<strong>Year:</strong> ${d3.timeFormat("%Y")(d.date)}<br>` +
-            `<strong>Emissions:</strong> ${d.emissions.toFixed(2)}B t`
-        )
-        .style("top", (event.pageY - 10) + "px")
-        .style("left", (event.pageX + 10) + "px");
-    d3.select(this).attr("fill", "orange"); // Highlight the circle
-})
-.on("mousemove", function (event) {
-    tooltip.style("top", (event.pageY - 10) + "px")
-        .style("left", (event.pageX + 10) + "px");
-})
-.on("mouseout", function () {
-    tooltip.style("visibility", "hidden");
-    d3.select(this).attr("fill", "steelblue"); // Reset circle color
-});
-// Add tooltips for temperature
-chartGroup.selectAll(".dot-temperature")
-    .data(dataset)
-    .enter()
-    .append("circle")
-    .attr("class", "dot-temperature")
-    .attr("cx", function (d) { return xScale(d.date); })
-    .attr("cy", function (d) { return yScaleTemperature(d.temperature); })
-    .attr("r", 2)
-    .attr("fill", "orange")
-    .on("mouseover", function (event, d) {
-        tooltip.style("visibility", "visible")
-            .html(`
-                <strong>Year:</strong> ${d.date.getFullYear()}<br>
-                <strong>Temperature:</strong> ${d.temperature.toFixed(2)}°C
-            `);
-        d3.select(this).attr("r", 7).attr("fill", "red");
-    })
-    .on("mousemove", function (event) {
-        tooltip.style("top", (event.pageY - 50) + "px")
-            .style("left", (event.pageX + 20) + "px");
-    })
-    .on("mouseout", function () {
-        tooltip.style("visibility", "hidden");
-        d3.select(this).attr("r", 5).attr("fill", "orange");
-    });
-
 }
 
 
