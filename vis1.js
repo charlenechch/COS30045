@@ -18,10 +18,10 @@ function init() {
             return d.date.getFullYear() >= 1850;
         });
 
-        // Set up scales
         xScale = d3.scaleTime()
-                   .domain(d3.extent(dataset, function (d) { return d.date; }))
-                   .range([padding - 110, w - padding - 90]); // Adjust left and right padding equally
+                    .domain(d3.extent(dataset, function (d) { return d.date; }))
+                    .range([padding, w - padding]); // Use consistent padding
+
 
 
         yScaleEmissions = d3.scaleLinear()
