@@ -218,42 +218,32 @@
         // Overlay for hover detection
         chartGroup.append("rect")
         .on("mousemove", function (event) {
-            // Get mouse X position relative to the chart
             var mouseX = d3.pointer(event, this)[0];
-        
-            // Map mouse X position to date using xScale
             var date = xScale.invert(mouseX);
-        
-            // Check if the year is 1919
-            if (d3.timeFormat("%Y")(date) === "1919") {
-                // Hide the hover line and tooltip
-                hoverLine.style("visibility", "hidden");
-                tooltip.style("visibility", "hidden");
-                return; // Exit the function
-            }
-        
-            // Find the X position for the vertical line using xScale
-            var xPosition = xScale(date);
-        
-            // Update the vertical hover line
+
+            // Find closest data point
+            var closest = dataset.reduce((a, b) => {
+                return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
+            });
+
             hoverLine
-                .attr("x1", xPosition)
-                .attr("x2", xPosition)
+                .attr("x1", xScale(closest.date))
+                .attr("x2", xScale(closest.date))
                 .style("visibility", "visible");
-        
-            // Update the tooltip position
+
             tooltip.style("visibility", "visible")
                 .html(`
-                    <strong>Year:</strong> ${d3.timeFormat("%Y")(date)}
+                    <strong>Year:</strong> ${d3.timeFormat("%Y")(closest.date)}<br>
+                    <strong>Emissions:</strong> ${closest.emissions.toFixed(2)} billion t<br>
+                    <strong>Temperature:</strong> ${closest.temperature.toFixed(2)}°C
                 `)
-                .style("top", `${event.pageY - 60}px`) // Align tooltip vertically
-                .style("left", `${event.pageX + 20}px`); // Align tooltip horizontally
+                .style("top", (event.pageY - 60) + "px")
+                .style("left", (event.pageX + 20) + "px");
         })
         .on("mouseout", function () {
-            // Hide the hover line and tooltip
             hoverLine.style("visibility", "hidden");
             tooltip.style("visibility", "hidden");
-        });        
+        });
             
     }
 
