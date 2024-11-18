@@ -222,36 +222,42 @@ function lineChart(dataset) {
         .attr("transform", `translate(${padding}, ${padding})`)
         .attr("fill", "none")
         .attr("pointer-events", "all")
-        .on("mousemove", function (event) {
-            var mouseX = d3.pointer(event, this)[0]; // Mouse position relative to the rect
-            var date = xScale.invert(mouseX);
-        
-            // Find the closest data point
-            var closest = dataset.reduce((a, b) => {
-                return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
-            });
-        
-            // Exact positions based on scales
-            var xPosition = xScale(closest.date); // Adjust for chart padding
-            var yPositionEmissions = yScaleEmissions(closest.emissions);
-            var yPositionTemperature = yScaleTemperature(closest.temperature);
-        
-            // Position the vertical hover line
-            hoverLine
-                .attr("x1", xPosition)
-                .attr("x2", xPosition)
-                .style("visibility", "visible");
-        
-            // Position the tooltip
-            tooltip.style("visibility", "visible")
-                .html(`
-                    <strong>Year:</strong> ${d3.timeFormat("%Y")(closest.date)}<br>
-                    <strong>Emissions:</strong> ${closest.emissions.toFixed(2)} billion t<br>
-                    <strong>Temperature:</strong> ${closest.temperature.toFixed(2)}°C
-                `)
-                .style("top", `${yPositionEmissions - 30}px`) // Adjust for circle and tooltip size
-                .style("left", `${xPosition + 20}px`);
-        })
+        chartGroup.append("rect")
+    .attr("width", w - padding * 2)
+    .attr("height", h - padding * 2)
+    .attr("transform", `translate(${padding}, ${padding})`)
+    .attr("fill", "none")
+    .attr("pointer-events", "all")
+    .on("mousemove", function (event) {
+        // Get mouse X position relative to the chart
+        var mouseX = d3.pointer(event, this)[0];
+
+        // Map mouse X position to date using xScale
+        var date = xScale.invert(mouseX);
+
+        // Find the X position for the vertical line using xScale
+        var xPosition = xScale(date);
+
+        // Update the vertical hover line
+        hoverLine
+            .attr("x1", xPosition)
+            .attr("x2", xPosition)
+            .style("visibility", "visible");
+
+        // Update the tooltip position (optional)
+        tooltip.style("visibility", "visible")
+            .html(`
+                <strong>Year:</strong> ${d3.timeFormat("%Y")(date)}
+            `)
+            .style("top", `${event.pageY - 60}px`) // Align tooltip vertically
+            .style("left", `${event.pageX + 20}px`); // Align tooltip horizontally
+    })
+    .on("mouseout", function () {
+        // Hide the hover line and tooltip when the mouse leaves
+        hoverLine.style("visibility", "hidden");
+        tooltip.style("visibility", "hidden");
+    });
+
         
         
 }
