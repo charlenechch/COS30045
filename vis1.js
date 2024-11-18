@@ -149,6 +149,38 @@ function lineChart(dataset) {
               .text("Average Temperature Anomaly (°C)")
               .style("font-size", "15px")
 
+    // Add a text box for values
+    var textBox = svg.append("g")
+        .attr("class", "text-box")
+        .attr("transform", `translate(${w - 300}, ${padding + 20})`) // Adjust position near the right side
+        .style("visibility", "hidden");
+
+    textBox.append("rect")
+        .attr("width", 250)
+        .attr("height", 80)
+        .attr("fill", "white")
+        .attr("stroke", "gray")
+        .attr("rx", 8)
+        .attr("ry", 8);
+
+    var yearText = textBox.append("text")
+        .attr("x", 10)
+        .attr("y", 20)
+        .attr("class", "year-text")
+        .text("");
+
+    var emissionText = textBox.append("text")
+        .attr("x", 10)
+        .attr("y", 40)
+        .attr("class", "emission-text")
+        .text("");
+
+    var temperatureText = textBox.append("text")
+        .attr("x", 10)
+        .attr("y", 60)
+        .attr("class", "temperature-text")
+        .text("");
+
     // Add vertical line for hover
     var hoverLine = chartGroup.append("line")
                               .attr("class", "hover-line")
@@ -162,38 +194,34 @@ function lineChart(dataset) {
 
     // Overlay for hover detection
     chartGroup.append("rect")
-              .attr("width", w - padding * 2)
-              .attr("height", h - padding * 2)
-              .attr("transform", `translate(${padding}, ${padding})`)
-              .attr("fill", "none")
-              .attr("pointer-events", "all")
-              .on("mousemove", function (event) {
-                  var mouseX = d3.pointer(event, this)[0];
-                  var date = xScale.invert(mouseX);
+        .attr("width", w - padding * 2)
+        .attr("height", h - padding * 2)
+        .attr("transform", `translate(${padding}, ${padding})`)
+        .attr("fill", "none")
+        .attr("pointer-events", "all")
+        .on("mousemove", function (event) {
+            var mouseX = d3.pointer(event, this)[0];
+            var date = xScale.invert(mouseX);
 
-                 // Find closest data point
-                  var closest = dataset.reduce((a, b) => {
-                    return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
-                  });
-
-                hoverLine
-                    .attr("x1", xScale(closest.date))
-                    .attr("x2", xScale(closest.date))
-                    .style("visibility", "visible");
-
-                tooltip.style("visibility", "visible")
-                    .html(`
-                        <strong>Year:</strong> ${d3.timeFormat("%Y")(closest.date)}<br>
-                        <strong>Emissions:</strong> ${closest.emissions.toFixed(2)} billion t<br>
-                        <strong>Temperature:</strong> ${closest.temperature.toFixed(2)}°C
-                    `)
-                    .style("top", (event.pageY - 40) + "px")
-                    .style("left", (event.pageX + 20) + "px");
-            })
-            .on("mouseout", function () {
-                hoverLine.style("visibility", "hidden");
-                tooltip.style("visibility", "hidden");
+            // Find closest data point
+            var closest = dataset.reduce((a, b) => {
+                return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
             });
+
+            hoverLine
+                .attr("x1", xScale(closest.date))
+                .attr("x2", xScale(closest.date))
+                .style("visibility", "visible");
+
+            textBox.style("visibility", "visible");
+            yearText.text(`Year: ${d3.timeFormat("%Y")(closest.date)}`);
+            emissionText.text(`Emissions: ${closest.emissions.toFixed(2)} billion t`);
+            temperatureText.text(`Temperature: ${closest.temperature.toFixed(2)}°C`);
+        })
+        .on("mouseout", function () {
+            hoverLine.style("visibility", "hidden");
+            textBox.style("visibility", "hidden");
+        });
 }
 
 
