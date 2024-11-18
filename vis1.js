@@ -18,10 +18,10 @@ function init() {
             return d.date.getFullYear() >= 1850;
         });
 
+        // Set up scales
         xScale = d3.scaleTime()
-                    .domain(d3.extent(dataset, function (d) { return d.date; }))
-                    .range([padding, w - padding]); // Use consistent padding
-
+                   .domain(d3.extent(dataset, function (d) { return d.date; }))
+                   .range([padding - 110, w - padding - 90]); // Adjust left and right padding equally
 
 
         yScaleEmissions = d3.scaleLinear()
@@ -232,7 +232,7 @@ function lineChart(dataset) {
             });
         
             // Exact positions based on scales
-            var xPosition = xScale(closest.date) + padding; // Adjust for chart padding
+            var xPosition = xScale(closest.date); // Adjust for chart padding
             var yPositionEmissions = yScaleEmissions(closest.emissions);
             var yPositionTemperature = yScaleTemperature(closest.temperature);
         
