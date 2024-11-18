@@ -224,11 +224,12 @@
             // Map mouse X position to date using xScale
             var date = xScale.invert(mouseX);
         
-            // If the year is 1919, hide the hover line and tooltip
+            // Check if the year is 1919
             if (d3.timeFormat("%Y")(date) === "1919") {
+                // Hide the hover line and tooltip
                 hoverLine.style("visibility", "hidden");
                 tooltip.style("visibility", "hidden");
-                return;
+                return; // Exit the function
             }
         
             // Find the X position for the vertical line using xScale
@@ -249,11 +250,10 @@
                 .style("left", `${event.pageX + 20}px`); // Align tooltip horizontally
         })
         .on("mouseout", function () {
-            // Hide the hover line and tooltip when the mouse leaves
+            // Hide the hover line and tooltip
             hoverLine.style("visibility", "hidden");
             tooltip.style("visibility", "hidden");
-        });
-        
+        });        
             
     }
 
