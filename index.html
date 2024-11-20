@@ -74,17 +74,27 @@
 
         <section id="section3">
             <div class="container">
-                <h2 class="section-heading">Historical Trends in Global Greenhouse Gas Emissions and Temperature Anomaly (1850–2022)</h2>
+                <h2 class="section-heading">Historical Trends in Global Greenhouse Gas Emissions (1850–2022)</h2>
                 <div id="chart"></div> <!-- Chart container -->
-                <script src="https://d3js.org/d3.v7.min.js"></script> 
-                <script src="vis1.js"></script>
-                <div id="tooltip"></div>
+                <div id="tooltip"></div> <!-- Tooltip container -->
             </div>
+        
+            <!-- Include D3.js -->
+            <script src="https://d3js.org/d3.v7.min.js"></script> 
+            <script src="d3.js"></script> <!-- Your script -->
+            <a href="#section4" id="scrollBtn3">
+                <button class="styled-button3">Next</button>
+            </a>
         </section>
         
         <section id="section4">
             <div class="container">
                 <h2 class="section-heading">Visualisation 2</h2>
+                <div id="chart"></div> <!-- Chart container -->
+                <div id="tooltip"></div> <!-- Tooltip container --></div>
+                  <!-- Include D3.js -->
+                  <script src="https://d3js.org/d3.v7.min.js"></script> 
+                  <script src="vis3.js"></script> <!-- Your script -->
             </div>
         </section>
         
@@ -100,8 +110,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-        const section3 = document.querySelector("#section3");
-        const chartHeading = document.querySelector("#section3 .section-heading");
+        const sections = document.querySelectorAll("section"); // Select all sections
+        const headings = document.querySelectorAll(".section-heading"); // Select all headings
         const chartContainer = document.querySelector("#chart");
 
         let visInitialized = false;
@@ -109,22 +119,29 @@
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting && !visInitialized) {
-                        visInitialized = true;
+                    if (entry.isIntersecting) {
+                        // Add fade-in effect to the visible heading
+                        const heading = entry.target.querySelector(".section-heading");
+                        if (heading) {
+                            heading.classList.add("fade-in");
+                        }
 
-                        // Add fade-in effect to heading
-                        chartHeading.classList.add("fade-in");
-
-                        // Animate the chart (init visualization)
-                        chartContainer.classList.add("fade-in");
-                        init(); // Trigger the visualization animation
+                        // Specific logic for Section 3 visualization
+                        if (entry.target.id === "section3" && !visInitialized) {
+                            visInitialized = true;
+                            chartContainer.classList.add("fade-in");
+                            init(); // Trigger the visualization animation
+                        }
                     }
                 });
             },
             { threshold: 0.5 } // Trigger when 50% of the section is visible
         );
 
-        observer.observe(section3);
+        // Observe all sections
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
     });
 
     $(document).ready(function() {
@@ -152,6 +169,14 @@
             e.preventDefault();
             $('html, body').animate({
                 scrollTop: $('#section3').offset().top
+            }, 1000);
+        });
+
+        // Smooth scroll for the second button in section2
+        $('#scrollBtn3').on('click', function(e) {
+            e.preventDefault();
+            $('html, body').animate({
+                scrollTop: $('#section4').offset().top
             }, 1000);
         });
 
