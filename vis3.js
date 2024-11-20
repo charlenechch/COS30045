@@ -31,7 +31,7 @@ var chartGroup = svg.append("g")
 
 // Load the CSV file and initialize the pie chart
 function init() {
-    d3.csv("Major Sectors.csv", function (d) {
+    d3.csv("resource/Sectors/Major Sectors.csv", function (d) {
         return {
             activity: d["Economic Activity"], // Adjusted for exact match
             values: Object.keys(d)
