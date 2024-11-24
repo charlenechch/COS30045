@@ -29,6 +29,50 @@ function initVis2() {
         .style("opacity", 0)
         .style("z-index", 10);
 
+        const countryNameMap = {
+            // Correct mappings for common name differences
+            "United States of America": "United States",
+            "Russian Federation": "Russia",
+            "Republic of Korea": "South Korea",
+            "United Republic of Tanzania": "Tanzania",
+            "Czech Republic": "Czechia",
+            "Ivory Coast": "Côte d'Ivoire",
+            "Democratic Republic of the Congo": "Democratic Republic of Congo",
+            "Republic of the Congo": "Congo",
+            "The Bahamas": "Bahamas",
+            "Swaziland": "Eswatini",
+            "Macedonia": "North Macedonia",
+            "Guinea Bissau": "Guinea-Bissau",
+            "Serbia": "Republic of Serbia",
+        
+            // Additional corrections from mismatches
+            "Cote d'Ivoire": "Côte d'Ivoire",
+            "Micronesia (country)": "Micronesia",
+            "Sao Tome and Principe": "São Tomé and Príncipe",
+            "Palau": "Palau", // Confirmed valid
+            "Kiribati": "Kiribati", // Confirmed valid
+            "Eswatini": "Swaziland",
+            "Cape Verde": "Cabo Verde",
+            "Saint Kitts and Nevis": "Saint Kitts and Nevis",
+            "Saint Lucia": "Saint Lucia",
+            "Saint Vincent and the Grenadines": "Saint Vincent and the Grenadines",
+        
+            // Groupings and regions to exclude
+            "Africa": null,
+            "Asia": null,
+            "Europe": null,
+            "North America": null,
+            "South America": null,
+            "Oceania": null,
+            "World": null,
+            "European Union (27)": null,
+            "High-income countries": null,
+            "Low-income countries": null,
+            "Lower-middle-income countries": null,
+            "Upper-middle-income countries": null,
+        };
+        
+
     const zoom = d3.zoom()
         .scaleExtent([1, 8]) // Define zoom scale limits
         .translateExtent([[0, 0], [width, height]]) // Limit panning to SVG bounds
@@ -42,7 +86,6 @@ function initVis2() {
         d3.json("resource/countries.geo.json"),
         d3.csv("resource/percapita.csv", d => ({
             country: d.Entity,
-            code: d.Code,
             year: +d.Year,
             emissions: parseFloat(d.Emissions) || 0
         }))
@@ -54,39 +97,40 @@ function initVis2() {
             .domain([0, 19.445]) // Adjust domain based on your dataset
             .interpolator(d3.interpolateOranges);
 
-            const updateMap = (selectedYear) => {
-                yearLabel.text(selectedYear);
-            
-                // Filter data for the selected year and create a Map for emissions by code
-                const yearData = csvData.filter(d => d.year === +selectedYear);
-                const emissionsMap = new Map(yearData.map(d => [d.code, d.emissions])); // Map emissions by code
-            
-                mapGroup.selectAll("path")
-                    .data(geoData.features)
-                    .join("path")
-                    .attr("d", path)
-                    .style("fill", d => {
-                        const emissions = emissionsMap.get(d.id); // Match using GeoJSON 'id' and CSV 'code'
-                        return emissions ? colorScale(emissions) : "#ccc"; // Color scale or gray for no data
-                    })
-                    .style("stroke", "#333")
-                    .style("stroke-width", 0.5)
-                    .on("mouseover", function (event, d) {
-                        const emissions = emissionsMap.get(d.id); // Match using GeoJSON 'id'
-                        tooltip.transition().duration(200).style("opacity", 0.9);
-                        tooltip.html(`
-                            <strong>${d.properties.name}</strong><br/>
-                            ${emissions ? `Emissions: ${emissions.toFixed(2)} tonnes of CO₂` : "No data"}
-                        `)
-                        .style("left", (event.offsetX + 30) + "px")
-                        .style("top", (event.offsetY - 110) + "px");
-                        d3.select(this).style("stroke-width", 1.5);
-                    })
-                    .on("mouseout", function () {
-                        tooltip.transition().duration(200).style("opacity", 0);
-                        d3.select(this).style("stroke-width", 0.5);
-                    });
-            };            
+        const updateMap = (selectedYear) => {
+            yearLabel.text(selectedYear);
+
+            const yearData = csvData.filter(d => d.year === +selectedYear);
+            const emissionsMap = new Map(yearData.map(d => [d.country, d.emissions]));
+
+            mapGroup.selectAll("path")
+                .data(geoData.features)
+                .join("path")
+                .attr("d", path)
+                .style("fill", d => {
+                    const correctedName = countryNameMap[d.properties.name] || d.properties.name;
+                    const emissions = emissionsMap.get(correctedName);
+                    return emissions ? colorScale(emissions) : "#ccc";
+                })
+                .style("stroke", "#333")
+                .style("stroke-width", 0.5)
+                .on("mouseover", function (event, d) {
+                    const correctedName = countryNameMap[d.properties.name] || d.properties.name;
+                    const emissions = emissionsMap.get(correctedName);
+                    tooltip.transition().duration(200).style("opacity", 0.9);
+                    tooltip.html(`
+                        <strong>${d.properties.name}</strong><br/>
+                        ${emissions ? `Emissions: ${emissions.toFixed(2)} tonnes of CO₂` : "No data"}
+                    `)
+                    .style("left", (event.offsetX + 30) + "px")
+                    .style("top", (event.offsetY - 110) + "px");
+                    d3.select(this).style("stroke-width", 1.5);
+                })
+                .on("mouseout", function () {
+                    tooltip.transition().duration(200).style("opacity", 0);
+                    d3.select(this).style("stroke-width", 0.5);
+                });
+        };
 
         slider.on("input", function () {
             const selectedYear = +this.value;
