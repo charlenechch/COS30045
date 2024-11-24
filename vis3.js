@@ -1,9 +1,8 @@
 // Define chart dimensions
-// var w = 800; // Chart width
-// var h = 700; // Chart height
-// var padding = 50;
+var w3 = 800; // Chart width
+var h3 = 700; // Chart height
 var currentYear = "2008"; // Default year
-var outerRadius = w / 3.2;  // Increased radius to give space for labels
+var outerRadius = w3 / 3.2;  // Increased radius to give space for labels
 var innerRadius = 0;
 
 var dataset3, pie, arc, color;
@@ -23,12 +22,12 @@ color = d3.scaleOrdinal(d3.schemeSet3); // Choose a color scheme
 // Create the SVG element
 var svg3 = d3.select("#chart3") // Change this line to append the chart inside the #chart container
     .append("svg")
-    .attr("width", w)
-    .attr("height", h);
+    .attr("w3idth", w3)
+    .attr("height", h3);
 
 // Group for the pie chart
 var chartGroup3 = svg3.append("g")
-    .attr("transform", `translate(${w / 2}, ${h / 2})`);
+    .attr("transform", `translate(${w3 / 2}, ${h3 / 2})`);
 
 // Load the CSV file and initialize the pie chart
 function init() {
