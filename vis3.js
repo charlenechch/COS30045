@@ -1,10 +1,10 @@
 // Define chart dimensions
-var w = 800; // Chart width
-var h = 700; // Chart height
-var padding = 50;
-var currentYear = "2008"; // Default year
-var outerRadius = w / 3.2;  // Increased radius to give space for labels
-var innerRadius = 0;
+// var w = 800; // Chart width
+// var h = 700; // Chart height
+// var padding = 50;
+// var currentYear = "2008"; // Default year
+// var outerRadius = w / 3.2;  // Increased radius to give space for labels
+// var innerRadius = 0;
 
 var dataset3, pie, arc, color;
 
