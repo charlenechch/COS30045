@@ -21,7 +21,7 @@ pie = d3.pie()
 color = d3.scaleOrdinal(d3.schemeSet3); // Choose a color scheme
 
 // Create the SVG element
-var svg3 = d3.select("#char3") // Change this line to append the chart inside the #chart container
+var svg3 = d3.select("#chart3") // Change this line to append the chart inside the #chart container
     .append("svg")
     .attr("width", w)
     .attr("height", h);
