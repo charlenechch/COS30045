@@ -1,3 +1,4 @@
+// Define chart dimensions
 var w = 800; // Chart width
 var h = 600; // Chart height
 var padding = 50;
@@ -17,7 +18,7 @@ pie = d3.pie()
     .value(d => d.value);
 
 // Define the color scale
-color = d3.scaleOrdinal(d3.schemeCategory10);
+color = d3.scaleOrdinal(d3.schemeSet3);
 
 // Create the SVG element
 var svg = d3.select("body")
@@ -31,37 +32,28 @@ var chartGroup = svg.append("g")
 
 // Load the CSV file and initialize the pie chart
 function init() {
-    d3.csv("resource/Sectors/Major Sectors.csv", function (d) {
-        return {
-            activity: d["Economic Activity"], // Adjusted for exact match
-            values: Object.keys(d)
-                .slice(1) // Skip the "Economic Activity" column
-                .reduce((acc, year) => {
-                    acc[year] = +d[year]; // Parse each year's value as a number
-                    return acc;
-                }, {})
-        };
-    }).then(function (data) {
-        console.log("Loaded Data:", data); // Verify the parsed data
+    d3.csv("Major Sectors.csv").then(function (data) {
+        console.log("Loaded Data:", data); // Check data loaded correctly
         dataset = data;
 
         // Draw the initial chart for the default year
         updateChart(currentYear);
+    }).catch(function(error) {
+        console.error("Error loading CSV data:", error);
     });
 }
-
-
-// Function to update the chart based on the selected year
 function updateChart(year) {
     // Extract the data for the selected year
     var yearData = dataset.map(d => ({
-        activity: d.activity,
-        value: d.values[year]
+        activity: d["Economic Activity"], // Adjusted for exact match
+        value: +d[year] || 0 // Ensure the value is a number or 0 if missing
     }));
+    
+    console.log("Year Data:", yearData); // Log to see if the data is properly extracted
 
-    // Bind data to pie slices
+    // Bind the data to pie slices
     var arcs = chartGroup.selectAll("g.arc")
-        .data(pie(yearData));
+        .data(pie(yearData)); // Calculate new pie chart slices based on the updated data
 
     // Enter new slices
     var enterArcs = arcs.enter()
@@ -70,17 +62,21 @@ function updateChart(year) {
 
     enterArcs.append("path")
         .attr("fill", (d, i) => color(i))
-        .attr("d", arc);
+        .attr("d", arc)
+        .transition() // Apply transition for smooth rendering
+        .duration(500); // Duration for smooth transition
 
     enterArcs.append("text")
-        .text(d => d.data.activity)
         .attr("transform", d => `translate(${arc.centroid(d)})`)
-        .attr("text-anchor", "middle");
+        .attr("text-anchor", "middle")
+        .text(d => d.data.activity)
+        .transition()
+        .duration(500);
 
     // Update existing slices
     arcs.select("path")
         .transition()
-        .duration(500)
+        .duration(500) // Apply a smooth transition for updating
         .attr("d", arc)
         .attr("fill", (d, i) => color(i));
 
@@ -94,7 +90,8 @@ function updateChart(year) {
     arcs.exit().remove();
 }
 
-// Call the init function
+
+// Call the init function to load data
 init();
 
 // Add a slider to select the year
