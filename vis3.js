@@ -1,9 +1,9 @@
 // Define chart dimensions
 var w = 800; // Chart width
-var h = 600; // Chart height
+var h = 700; // Chart height
 var padding = 50;
 var currentYear = "2008"; // Default year
-var outerRadius = w / 3;
+var outerRadius = w / 3.2;  // Increased radius to give space for labels
 var innerRadius = 0;
 
 var dataset, pie, arc, color;
@@ -18,10 +18,10 @@ pie = d3.pie()
     .value(d => d.value);
 
 // Define the color scale
-color = d3.scaleOrdinal(d3.schemeSet3);
+color = d3.scaleOrdinal(d3.schemeSet3); // Choose a color scheme
 
 // Create the SVG element
-var svg = d3.select("body")
+var svg = d3.select("#chart") // Change this line to append the chart inside the #chart container
     .append("svg")
     .attr("width", w)
     .attr("height", h);
@@ -42,14 +42,24 @@ function init() {
         console.error("Error loading CSV data:", error);
     });
 }
+
+// Append a tooltip
+var tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("position", "absolute")
+    .style("visibility", "hidden")
+    .style("background-color", "lightgray")
+    .style("padding", "5px")
+    .style("border-radius", "5px");
+
+// Function to update the chart based on the selected year
 function updateChart(year) {
     // Extract the data for the selected year
     var yearData = dataset.map(d => ({
         activity: d["Economic Activity"], // Adjusted for exact match
         value: +d[year] || 0 // Ensure the value is a number or 0 if missing
     }));
-    
-    console.log("Year Data:", yearData); // Log to see if the data is properly extracted
 
     // Bind the data to pie slices
     var arcs = chartGroup.selectAll("g.arc")
@@ -60,18 +70,28 @@ function updateChart(year) {
         .append("g")
         .attr("class", "arc");
 
+    // Append the path for each slice
     enterArcs.append("path")
         .attr("fill", (d, i) => color(i))
         .attr("d", arc)
         .transition() // Apply transition for smooth rendering
         .duration(500); // Duration for smooth transition
 
+    // Append the text labels outside the slices with rotation and distance adjustment
     enterArcs.append("text")
-        .attr("transform", d => `translate(${arc.centroid(d)})`)
-        .attr("text-anchor", "middle")
         .text(d => d.data.activity)
-        .transition()
-        .duration(500);
+        .attr("transform", function(d) {
+            var pos = arc.centroid(d);
+            pos[0] *= 2.3;  // Increase the distance of labels from the center
+            pos[1] *= 2.3;
+
+            // Adjust rotation to align the text with the slices
+            var angle = (d.startAngle + d.endAngle) / 2 * 180 / Math.PI - 90;
+            return "translate(" + pos + ") rotate(" + angle + ")";
+        })
+        .attr("text-anchor", "middle")
+        .style("font-size", "12px") // Adjust font size
+        .style("font-family", "Arial, sans-serif");  // Set font style
 
     // Update existing slices
     arcs.select("path")
@@ -80,42 +100,25 @@ function updateChart(year) {
         .attr("d", arc)
         .attr("fill", (d, i) => color(i));
 
-    arcs.select("text")
-        .transition()
-        .duration(500)
-        .attr("transform", d => `translate(${arc.centroid(d)})`)
-        .text(d => d.data.activity);
-
     // Remove old slices
     arcs.exit().remove();
 }
 
-
 // Call the init function to load data
 init();
 
-// Add a slider to select the year
-var slider = d3.select("body")
-    .append("input")
-    .attr("type", "range")
-    .attr("min", 2008)
-    .attr("max", 2022)
-    .attr("step", 1)
-    .attr("value", 2008)
+// Slider and year label update
+var slider = d3.select("#year-slider")
     .on("input", function () {
         currentYear = this.value;
-        updateChart(currentYear);
+        d3.select("#year-label").text(`Year: ${currentYear}`);
+        updateChart(currentYear); // Update the chart based on selected year
     });
 
-// Add a label for the current year
+// Add a label for the current year (only once)
 var yearLabel = d3.select("body")
     .append("div")
+    .attr("id", "year-label")
     .style("font-size", "20px")
     .style("margin", "10px")
     .text(`Year: ${currentYear}`);
-
-slider.on("input", function () {
-    currentYear = this.value;
-    yearLabel.text(`Year: ${currentYear}`);
-    updateChart(currentYear);
-});
