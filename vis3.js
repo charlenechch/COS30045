@@ -32,7 +32,7 @@ var chartGroup = svg.append("g")
 
 // Load the CSV file and initialize the pie chart
 function init() {
-    d3.csv("Major Sectors.csv").then(function (data) {
+    d3.csv("resource/Sectors/Major Sectors.csv").then(function (data) {
         console.log("Loaded Data:", data); // Check data loaded correctly
         dataset = data;
 
