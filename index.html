@@ -89,7 +89,7 @@
         
         <section id="section4">
             <div class="container">
-                <h2>Global Greenhouse Gas Emissions by Country (1850–2022)</h2>
+                <h2 class="fade-in">Global Greenhouse Gas Emissions by Country (1850–2022)</h2>
                 <div id="container">
                     <div id="slider-box">
                         <p>
@@ -99,7 +99,6 @@
                         <span id="current-year">1850</span>
                     </div>
                     <div id="chart2"></div>
-                </div>
                 
                 <script src="vis2.js"></script>
             </div>
@@ -271,6 +270,58 @@
             }
         });
     });
+
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        const section4 = document.querySelector("#section4");
+        const section5 = document.querySelector("#section5");
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.target.id === "section5") {
+                        if (entry.isIntersecting) {
+                            section4.style.visibility = "hidden"; // Hide Section 4
+                        } else {
+                            section4.style.visibility = "visible"; // Show Section 4
+                        }
+                    }
+                });
+            },
+            { threshold: 0.5 } // Trigger when 50% of Section 5 is visible
+        );
+
+        observer.observe(section5);
+    
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const section4 = document.querySelector("#section4");
+        const chartContainer = document.querySelector("#chart2");
+
+        let visInitialized = false;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting && !visInitialized) {
+                        visInitialized = true;
+
+                        // Add fade-in effect to the chart container
+                        chartContainer.classList.add("fade-in");
+
+                        // Initialize the visualization
+                        initVis2();
+                    }
+                });
+            },
+            { threshold: 0.5 } // Trigger when 50% of the section is visible
+        );
+
+        observer.observe(section4);
+    });
+
+
     </script>
 
     <footer>
