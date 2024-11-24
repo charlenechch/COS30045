@@ -6,7 +6,7 @@ var currentYear = "2008"; // Default year
 var outerRadius = w / 3.2;  // Increased radius to give space for labels
 var innerRadius = 0;
 
-var dataset, pie, arc, color;
+var dataset3, pie, arc, color;
 
 // Define arc for each slice
 arc = d3.arc()
@@ -27,14 +27,14 @@ var svg3 = d3.select("#chart3") // Change this line to append the chart inside t
     .attr("height", h);
 
 // Group for the pie chart
-var chartGroup = svg3.append("g")
+var chartGroup3 = svg3.append("g")
     .attr("transform", `translate(${w / 2}, ${h / 2})`);
 
 // Load the CSV file and initialize the pie chart
 function init() {
     d3.csv("resource/Sectors/Major Sectors.csv").then(function (data) {
         console.log("Loaded Data:", data); // Check data loaded correctly
-        dataset = data;
+        dataset3 = data;
 
         // Draw the initial chart for the default year
         updateChart(currentYear);
@@ -56,13 +56,13 @@ var tooltip3 = d3.select("body")
 // Function to update the chart based on the selected year
 function updateChart(year) {
     // Extract the data for the selected year
-    var yearData = dataset.map(d => ({
+    var yearData = dataset3.map(d => ({
         activity: d["Economic Activity"], // Adjusted for exact match
         value: +d[year] || 0 // Ensure the value is a number or 0 if missing
     }));
 
     // Bind the data to pie slices
-    var arcs = chartGroup.selectAll("g.arc")
+    var arcs = chartGroup3.selectAll("g.arc")
         .data(pie(yearData)); // Calculate new pie chart slices based on the updated data
 
     // Enter new slices
