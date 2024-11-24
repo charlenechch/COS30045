@@ -21,13 +21,13 @@ pie = d3.pie()
 color = d3.scaleOrdinal(d3.schemeSet3); // Choose a color scheme
 
 // Create the SVG element
-var svg = d3.select("#chart") // Change this line to append the chart inside the #chart container
+var svg3 = d3.select("#char3") // Change this line to append the chart inside the #chart container
     .append("svg")
     .attr("width", w)
     .attr("height", h);
 
 // Group for the pie chart
-var chartGroup = svg.append("g")
+var chartGroup = svg3.append("g")
     .attr("transform", `translate(${w / 2}, ${h / 2})`);
 
 // Load the CSV file and initialize the pie chart
@@ -44,7 +44,7 @@ function init() {
 }
 
 // Append a tooltip
-var tooltip = d3.select("body")
+var tooltip3 = d3.select("body")
     .append("div")
     .attr("class", "tooltip")
     .style("position", "absolute")
@@ -108,7 +108,7 @@ function updateChart(year) {
 init();
 
 // Slider and year label update
-var slider = d3.select("#year-slider")
+var slider3 = d3.select("#year-slider")
     .on("input", function () {
         currentYear = this.value;
         d3.select("#year-label").text(`Year: ${currentYear}`);
@@ -116,7 +116,7 @@ var slider = d3.select("#year-slider")
     });
 
 // Add a label for the current year (only once)
-var yearLabel = d3.select("body")
+var yearLabel3 = d3.select("body")
     .append("div")
     .attr("id", "year-label")
     .style("font-size", "20px")
