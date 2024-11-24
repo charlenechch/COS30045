@@ -132,29 +132,22 @@
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        // Add fade-in effect to the visible heading
-                        const heading = entry.target.querySelector(".section-heading");
-                        if (heading) {
-                            heading.classList.add("fade-in");
-                        }
+                    if (entry.isIntersecting && !visInitialized) {
+                        visInitialized = true;
 
-                        // Specific logic for Section 3 visualization
-                        if (entry.target.id === "section3" && !visInitialized) {
-                            visInitialized = true;
-                            chartContainer.classList.add("fade-in");
-                            init(); // Trigger the visualization animation
-                        }
+                        // Add fade-in effect to heading
+                        chartHeading.classList.add("fade-in");
+
+                        // Animate the chart (init visualization)
+                        chartContainer.classList.add("fade-in");
+                        init(); // Trigger the visualization animation
                     }
                 });
             },
             { threshold: 0.5 } // Trigger when 50% of the section is visible
         );
 
-        // Observe all sections
-        sections.forEach((section) => {
-            observer.observe(section);
-        });
+        observer.observe(section3);
     });
 
     $(document).ready(function() {
