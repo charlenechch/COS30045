@@ -94,7 +94,7 @@ h1 {
 .styled-button3 {
     background-color: #2A5D91; 
     color: white; 
-    top: 92%; /* Adjust this to control vertical positioning */
+    top: 90%; /* Adjust this to control vertical positioning */
     right: 4%; /* Adjust this to control horizontal positioning */
     font-size: 16px;
     font-weight: bold;
