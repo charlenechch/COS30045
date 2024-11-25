@@ -74,12 +74,17 @@
 
         <section id="section3">
             <div class="container">
-                <h2 class="section-heading">Historical Trends in Global Greenhouse Gas Emissions and Temperature Anomaly (1850–2022)</h2>
+                <h2 class="section-heading">Historical Trends in Global Greenhouse Gas Emissions (1850–2022)</h2>
                 <div id="chart"></div> <!-- Chart container -->
-                <script src="https://d3js.org/d3.v7.min.js"></script> 
-                <script src="vis1.js"></script>
-                <div id="tooltip"></div>
+                <div id="tooltip"></div> <!-- Tooltip container -->
             </div>
+        
+            <!-- Include D3.js -->
+            <script src="https://d3js.org/d3.v7.min.js"></script> 
+            <script src="vis1.js"></script> <!-- Your script -->
+            <a href="#section4" id="scrollBtn3">
+                <button class="styled-button3">Next</button>
+            </a>            
         </section>
         
         <section id="section4">
@@ -94,14 +99,13 @@
                         <span id="current-year">1850</span>
                     </div>
                     <div id="chart2"></div>
-                </div>
-                <script src="vis2.js"></script> <!-- Script to initialize visualization -->
+                
+                <script src="vis2.js"></script>
                 <a href="#section5" id="scrollBtn4">
                     <button class="styled-button4">Next</button>
                 </a>            
             </div>
         </section>
-        
         
         <section id="section5">
             <div class="container">
@@ -110,8 +114,9 @@
             <script src="vis3.js"></script> <!-- Your script for Section 5 -->
                 </div> <!-- Chart container -->
             </div>
-        </section>
 
+
+        </section>
 
     </main>
 
@@ -119,8 +124,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-        const section3 = document.querySelector("#section3");
-        const chartHeading = document.querySelector("#section3 .section-heading");
+        const sections = document.querySelectorAll("section"); // Select all sections
+        const headings = document.querySelectorAll(".section-heading"); // Select all headings
         const chartContainer = document.querySelector("#chart");
 
         let visInitialized = false;
@@ -128,22 +133,29 @@
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting && !visInitialized) {
-                        visInitialized = true;
+                    if (entry.isIntersecting) {
+                        // Add fade-in effect to the visible heading
+                        const heading = entry.target.querySelector(".section-heading");
+                        if (heading) {
+                            heading.classList.add("fade-in");
+                        }
 
-                        // Add fade-in effect to heading
-                        chartHeading.classList.add("fade-in");
-
-                        // Animate the chart (init visualization)
-                        chartContainer.classList.add("fade-in");
-                        init(); // Trigger the visualization animation
+                        // Specific logic for Section 3 visualization
+                        if (entry.target.id === "section3" && !visInitialized) {
+                            visInitialized = true;
+                            chartContainer.classList.add("fade-in");
+                            init(); // Trigger the visualization animation
+                        }
                     }
                 });
             },
             { threshold: 0.5 } // Trigger when 50% of the section is visible
         );
 
-        observer.observe(section3);
+        // Observe all sections
+        sections.forEach((section) => {
+            observer.observe(section);
+        });
     });
 
     $(document).ready(function() {
@@ -174,8 +186,8 @@
             }, 1000);
         });
 
-           // Smooth scroll for the second button in section3
-           $('#scrollBtn3').on('click', function(e) {
+        // Smooth scroll for the second button in section3
+        $('#scrollBtn3').on('click', function(e) {
             e.preventDefault();
             $('html, body').animate({
                 scrollTop: $('#section4').offset().top
@@ -183,7 +195,7 @@
         });
 
         // Smooth scroll for the second button in section4
-        $('#scrollBtn4').on('click', function(e) {
+                $('#scrollBtn4').on('click', function(e) {
             e.preventDefault();
             $('html, body').animate({
                 scrollTop: $('#section5').offset().top
@@ -275,6 +287,7 @@
         });
     });
 
+    
     document.addEventListener("DOMContentLoaded", () => {
         const section4 = document.querySelector("#section4");
         const section5 = document.querySelector("#section5");
@@ -302,11 +315,19 @@
         const section4 = document.querySelector("#section4");
         const chartContainer = document.querySelector("#chart2");
 
+        let visInitialized = false;
+
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
+                    if (entry.isIntersecting && !visInitialized) {
+                        visInitialized = true;
+
+                        // Add fade-in effect to the chart container
                         chartContainer.classList.add("fade-in");
+
+                        // Initialize the visualization
+                        initVis2();
                     }
                 });
             },
