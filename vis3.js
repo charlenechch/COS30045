@@ -1,123 +1,148 @@
-// Define chart dimensions
-var w3 = 800; // Chart width
-var h3 = 700; // Chart height
-var currentYear = "2008"; // Default year
-var outerRadius = w3 / 3.2;  // Increased radius to give space for labels
-var innerRadius = 0;
+var w3 = 1300; // Adjust chart width to fit the window
+var h3 = 600; // Fixed height
+var barPadding = 5;
+var dataset3, xScale3, yScale3, xAxis3, yAxis3;
 
-var dataset3, pie, arc, color;
-
-// Define arc for each slice
-arc = d3.arc()
-    .outerRadius(outerRadius)
-    .innerRadius(innerRadius);
-
-// Define pie layout
-pie = d3.pie()
-    .value(d => d.value);
-
-// Define the color scale
-color = d3.scaleOrdinal(d3.schemeSet3); // Choose a color scheme
-
-// Create the SVG element
-var svg3 = d3.select("#chart3") // Change this line to append the chart inside the #chart container
-    .append("svg")
-    .attr("w3idth", w3)
-    .attr("height", h3);
-
-// Group for the pie chart
-var chartGroup3 = svg3.append("g")
-    .attr("transform", `translate(${w3 / 2}, ${h3 / 2})`);
-
-// Load the CSV file and initialize the pie chart
-function init() {
-    d3.csv("resource/Sectors/Major Sectors.csv").then(function (data) {
-        console.log("Loaded Data:", data); // Check data loaded correctly
-        dataset3 = data;
-
-        // Draw the initial chart for the default year
-        updateChart(currentYear);
-    }).catch(function(error) {
-        console.error("Error loading CSV data:", error);
+// Load CSV and Initialize
+d3.csv("resource/Sectors/Major Sectors.csv").then(function (data) {
+    // Parse CSV
+    var years = Object.keys(data[0]).filter(function (key) {
+        return key !== "Economic Activity";
     });
-}
+    dataset3 = data.map(function (d) {
+        return {
+            activity: d["Economic Activity"],
+            values: years.map(function (year) {
+                return { year: year, value: +d[year] };
+            })
+        };
+    });
 
-// Append a tooltip
-var tooltip3 = d3.select("body")
-    .append("div")
-    .attr("class", "tooltip")
-    .style("position", "absolute")
-    .style("visibility", "hidden")
-    .style("background-color", "lightgray")
-    .style("padding", "5px")
-    .style("border-radius", "5px");
+    // Determine the maximum value across all years for a fixed Y-axis scale
+    var maxYValue = d3.max(dataset3, function (d) {
+        return d3.max(d.values, function (v) { return v.value; });
+    });
 
-// Function to update the chart based on the selected year
-function updateChart(year) {
-    // Extract the data for the selected year
-    var yearData = dataset3.map(d => ({
-        activity: d["Economic Activity"], // Adjusted for exact match
-        value: +d[year] || 0 // Ensure the value is a number or 0 if missing
-    }));
+    // Initial Year (set to the first year)
+    var selectedYear = years[0];
 
-    // Bind the data to pie slices
-    var arcs = chartGroup3.selectAll("g.arc")
-        .data(pie(yearData)); // Calculate new pie chart slices based on the updated data
+    // Add Slider Container
+    var sliderContainer = d3.select("#chart3")
+        .insert("div", ":first-child")
+        .attr("class", "slider-container")
+        .style("text-align", "center")
+        .style("margin-bottom", "10px");
 
-    // Enter new slices
-    var enterArcs = arcs.enter()
-        .append("g")
-        .attr("class", "arc");
+    // Add Slider Label
+    sliderContainer.append("label")
+        .attr("for", "year-slider")
+        .text("Select Year: ")
+        .style("margin-right", "10px")
+        
+ // Initial Year (set to the first year)
+var selectedYear = years[0];
 
-    // Append the path for each slice
-    enterArcs.append("path")
-        .attr("fill", (d, i) => color(i))
-        .attr("d", arc)
-        .transition() // Apply transition for smooth rendering
-        .duration(500); // Duration for smooth transition
+// Add Year Value Display
+var yearLabel = sliderContainer.append("span")
+    .attr("id", "selected-year")
+    .style("font-weight", "bold")
+    .text(selectedYear);
 
-    // Append the text labels outside the slices with rotation and distance adjustment
-    enterArcs.append("text")
-        .text(d => d.data.activity)
-        .attr("transform", function(d) {
-            var pos = arc.centroid(d);
-            pos[0] *= 2.3;  // Increase the distance of labels from the center
-            pos[1] *= 2.3;
-
-            // Adjust rotation to align the text with the slices
-            var angle = (d.startAngle + d.endAngle) / 2 * 180 / Math.PI - 90;
-            return "translate(" + pos + ") rotate(" + angle + ")";
-        })
-        .attr("text-anchor", "middle")
-        .style("font-size", "12px") // Adjust font size
-        .style("font-family", "Arial, sans-serif");  // Set font style
-
-    // Update existing slices
-    arcs.select("path")
-        .transition()
-        .duration(500) // Apply a smooth transition for updating
-        .attr("d", arc)
-        .attr("fill", (d, i) => color(i));
-
-    // Remove old slices
-    arcs.exit().remove();
-}
-
-// Call the init function to load data
-init();
-
-// Slider and year label update
-var slider3 = d3.select("#year-slider")
+// Add Slider Input
+sliderContainer.append("input")
+    .attr("type", "range")
+    .attr("id", "year-slider3")
+    .attr("min", 0)
+    .attr("max", years.length - 1) // Map slider range to years array index
+    .attr("step", 1)
+    .attr("value", 0) // Set initial value to the first year
+    .style("width", "60%")
     .on("input", function () {
-        currentYear = this.value;
-        d3.select("#year-label").text(`Year: ${currentYear}`);
-        updateChart(currentYear); // Update the chart based on selected year
+        selectedYear = years[this.value]; // Get the corresponding year
+        yearLabel.text(selectedYear);  // Update the year label
+        updateChart(selectedYear);  // Update the chart with the selected year
     });
 
-// Add a label for the current year (only once)
-var yearLabel3 = d3.select("body")
-    .append("div")
-    .attr("id", "year-label")
-    .style("font-size", "20px")
-    .style("margin", "10px")
-    .text(`Year: ${currentYear}`);
+        
+    // Scales
+    xScale3 = d3.scaleBand()
+        .domain(dataset3.map(function (d) { return d.activity; }))
+        .range([0, w3 - 100])
+        .padding(0.1);
+
+    yScale3 = d3.scaleLinear()
+        .domain([0, maxYValue]) // Fixed domain for all years
+        .range([h3 - 100, 0]);
+
+    // Axes
+    xAxis3 = d3.axisBottom(xScale3);
+    yAxis3 = d3.axisLeft(yScale3).tickFormat(d3.format(".2s")); // Format large numbers
+
+    // SVG Container
+    var svg3 = d3.select("#chart3")
+        .append("svg")
+        .attr("width", w3)
+        .attr("height", h3)
+        .append("g")
+        .attr("transform", "translate(50, 50)");
+
+    // Add Axes Groups
+    svg3.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", `translate(0, ${h3 - 100})`);
+
+    svg3.append("g")
+        .attr("class", "y-axis")
+        .call(yAxis3);
+
+    // Add Bars Group
+    var barsGroup = svg3.append("g");
+
+    // Update Function
+    function updateChart(year) {
+        var yearData = dataset3.map(function (d) {
+            return {
+                activity: d.activity,
+                value: d.values.find(function (v) { return v.year === year; }).value
+            };
+        });
+
+        // No need to update Y-axis scale since it's fixed
+
+        // Bind Data to Bars
+        var bars = barsGroup.selectAll("rect")
+            .data(yearData);
+
+        // Enter Bars
+        bars.enter()
+            .append("rect")
+            .attr("x", function (d) { return xScale3(d.activity); })
+            .attr("y", yScale3(0)) // Start at 0 height for animation
+            .attr("width", xScale3.bandwidth())
+            .attr("height", 0) // Start at 0 height for animation
+            .attr("fill", "steelblue")
+            .merge(bars) // Update Bars
+            .transition()
+            .duration(500)
+            .attr("y", function (d) { return yScale3(d.value); })
+            .attr("height", function (d) { return h3 - 100 - yScale3(d.value); });
+
+        // Exit Bars
+        bars.exit()
+            .transition()
+            .duration(500)
+            .attr("y", yScale3(0))
+            .attr("height", 0)
+            .remove();
+
+        // Update X-Axis
+        svg3.select(".x-axis")
+            .call(xAxis3)
+            .selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
+    }
+
+    // Initial Render
+    updateChart(selectedYear);
+});
