@@ -545,12 +545,33 @@ footer {
     margin-bottom: 20px;  /* Space between slider and chart */
 }
 
-/* Center the chart horizontally */
 #chart3 {
-    display: block;
-    margin: 0 auto;
-    width: 80%;  /* Optional: Set a fixed width or percentage */
+    width: 100%; /* Full width of the container */
+    margin: 0 auto; /* Center the chart horizontally */
+    text-align: center; /* Center child elements like the slider */
+    position: relative;
 }
+
+.slider-container {
+    display: flex; /* Use Flexbox for alignment */
+    align-items: center; /* Vertically align label and slider */
+    justify-content: center; /* Center the entire container */
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+#year-slider3 {
+    cursor: pointer;
+    margin-left: 10px; /* Space between label and slider */
+    width: 60%; /* Adjust width for better appearance */
+    height: 5px; /* Adjust slider height */
+    background: #ddd; /* Slider track color */
+    outline: none;
+    border-radius: 5px; /* Rounded slider track */
+}
+
+
 
 
 
