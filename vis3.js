@@ -4,7 +4,7 @@ var barPadding = 5;
 var dataset3, xScale3, yScale3, xAxis3, yAxis3;
 
 // Load CSV and Initialize
-d3.csv("Major Sectors.csv").then(function (data) {
+d3.csv("resource/Sectors/Major Sectors.csv").then(function (data) {
     // Parse CSV
     var years = Object.keys(data[0]).filter(function (key) {
         return key !== "Economic Activity";
