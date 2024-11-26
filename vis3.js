@@ -4,7 +4,7 @@ var barPadding = 5;
 var dataset3, xScale3, yScale3, xAxis3, yAxis3;
 
 // Load CSV and Initialize
-d3.csv("resource/Sectors/Major Sectors.csv").then(function (data) {
+d3.csv("Major Sectors.csv").then(function (data) {
     // Parse CSV
     var years = Object.keys(data[0]).filter(function (key) {
         return key !== "Economic Activity";
@@ -113,60 +113,61 @@ sliderContainer.append("input")
         var bars = barsGroup.selectAll("rect")
             .data(yearData);
 
-            // Tooltip Container
+// Tooltip box (styled)
 var tooltip = d3.select("body")
-.append("div")
-.attr("class", "tooltip")
-.style("position", "absolute")
-.style("visibility", "hidden")
-.style("background-color", "rgba(0, 0, 0, 0.7)")
-.style("color", "white")
-.style("padding", "10px")
-.style("border-radius", "5px")
-.style("pointer-events", "none");
+    .append("div")
+    .attr("class", "tooltip-vis3") // Ensure unique tooltip class
+    .style("position", "absolute")
+    .style("background-color", "#ffffff")
+    .style("border", "1px solid #ccc")
+    .style("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
+    .style("padding", "10px")
+    .style("border-radius", "8px")
+    .style("font-family", "Arial, sans-serif")
+    .style("font-size", "14px")
+    .style("pointer-events", "none")
+    .style("visibility", "hidden");
 
 // When mouseover, display the tooltip
 bars.enter()
-.append("rect")
-.attr("x", function (d) { return xScale3(d.activity); })
-.attr("y", yScale3(0)) // Start at 0 height for animation
-.attr("width", xScale3.bandwidth())
-.attr("height", 0) // Start at 0 height for animation
-.attr("fill", "#fb8433")
-.on("mouseover", function(event, d) {
-    // Format the tooltip content consistently
-    var tooltipContent = `
-        <strong>Year: </strong> ${d.year}<br/>
-        <strong>Emissions: </strong> ${d.value.toFixed(2)} billion t<br/>
-        <strong>Temperature: </strong> ${d.temperature.toFixed(2)} °C
-    `;
+    .append("rect")
+    .attr("x", function (d) { return xScale3(d.activity); })
+    .attr("y", yScale3(0)) // Start at 0 height for animation
+    .attr("width", xScale3.bandwidth())
+    .attr("height", 0) // Start at 0 height for animation
+    .attr("fill", "#fb8433")
+    .on("mouseover", function(event, d) {
+        // Convert the emissions to billions and format to 2 decimal places
+        var emissionsInBillions = (d.value / 1e6).toFixed(2);
 
-    // Display the tooltip with the content
-    tooltip.style("visibility", "visible")
-        .html(tooltipContent);  // Set the content inside the tooltip
+        // Format the tooltip content
+        var tooltipContent = `
+            <strong>Emissions: </strong> ${emissionsInBillions} million t
+        `;
 
-    // Position the tooltip based on mouse position
-    tooltip.style("top", (event.pageY - 30) + "px")
-        .style("left", (event.pageX + 10) + "px");
-})
-.on("mousemove", function(event) {
-    // Move the tooltip with the mouse
-    tooltip.style("top", (event.pageY - 30) + "px")
-        .style("left", (event.pageX + 10) + "px");
-})
-.on("mouseout", function() {
-    // Hide the tooltip when mouse leaves the bar
-    tooltip.style("visibility", "hidden");
-})
-.merge(bars) // Update Bars
-.transition()
-.duration(500)
-.attr("y", function (d) { return yScale3(d.value); })
-.attr("height", function (d) { return h3 - 100 - yScale3(d.value); });
+        // Display the tooltip with the content
+        tooltip.style("visibility", "visible")
+            .html(tooltipContent);  // Set the content inside the tooltip
 
- 
-        
-
+        // Position the tooltip based on mouse position
+        tooltip.style("top", (event.pageY - 30) + "px")
+            .style("left", (event.pageX + 10) + "px");
+    })
+    .on("mousemove", function(event, d) {
+        // Update the tooltip position dynamically as the mouse moves
+        tooltip.style("top", (event.pageY - 30) + "px")
+            .style("left", (event.pageX + 10) + "px");
+    })
+    .on("mouseout", function() {
+        // Hide the tooltip when mouse leaves the bar
+        tooltip.style("visibility", "hidden");
+    })
+    .merge(bars) // Update Bars
+    .transition()
+    .duration(500)
+    .attr("y", function (d) { return yScale3(d.value); })
+    .attr("height", function (d) { return h3 - 100 - yScale3(d.value); });
+    
         // Exit Bars
         bars.exit()
             .transition()
