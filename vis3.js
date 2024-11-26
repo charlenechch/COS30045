@@ -78,6 +78,19 @@ sliderContainer.append("input")
     xAxis3 = d3.axisBottom(xScale3);
     yAxis3 = d3.axisLeft(yScale3).tickFormat(d3.format(".2s")); // Format large numbers
 
+    // Tooltip Container
+var tooltip = d3.select("body")
+.append("div")
+.attr("class", "tooltip")
+.style("position", "absolute")
+.style("visibility", "hidden")
+.style("background-color", "rgba(0, 0, 0, 0.7)")
+.style("color", "white")
+.style("padding", "5px")
+.style("border-radius", "5px")
+.style("pointer-events", "none");
+
+
     // SVG Container
     var svg3 = d3.select("#chart3")
         .append("svg")
