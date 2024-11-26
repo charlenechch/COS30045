@@ -120,7 +120,7 @@ sliderContainer.append("input")
             .attr("y", yScale3(0)) // Start at 0 height for animation
             .attr("width", xScale3.bandwidth())
             .attr("height", 0) // Start at 0 height for animation
-            .attr("fill", "#c78916")
+            .attr("fill", "#fb8433")
             .merge(bars) // Update Bars
             .transition()
             .duration(500)
