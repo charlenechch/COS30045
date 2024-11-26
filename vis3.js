@@ -139,7 +139,7 @@ sliderContainer.append("input")
         svg3.select(".x-axis")
             .call(xAxis3)
             .selectAll("text")
-            .attr("transform", "rotate(-25)")
+            .attr("transform", "rotate(-20)")
             .style("text-anchor", "end");
     }
 
