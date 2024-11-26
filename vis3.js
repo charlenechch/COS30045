@@ -113,19 +113,37 @@ sliderContainer.append("input")
         var bars = barsGroup.selectAll("rect")
             .data(yearData);
 
-        // Enter Bars
-        bars.enter()
+            bars.enter()
             .append("rect")
             .attr("x", function (d) { return xScale3(d.activity); })
             .attr("y", yScale3(0)) // Start at 0 height for animation
             .attr("width", xScale3.bandwidth())
             .attr("height", 0) // Start at 0 height for animation
             .attr("fill", "#fb8433")
+            .on("mouseover", function(event, d) {
+                // Show Tooltip on Mouseover
+                tooltip.style("visibility", "visible")
+                    .text(d.value);  // Display the actual value
+        
+                // Optional: Adjust the tooltip's position to follow the mouse
+                tooltip.style("top", (event.pageY - 30) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mousemove", function(event) {
+                // Move the tooltip with the mouse as it moves
+                tooltip.style("top", (event.pageY - 30) + "px")
+                    .style("left", (event.pageX + 10) + "px");
+            })
+            .on("mouseout", function() {
+                // Hide the tooltip when the mouse leaves the bar
+                tooltip.style("visibility", "hidden");
+            })
             .merge(bars) // Update Bars
             .transition()
             .duration(500)
             .attr("y", function (d) { return yScale3(d.value); })
             .attr("height", function (d) { return h3 - 100 - yScale3(d.value); });
+        
 
         // Exit Bars
         bars.exit()
@@ -139,7 +157,7 @@ sliderContainer.append("input")
         svg3.select(".x-axis")
             .call(xAxis3)
             .selectAll("text")
-            .attr("transform", "rotate(-20)")
+            .attr("transform", "rotate(-15)")
             .style("text-anchor", "end");
     }
 
