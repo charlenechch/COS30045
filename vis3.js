@@ -78,19 +78,6 @@ sliderContainer.append("input")
     xAxis3 = d3.axisBottom(xScale3);
     yAxis3 = d3.axisLeft(yScale3).tickFormat(d3.format(".2s")); // Format large numbers
 
-    // Tooltip Container
-var tooltip = d3.select("body")
-.append("div")
-.attr("class", "tooltip")
-.style("position", "absolute")
-.style("visibility", "hidden")
-.style("background-color", "rgba(0, 0, 0, 0.7)")
-.style("color", "white")
-.style("padding", "5px")
-.style("border-radius", "5px")
-.style("pointer-events", "none");
-
-
     // SVG Container
     var svg3 = d3.select("#chart3")
         .append("svg")
@@ -126,36 +113,58 @@ var tooltip = d3.select("body")
         var bars = barsGroup.selectAll("rect")
             .data(yearData);
 
-            bars.enter()
-            .append("rect")
-            .attr("x", function (d) { return xScale3(d.activity); })
-            .attr("y", yScale3(0)) // Start at 0 height for animation
-            .attr("width", xScale3.bandwidth())
-            .attr("height", 0) // Start at 0 height for animation
-            .attr("fill", "#fb8433")
-            .on("mouseover", function(event, d) {
-                // Show Tooltip on Mouseover
-                tooltip.style("visibility", "visible")
-                    .text(d.value);  // Display the actual value
-        
-                // Optional: Adjust the tooltip's position to follow the mouse
-                tooltip.style("top", (event.pageY - 30) + "px")
-                    .style("left", (event.pageX + 10) + "px");
-            })
-            .on("mousemove", function(event) {
-                // Move the tooltip with the mouse as it moves
-                tooltip.style("top", (event.pageY - 30) + "px")
-                    .style("left", (event.pageX + 10) + "px");
-            })
-            .on("mouseout", function() {
-                // Hide the tooltip when the mouse leaves the bar
-                tooltip.style("visibility", "hidden");
-            })
-            .merge(bars) // Update Bars
-            .transition()
-            .duration(500)
-            .attr("y", function (d) { return yScale3(d.value); })
-            .attr("height", function (d) { return h3 - 100 - yScale3(d.value); });
+            // Tooltip Container
+var tooltip = d3.select("body")
+.append("div")
+.attr("class", "tooltip")
+.style("position", "absolute")
+.style("visibility", "hidden")
+.style("background-color", "rgba(0, 0, 0, 0.7)")
+.style("color", "white")
+.style("padding", "10px")
+.style("border-radius", "5px")
+.style("pointer-events", "none");
+
+// When mouseover, display the tooltip
+bars.enter()
+.append("rect")
+.attr("x", function (d) { return xScale3(d.activity); })
+.attr("y", yScale3(0)) // Start at 0 height for animation
+.attr("width", xScale3.bandwidth())
+.attr("height", 0) // Start at 0 height for animation
+.attr("fill", "#fb8433")
+.on("mouseover", function(event, d) {
+    // Format the tooltip content consistently
+    var tooltipContent = `
+        <strong>Year: </strong> ${d.year}<br/>
+        <strong>Emissions: </strong> ${d.value.toFixed(2)} billion t<br/>
+        <strong>Temperature: </strong> ${d.temperature.toFixed(2)} °C
+    `;
+
+    // Display the tooltip with the content
+    tooltip.style("visibility", "visible")
+        .html(tooltipContent);  // Set the content inside the tooltip
+
+    // Position the tooltip based on mouse position
+    tooltip.style("top", (event.pageY - 30) + "px")
+        .style("left", (event.pageX + 10) + "px");
+})
+.on("mousemove", function(event) {
+    // Move the tooltip with the mouse
+    tooltip.style("top", (event.pageY - 30) + "px")
+        .style("left", (event.pageX + 10) + "px");
+})
+.on("mouseout", function() {
+    // Hide the tooltip when mouse leaves the bar
+    tooltip.style("visibility", "hidden");
+})
+.merge(bars) // Update Bars
+.transition()
+.duration(500)
+.attr("y", function (d) { return yScale3(d.value); })
+.attr("height", function (d) { return h3 - 100 - yScale3(d.value); });
+
+ 
         
 
         // Exit Bars
