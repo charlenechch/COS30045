@@ -110,13 +110,12 @@
         <section id="section5">
             <div class="container">
                 <h2 class="section-heading">Global Greenhouse Gas by Sectors (2008-2022)</h2>
-                <div id="chart3">
-            <script src="vis3.js"></script> <!-- Your script for Section 5 -->
-                </div> <!-- Chart container -->
+                <div id="chart3" class="fade-in"> <!-- Add fade-in class here -->
+                    <script src="vis3.js"></script> <!-- Your script for Section 5 -->
+                </div>
             </div>
-
-
         </section>
+        
 
     </main>
 
@@ -328,6 +327,24 @@
 
         observer.observe(section4);
     });
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const chartContainer = document.querySelector("#chart3");
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    // Add the 'visible' class to trigger the fade-in effect
+                    chartContainer.classList.add("visible");
+                }
+            });
+        },
+        { threshold: 0.5 } // Trigger when 50% of the chart is visible
+    );
+
+    observer.observe(chartContainer);
+});
 
 
     </script>
