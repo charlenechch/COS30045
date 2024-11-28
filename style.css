@@ -584,25 +584,56 @@ footer {
     text-align: center; /* Center child elements like the slider */
     position: relative;
 }
-
+/* Styling the slider container */
 .slider-container {
-    display: flex; /* Use Flexbox for alignment */
-    align-items: center; /* Vertically align label and slider */
-    justify-content: center; /* Center the entire container */
-    margin-bottom: 20px;
-    font-family: Arial, sans-serif;
-    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
 }
 
+/* Styling the slider itself */
 #year-slider3 {
-    cursor: pointer;
-    margin-left: 10px; /* Space between label and slider */
-    width: 60%; /* Adjust width for better appearance */
-    height: 5px; /* Adjust slider height */
-    background: #ddd; /* Slider track color */
+    width: 80%; /* Adjust width to fit the layout */
+    height: 10px; /* Slider thickness */
+    border-radius: 5px; /* Rounded edges */
+    -webkit-appearance: none;
+    appearance: none;
+    background: #ddd; /* Light gray background */
     outline: none;
-    border-radius: 5px; /* Rounded slider track */
+    transition: background-color 0.3s;
 }
+
+/* Slider handle styles */
+#year-slider3::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px; /* Size of the thumb */
+    height: 20px;
+    border-radius: 50%; /* Circular thumb */
+    background: #D76A28; /* Dark orange thumb color */
+    cursor: pointer;
+}
+
+/* Change thumb color on hover */
+#year-slider3:hover::-webkit-slider-thumb {
+    background: #c5641f; /* Slightly darker orange */
+}
+
+/* Style for the tooltip text */
+#selected-year {
+    font-weight: bold;
+    color: #333; /* Dark gray text */
+    margin-left: 10px;
+}
+
+/* Styling for the label */
+label {
+    font-size: 16px;
+    color: #333; /* Dark gray for labels */
+    margin-right: 10px;
+}
+
 
 /* Initial state: Hidden */
 .fade-in {
@@ -620,14 +651,21 @@ footer {
 /* Tooltip container */
 .tooltip3 {
     position: absolute;
-    visibility: hidden; /* Initially hidden */
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
+    visibility: hidden;
+    background-color: rgba(255, 255, 255, 0.9); /* White with slight transparency */
+    color: black;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    pointer-events: none;
     font-size: 14px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    text-align: left;
+    pointer-events: none; /* Ensures it doesn't interfere with hover events */
+    border: 1px solid #ddd;
+    width: auto; /* Adjust width based on content */
+    z-index: 9999; /* Make sure it is above all other elements */
+    
 }
 
 
