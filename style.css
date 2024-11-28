@@ -503,7 +503,7 @@ footer {
 #slider-box p {
     margin: 0 0 10px; /* Add spacing above the slider */
     font-size: 16px;
-    color: #333;
+    color: #333;    
 }
 
 #year-slider {
@@ -666,6 +666,21 @@ label {
     width: auto; /* Adjust width based on content */
     z-index: 9999; /* Make sure it is above all other elements */
     
+}
+
+/* Description Styling */
+.description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333; /* Dark gray for the text */
+    margin-bottom: 20px; /* Adds space between description and chart */
+    padding: 20px;
+    border-radius: 8px; /* Rounded corners */
+    width: 90%; /* Responsive width */
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto; /* Centers the description */
+    text-align: justify; 
 }
 
 
