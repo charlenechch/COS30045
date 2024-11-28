@@ -506,7 +506,7 @@ footer {
     color: #333;    
 }
 
-#year-slider {
+#year-slider, #year-slider3 {
     width: 95%;
     margin: 3px auto; /* Center the slider */
 }
@@ -590,34 +590,6 @@ footer {
     align-items: center;
     justify-content: center;
     margin: 20px 0;
-}
-
-/* Styling the slider itself */
-#year-slider3 {
-    width: 80%; /* Adjust width to fit the layout */
-    height: 10px; /* Slider thickness */
-    border-radius: 5px; /* Rounded edges */
-    -webkit-appearance: none;
-    appearance: none;
-    background: #ddd; /* Light gray background */
-    outline: none;
-    transition: background-color 0.3s;
-}
-
-/* Slider handle styles */
-#year-slider3::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px; /* Size of the thumb */
-    height: 20px;
-    border-radius: 50%; /* Circular thumb */
-    background: #D76A28; /* Dark orange thumb color */
-    cursor: pointer;
-}
-
-/* Change thumb color on hover */
-#year-slider3:hover::-webkit-slider-thumb {
-    background: #c5641f; /* Slightly darker orange */
 }
 
 /* Style for the tooltip text */
