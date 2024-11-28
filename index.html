@@ -32,7 +32,8 @@
     <main id="contents">
         <section id="section1">
             <div class="container">
-                <h1>Greenhouse Gas Emissions Insights</h1>
+                <h1>Climate Change Unveiled: <br>
+                    Insights into Emissions Trends</h1>
                     <!-- Styled Scroll Button -->
                     <a href="#section2" id="scrollBtn">
                         <button class="styled-button">Explore Insights</button>
@@ -98,12 +99,29 @@
                         <input type="range" id="year-slider" min="1850" max="2022" value="1850" step="1" />
                         <span id="current-year">1850</span>
                     </div>
-                    <div id="chart2"></div>
-                
-                <script src="vis2.js"></script>
-                <a href="#section5" id="scrollBtn4">
-                    <button class="styled-button4">Next</button>
-                </a>            
+                    <div class="map-and-table">
+                        <section id="top-contributors">
+                            <h3>Top Contributors for Selected Year</h3>
+                            <div id="top-regions-table-container">
+                                <table id="top-regions-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Region</th>
+                                            <th>Contribution</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Table rows will be inserted dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </section>
+                        <div id="chart2"></div> <!-- Visualization 2 -->
+                    </div>
+                </div>
+                <script src="vis2.js"></script> <!-- Script to initialize visualization -->
             </div>
         </section>
         
