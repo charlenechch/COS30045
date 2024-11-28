@@ -1,4 +1,4 @@
-var w3 = 1300; // Chart width
+var w3 = 1200; // Chart width
 var h3 = 500; // Chart height
 var margin = { top: 50, right: 50, bottom: 50, left: 100 };
 
@@ -149,7 +149,7 @@ d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
         // Update axes (X-axis updates for sectors, Y-axis remains fixed once set)
         xAxis3.call(d3.axisBottom(xScale3))
             .selectAll("text")
-            .style("font-size", "14px")  // Set the font size for the x-axis labels
+            .style("font-size", "12px")  // Set the font size for the x-axis labels
             .style("font-weight", "bold") // Optional: make the x-axis labels bold for better visibility
         
 yAxis3.call(d3.axisLeft(yScale3).tickFormat(d => `${d / 1e6}M`)); // Display Y-axis in millions
