@@ -54,7 +54,7 @@ d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
     // Add slider container
     var sliderContainer = d3.select("#chart3")
         .insert("div", ":first-child")
-        .attr("class", "slider-container")
+        .attr("class", "slider-box")
         .style("text-align", "center")
         .style("margin-bottom", "20px");
 
