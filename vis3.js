@@ -126,7 +126,7 @@ d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
             .attr("y", yScale3(0)) // Start animation from 0 height
             .attr("width", xScale3.bandwidth())
             .attr("height", 0)
-            .attr("fill", "#D76A28")
+            .attr("fill", "#fb8433")
             .on("mouseover", function (event, d) {
                 tooltip.style("visibility", "visible")
                     .html(`<strong>${d.sector}</strong>: ${(d.value / 1e6).toLocaleString()} million tons`);
@@ -149,8 +149,6 @@ d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
         // Update axes (X-axis updates for sectors, Y-axis remains fixed once set)
         xAxis3.call(d3.axisBottom(xScale3))
             .selectAll("text")
-            .attr("transform", "rotate(-15)")
-            .style("text-anchor", "end");
         yAxis3.call(d3.axisLeft(yScale3).tickFormat(d => `${d / 1e6}M`)); // Display Y-axis in millions
     }
 
