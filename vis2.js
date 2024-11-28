@@ -75,7 +75,7 @@ function initVis2() {
         const yearLabel = d3.select("#current-year");
 
         const colorScale = d3.scaleSequential()
-            .domain([0, 19.445]) // Adjust domain based on your dataset
+            .domain([0, 19.446]) // Adjust domain based on your dataset
             .interpolator(d3.interpolateOranges);
 
         const updateMap = (selectedYear) => {
