@@ -583,6 +583,7 @@ footer {
     margin: 0 auto; /* Center the chart horizontally */
     text-align: center; /* Center child elements like the slider */
     position: relative;
+    margin-top: 0px; 
 }
 /* Styling the slider container */
 .slider-container {
