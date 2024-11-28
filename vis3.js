@@ -1,189 +1,168 @@
-var w3 = 1300; // Adjust chart width to fit the window
-var h3 = 600; // Fixed height
-var barPadding = 5;
-var dataset3, xScale3, yScale3, xAxis3, yAxis3;
+var w3 = 1300; // Chart width
+var h3 = 600; // Chart height
+var margin = { top: 50, right: 50, bottom: 50, left: 100 };
 
-// Load CSV and Initialize
-d3.csv("resource/Sectors/Major Sectors.csv").then(function (data) {
-    // Parse CSV
-    var years = Object.keys(data[0]).filter(function (key) {
-        return key !== "Economic Activity";
-    });
-    dataset3 = data.map(function (d) {
-        return {
-            activity: d["Economic Activity"],
-            values: years.map(function (year) {
-                return { year: year, value: +d[year] };
-            })
-        };
-    });
+// Create SVG container
+var svg3 = d3.select("#chart3")
+    .append("svg")
+    .attr("width", w3)
+    .attr("height", h3)
+    .append("g")
+    .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-    // Determine the maximum value across all years for a fixed Y-axis scale
-    var maxYValue = d3.max(dataset3, function (d) {
-        return d3.max(d.values, function (v) { return v.value; });
-    });
+// Scales
+var xScale3 = d3.scaleBand().range([0, w3 - margin.left - margin.right]).padding(0.1);
+var yScale3 = d3.scaleLinear().range([h3 - margin.top - margin.bottom, 0]);
 
-    // Initial Year (set to the first year)
-    var selectedYear = years[0];
+// Axes
+var xAxis3 = svg3.append("g").attr("transform", `translate(0, ${h3 - margin.top - margin.bottom})`);
+var yAxis3 = svg3.append("g");
 
-    // Add Slider Container
+// Tooltip
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip3")
+    .style("position", "absolute")
+    .style("visibility", "hidden")
+    .style("background", "#fff")
+    .style("border", "1px solid #ccc")
+    .style("padding", "8px")
+    .style("border-radius", "5px");
+
+// Load and parse the CSV file
+d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
+    // Extract unique countries/entities and years
+    var entities = Array.from(new Set(data.map(d => d.Entity))); // Unique countries/regions
+    var years = Array.from(new Set(data.map(d => d.Year))); // Unique years
+
+    // Default selections
+    var defaultCountry = "World";
+    var initialYear = years[0];
+
+    // Variable to store the fixed Y-scale domain
+    var fixedYDomain = null;
+
+    // Populate the dropdown for countries
+    d3.select("#country-select")
+        .selectAll("option")
+        .data(entities)
+        .enter()
+        .append("option")
+        .attr("value", d => d)
+        .text(d => d)
+        .property("selected", d => d === defaultCountry); // Default selection
+
+    // Add slider container
     var sliderContainer = d3.select("#chart3")
         .insert("div", ":first-child")
         .attr("class", "slider-container")
         .style("text-align", "center")
-        .style("margin-bottom", "10px");
+        .style("margin-bottom", "20px");
 
-    // Add Slider Label
+    // Add slider label and display selected year
     sliderContainer.append("label")
-        .attr("for", "year-slider")
+        .attr("for", "year-slider3")
         .text("Select Year: ")
-        .style("margin-right", "10px")
-        
- // Initial Year (set to the first year)
-var selectedYear = years[0];
+        .style("margin-right", "10px");
 
-// Add Year Value Display
-var yearLabel = sliderContainer.append("span")
-    .attr("id", "selected-year")
-    .style("font-weight", "bold")
-    .text(selectedYear);
+    var yearLabel = sliderContainer.append("span")
+        .attr("id", "selected-year")
+        .style("font-weight", "bold")
+        .text(initialYear);
 
-// Add Slider Input
-sliderContainer.append("input")
-    .attr("type", "range")
-    .attr("id", "year-slider3")
-    .attr("min", 0)
-    .attr("max", years.length - 1) // Map slider range to years array index
-    .attr("step", 1)
-    .attr("value", 0) // Set initial value to the first year
-    .style("width", "60%")
-    .on("input", function () {
-        selectedYear = years[this.value]; // Get the corresponding year
-        yearLabel.text(selectedYear);  // Update the year label
-        updateChart(selectedYear);  // Update the chart with the selected year
-    });
-
-        
-    // Scales
-    xScale3 = d3.scaleBand()
-        .domain(dataset3.map(function (d) { return d.activity; }))
-        .range([0, w3 - 100])
-        .padding(0.1);
-
-    yScale3 = d3.scaleLinear()
-        .domain([0, maxYValue]) // Fixed domain for all years
-        .range([h3 - 100, 0]);
-
-    // Axes
-    xAxis3 = d3.axisBottom(xScale3);
-    yAxis3 = d3.axisLeft(yScale3).tickFormat(d3.format(".2s")); // Format large numbers
-
-    // SVG Container
-    var svg3 = d3.select("#chart3")
-        .append("svg")
-        .attr("width", w3)
-        .attr("height", h3)
-        .append("g")
-        .attr("transform", "translate(50, 50)");
-
-    // Add Axes Groups
-    svg3.append("g")
-        .attr("class", "x-axis")
-        .attr("transform", `translate(0, ${h3 - 100})`);
-
-    svg3.append("g")
-        .attr("class", "y-axis")
-        .call(yAxis3);
-
-    // Add Bars Group
-    var barsGroup = svg3.append("g");
-
-    // Update Function
-    function updateChart(year) {
-        var yearData = dataset3.map(function (d) {
-            return {
-                activity: d.activity,
-                value: d.values.find(function (v) { return v.year === year; }).value
-            };
+    // Add slider input
+    sliderContainer.append("input")
+        .attr("type", "range")
+        .attr("id", "year-slider3")
+        .attr("min", 0)
+        .attr("max", years.length - 1)
+        .attr("value", years.indexOf(initialYear))
+        .style("width", "60%")
+        .on("input", function () {
+            var selectedYear = years[this.value];
+            yearLabel.text(selectedYear); // Update displayed year
+            updateChart(d3.select("#country-select").node().value, selectedYear); // Update chart
         });
 
-        // No need to update Y-axis scale since it's fixed
+    // Update the chart based on the selected country and year
+    function updateChart(selectedCountry, selectedYear) {
+        // Filter data for the selected country and year
+        var filteredData = data.filter(d => d.Entity === selectedCountry && d.Year === selectedYear);
 
-        // Bind Data to Bars
-        var bars = barsGroup.selectAll("rect")
-            .data(yearData);
+        if (filteredData.length === 0) {
+            console.error("No data available for the selected country and year.");
+            return;
+        }
 
-// Tooltip box (styled)
-var tooltip = d3.select("body")
-    .append("div")
-    .attr("class", "tooltip-vis3") // Ensure unique tooltip class
-    .style("position", "absolute")
-    .style("background-color", "#ffffff")
-    .style("border", "1px solid #ccc")
-    .style("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
-    .style("padding", "10px")
-    .style("border-radius", "8px")
-    .style("font-family", "Arial, sans-serif")
-    .style("font-size", "14px")
-    .style("pointer-events", "none")
-    .style("visibility", "hidden");
+        // Map the data to sectors and values
+        var chartData = Object.keys(filteredData[0])
+            .filter(key => !["Entity", "Year"].includes(key)) // Exclude non-sector columns
+            .map(key => ({ sector: key, value: +filteredData[0][key] })); // Convert values to numbers
 
-// When mouseover, display the tooltip
-bars.enter()
-    .append("rect")
-    .attr("x", function (d) { return xScale3(d.activity); })
-    .attr("y", yScale3(0)) // Start at 0 height for animation
-    .attr("width", xScale3.bandwidth())
-    .attr("height", 0) // Start at 0 height for animation
-    .attr("fill", "#fb8433")
-    .on("mouseover", function(event, d) {
-        // Convert the emissions to billions and format to 2 decimal places
-        var emissionsInBillions = (d.value / 1e6).toFixed(2);
+        // Update X scale domain (sectors remain consistent across years)
+        xScale3.domain(chartData.map(d => d.sector));
 
-        // Format the tooltip content
-        var tooltipContent = `
-            <strong>Emissions: </strong> ${emissionsInBillions} million t
-        `;
+        // If the Y-scale is not fixed yet (i.e., on first country selection), calculate the max Y value
+        if (!fixedYDomain) {
+            // Calculate the maximum Y value for the selected country's data for scaling
+            var maxYValue = d3.max(chartData, d => d.value);
+            
+            // Set Y scale domain based on the maximum Y value for the selected country
+            yScale3.domain([0, maxYValue]);
 
-        // Display the tooltip with the content
-        tooltip.style("visibility", "visible")
-            .html(tooltipContent);  // Set the content inside the tooltip
+            // Store the fixed Y-domain for future use
+            fixedYDomain = yScale3.domain();
+        }
 
-        // Position the tooltip based on mouse position
-        tooltip.style("top", (event.pageY - 30) + "px")
-            .style("left", (event.pageX + 10) + "px");
-    })
-    .on("mousemove", function(event, d) {
-        // Update the tooltip position dynamically as the mouse moves
-        tooltip.style("top", (event.pageY - 30) + "px")
-            .style("left", (event.pageX + 10) + "px");
-    })
-    .on("mouseout", function() {
-        // Hide the tooltip when mouse leaves the bar
-        tooltip.style("visibility", "hidden");
-    })
-    .merge(bars) // Update Bars
-    .transition()
-    .duration(500)
-    .attr("y", function (d) { return yScale3(d.value); })
-    .attr("height", function (d) { return h3 - 100 - yScale3(d.value); });
-    
-        // Exit Bars
-        bars.exit()
+        // If the Y-scale is already fixed (i.e., a country has been selected before), use the fixed domain
+        yScale3.domain(fixedYDomain);
+
+        // Bind data to bars
+        var bars = svg3.selectAll("rect").data(chartData);
+
+        // Enter new bars
+        bars.enter()
+            .append("rect")
+            .attr("x", d => xScale3(d.sector))
+            .attr("y", yScale3(0)) // Start animation from 0 height
+            .attr("width", xScale3.bandwidth())
+            .attr("height", 0)
+            .attr("fill", "#D76A28")
+            .on("mouseover", function (event, d) {
+                tooltip.style("visibility", "visible")
+                    .html(`<strong>${d.sector}</strong>: ${(d.value / 1e6).toLocaleString()} million tons`);
+            })
+            .on("mousemove", function (event) {
+                tooltip.style("top", `${event.pageY - 30}px`).style("left", `${event.pageX + 15}px`);
+            })
+            .on("mouseout", function () {
+                tooltip.style("visibility", "hidden");
+            })
+            .merge(bars) // Update existing bars
             .transition()
             .duration(500)
-            .attr("y", yScale3(0))
-            .attr("height", 0)
-            .remove();
+            .attr("y", d => yScale3(d.value))
+            .attr("height", d => h3 - margin.top - margin.bottom - yScale3(d.value));
 
-        // Update X-Axis
-        svg3.select(".x-axis")
-            .call(xAxis3)
+        // Remove unused bars
+        bars.exit().remove();
+
+        // Update axes (X-axis updates for sectors, Y-axis remains fixed once set)
+        xAxis3.call(d3.axisBottom(xScale3))
             .selectAll("text")
             .attr("transform", "rotate(-15)")
             .style("text-anchor", "end");
+        yAxis3.call(d3.axisLeft(yScale3).tickFormat(d => `${d / 1e6}M`)); // Display Y-axis in millions
     }
 
-    // Initial Render
-    updateChart(selectedYear);
+    // Render the initial chart
+    updateChart(defaultCountry, initialYear);
+
+    // Update the chart when the country selection changes
+    d3.select("#country-select").on("change", function () {
+        var selectedCountry = this.value;
+        var selectedYear = years[d3.select("#year-slider3").node().value];
+        // Reset fixed Y-domain when a new country is selected
+        fixedYDomain = null;
+        updateChart(selectedCountry, selectedYear);
+    });
 });
