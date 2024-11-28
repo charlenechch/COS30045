@@ -1,5 +1,5 @@
-var w3 = 1200; // Chart width
-var h3 = 475; // Chart height
+var w3 = 1100; // Chart width
+var h3 = 500; // Chart height
 var margin = { top: 50, right: 50, bottom: 50, left: 100 };
 
 // Create SVG container
@@ -60,7 +60,7 @@ d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
 
     // Add slider label and display selected year
     sliderContainer.append("label")
-        .attr("for", "year-slider")
+        .attr("for", "year-slider3")
         .text("Select Year: ")
         .style("margin-right", "10px");
 
@@ -72,7 +72,7 @@ d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
     // Add slider input
     sliderContainer.append("input")
         .attr("type", "range")
-        .attr("id", "year-slider")
+        .attr("id", "year-slider3")
         .attr("min", 0)
         .attr("max", years.length - 1)
         .attr("value", years.indexOf(initialYear))
@@ -158,7 +158,7 @@ d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
     // Update the chart when the country selection changes
     d3.select("#country-select").on("change", function () {
         var selectedCountry = this.value;
-        var selectedYear = years[d3.select("#year-slider").node().value];
+        var selectedYear = years[d3.select("#year-slider3").node().value];
         // Reset fixed Y-domain when a new country is selected
         fixedYDomain = null;
         updateChart(selectedCountry, selectedYear);
