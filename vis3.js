@@ -1,5 +1,5 @@
-var w3 = 1300; // Chart width
-var h3 = 600; // Chart height
+var w3 = 1100; // Chart width
+var h3 = 500; // Chart height
 var margin = { top: 50, right: 50, bottom: 50, left: 100 };
 
 // Create SVG container
