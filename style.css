@@ -524,6 +524,43 @@ footer {
     transform: translateY(0); /* Move to its original position */
 }
 
+/*Table in vis2*/
+#section4 .map-and-table {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px; /* Adjust this value to minimize the gap */
+}
+
+#chart2 {
+    flex: 1; /* Allow the map to take more space proportionally */
+}
+
+#top-contributors {
+    flex: 1; /* Adjust the table width proportionally to the map */
+    margin-left: 10px; /* Fine-tune the spacing between map and table */
+}
+
+#top-regions-table {
+    width: 100%; /* Make the table width dynamic to fit its container */
+    border-collapse: collapse; /* Ensure proper alignment of table borders */
+}
+
+#top-regions-table th, #top-regions-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid black;
+}
+
+#top-regions-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+#top-regions-table-container {
+    height: 400px; /* Set a fixed height for the table container */
+    overflow-y: auto; /* Enables vertical scrolling */
+}
+
 .tooltip-vis1 {
     position: absolute;
     background-color: #f9f9f9; /* Light gray for better visibility */
@@ -583,6 +620,20 @@ footer {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* Tooltip container */
+.tooltip3 {
+    position: absolute;
+    visibility: hidden; /* Initially hidden */
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+    font-size: 14px;
+}
+
 
 
 
