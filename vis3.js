@@ -1,4 +1,4 @@
-var w3 = 1200; // Chart width
+var w3 = 1300; // Chart width
 var h3 = 450; // Chart height
 var margin = { top: 50, right: 50, bottom: 50, left: 100 };
 
