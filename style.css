@@ -445,6 +445,7 @@ footer {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 1s ease, transform 1s ease;
+    text-align: center;
 }
 
 #chart {
@@ -457,7 +458,7 @@ footer {
 }
 
 #section3 .container {
-    /* padding-left: 5%; */
+    padding-left: 5%;
     margin: 0; 
 }
 
