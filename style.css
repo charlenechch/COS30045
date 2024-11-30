@@ -456,13 +456,20 @@ footer {
 }
 
 #section3 .container {
-    padding-left: 5%;
+    padding-left: 10px;
     margin: 0; 
 }
 
 .fade-in {
     opacity: 1;
     transform: translateY(0);
+}
+
+.description1 {
+    font-size: 16px;
+    color: #333; /* Dark gray for the text */
+    text-align: justify; 
+    margin-bottom: -50px;
 }
 
 #tooltip {
@@ -642,10 +649,11 @@ label {
 }
 
 /* Description Styling */
-.description, .description1 {
+.description {
     font-size: 16px;
     color: #333; /* Dark gray for the text */
     text-align: justify; 
+    
 }
 
 
