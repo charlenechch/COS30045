@@ -64,13 +64,13 @@ d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
 
     // Populate the dropdown for countries
     d3.select("#country-select")
-        .selectAll("option")
-        .data(entities)
-        .enter()
-        .append("option")
-        .attr("value", d => d)
-        .text(d => d)
-        .property("selected", d => d === defaultCountry); // Default selection
+      .selectAll("option")
+      .data(entities)
+      .enter()
+      .append("option")
+      .attr("value", function(d) {return d})
+      .text(d => d)
+      .property("selected", d => d === defaultCountry); // Default selection
 
     // Add slider container
     var sliderContainer = d3.select("#chart3")
