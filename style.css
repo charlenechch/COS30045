@@ -468,6 +468,7 @@ footer {
 .description1 {
     font-size: 16px;
     color: #333; /* Dark gray for the text */
+    align-items: center;
     text-align: justify; 
     margin-bottom: -50px;
 }
