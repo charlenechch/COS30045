@@ -46,6 +46,10 @@ h1 {
     animation: shift 2s ease-in-out forwards;  /* Smooth animation for the heading */
 }
 
+h2{
+    text-align: center;
+}
+
 /* Text Animation */
 @keyframes shift {
     0% {
