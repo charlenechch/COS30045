@@ -46,9 +46,6 @@ h1 {
     animation: shift 2s ease-in-out forwards;  /* Smooth animation for the heading */
 }
 
-p{
-    text-align: center;
-}
 
 /* Text Animation */
 @keyframes shift {
@@ -473,6 +470,7 @@ footer {
     position: relative; 
     width: 100%; /* Adjust based on your chart's width */
     height: 100%; /* Adjust based on your chart's height */
+    padding-left: 40px;
 }
 
 .description1 {
