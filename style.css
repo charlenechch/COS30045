@@ -94,19 +94,18 @@ h1 {
 .styled-button3 {
     background-color: #2A5D91; 
     color: white; 
-    top: 90%; /* Adjust this to control vertical positioning */
-    right: 4%; /* Adjust this to control horizontal positioning */
+    top: 90%; /* Adjust vertical positioning */
+    right: 4%; /* Adjust horizontal positioning */
     font-size: 16px;
     font-weight: bold;
     padding: 6px 18px;
     border: none;
     border-radius: 5px;
-    position: absolute;
+    position: absolute; /* Ensure it's positioned correctly */
     cursor: pointer;
-    box-shadow: -3px 6px 0px #1F4670, 3px 6px 0px #1F4670; /* Darker blue shadow on both sides */
+    z-index: 9999; /* Ensure it's on top */
+    box-shadow: -3px 6px 0px #1F4670, 3px 6px 0px #1F4670; 
     transition: all 0.2s ease;
-    animation: fadeIn 0.5s forwards 1s, bounce 2s infinite 2s; /* Adds fadeIn and bounce with 2s delay */
-    opacity: 1; 
 }
 
 .styled-button4 {
@@ -585,6 +584,7 @@ footer {
     position: relative;
     margin-top: 0px; 
 }
+
 /* Styling the slider container */
 .slider-container {
     display: flex;
