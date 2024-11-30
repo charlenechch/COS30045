@@ -4,11 +4,11 @@ var margin = { top: 50, right: 50, bottom: 50, left: 100 };
 
 // Create SVG container
 var svg3 = d3.select("#chart3")
-    .append("svg")
-    .attr("width", w3)
-    .attr("height", h3)
-    .append("g")
-    .attr("transform", `translate(${margin.left}, ${margin.top})`);
+             .append("svg")
+             .attr("width", w3)
+             .attr("height", h3)
+             .append("g")
+             .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Scales
 var xScale3 = d3.scaleBand().range([0, w3 - margin.left - margin.right]).padding(0.1);
@@ -17,6 +17,27 @@ var yScale3 = d3.scaleLinear().range([h3 - margin.top - margin.bottom, 0]);
 // Axes
 var xAxis3 = svg3.append("g").attr("transform", `translate(0, ${h3 - margin.top - margin.bottom})`);
 var yAxis3 = svg3.append("g");
+
+// Add X-axis label
+svg3.append("text")
+    .attr("class", "x-axis-label")
+    .attr("x", (w3 - margin.left - margin.right) / 2) // Center horizontally
+    .attr("y", h3 - margin.bottom - 10) // Adjust position below the X-axis
+    .attr("text-anchor", "middle") // Center alignment
+    .style("font-size", "14px")
+    .style("font-weight", "bold")
+    .text("Sectors");
+
+// Add Y-axis label
+svg3.append("text")
+    .attr("class", "y-axis-label")
+    .attr("x", -(h3 - margin.top - margin.bottom) / 2) // Center vertically
+    .attr("y", -margin.left / 1.5) // Position to the left of the Y-axis
+    .attr("text-anchor", "middle") // Center alignment
+    .attr("transform", "rotate(-90)") // Rotate for Y-axis
+    .style("font-size", "14px")
+    .style("font-weight", "bold")
+    .text("Emissions (Million Tons)");
 
 // Tooltip
 var tooltip = d3.select("body").append("div")
@@ -31,8 +52,8 @@ var tooltip = d3.select("body").append("div")
 // Load and parse the CSV file
 d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
     // Extract unique countries/entities and years
-    var entities = Array.from(new Set(data.map(d => d.Entity))); // Unique countries/regions
-    var years = Array.from(new Set(data.map(d => d.Year))); // Unique years
+    var entities = Array.from(new Set(data.map(function(d) {return d.Entity}))); // Unique countries/regions
+    var years = Array.from(new Set(data.map(function(d) {return d.Year}))); // Unique years
 
     // Default selections
     var defaultCountry = "World";
@@ -152,8 +173,6 @@ d3.csv("resource/ghg-emissions-by-sector.csv").then(function (data) {
             .style("font-size", "12px")  // Set the font size for the x-axis labels
             .style("font-weight", "bold") // Optional: make the x-axis labels bold for better visibility
         
-yAxis3.call(d3.axisLeft(yScale3).tickFormat(d => `${d / 1e6}M`)); // Display Y-axis in millions
-
         yAxis3.call(d3.axisLeft(yScale3).tickFormat(d => `${d / 1e6}M`)); // Display Y-axis in millions
     }
 
