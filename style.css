@@ -642,7 +642,7 @@ label {
 }
 
 /* Description Styling */
-.description {
+.description, .description1 {
     font-size: 16px;
     color: #333; /* Dark gray for the text */
     text-align: justify; 
