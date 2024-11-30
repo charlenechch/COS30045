@@ -469,6 +469,12 @@ footer {
     transform: translateY(0);
 }
 
+#chart-container {
+    position: relative; 
+    width: 100%; /* Adjust based on your chart's width */
+    height: 100%; /* Adjust based on your chart's height */
+}
+
 .description1 {
     font-size: 16px;
     color: #333; /* Dark gray for the text */
