@@ -20,8 +20,8 @@ function init() {
 
         // Set up scales
         xScale = d3.scaleTime()
-                .domain(d3.extent(dataset, function (d) { return d.date; }))
-                .range([padding - 110, w - padding - 90]); // Adjust left and right padding equally
+                   .domain(d3.extent(dataset, function (d) { return d.date; }))
+                   .range([padding - 110, w - padding - 90]); // Adjust left and right padding equally
 
 
         yScaleEmissions = d3.scaleLinear()
@@ -35,8 +35,8 @@ function init() {
 
         // Define the line generators
         lineEmissions = d3.line()
-                        .x(function (d) { return xScale(d.date); })
-                        .y(function (d) { return yScaleEmissions(d.emissions); });
+                          .x(function (d) { return xScale(d.date); })
+                          .y(function (d) { return yScaleEmissions(d.emissions); });
 
         lineTemperature = d3.line()
                             .x(function (d) { return xScale(d.date); })
@@ -64,21 +64,21 @@ function lineChart(dataset) {
 
     // Draw the emissions line
     var pathEmissions = chartGroup.append("path")
-                                .datum(dataset)
-                                .attr("fill", "none")
-                                .attr("stroke", "steelblue")
-                                .attr("stroke-width", 2)
-                                .attr("d", lineEmissions);
+                                  .datum(dataset)
+                                  .attr("fill", "none")
+                                  .attr("stroke", "steelblue")
+                                  .attr("stroke-width", 2)
+                                  .attr("d", lineEmissions);
 
     // Animate the emissions line
     var totalLengthEmissions = pathEmissions.node().getTotalLength();
 
     pathEmissions.attr("stroke-dasharray", totalLengthEmissions + " " + totalLengthEmissions)
-                .attr("stroke-dashoffset", totalLengthEmissions)
-                .transition()
-                .duration(2500)
-                .ease(d3.easeLinear)
-                .attr("stroke-dashoffset", 0);
+                 .attr("stroke-dashoffset", totalLengthEmissions)
+                 .transition()
+                 .duration(2500)
+                 .ease(d3.easeLinear)
+                 .attr("stroke-dashoffset", 0);
 
     // Draw the temperature line
     var pathTemperature = chartGroup.append("path")
@@ -92,62 +92,62 @@ function lineChart(dataset) {
     var totalLengthTemperature = pathTemperature.node().getTotalLength();
 
     pathTemperature.attr("stroke-dasharray", totalLengthTemperature + " " + totalLengthTemperature)
-                .attr("stroke-dashoffset", totalLengthTemperature)
-                .transition()
-                .duration(2500)
-                .ease(d3.easeLinear)
-                .attr("stroke-dashoffset", 0);
+                   .attr("stroke-dashoffset", totalLengthTemperature)
+                   .transition()
+                   .duration(2500)
+                   .ease(d3.easeLinear)
+                   .attr("stroke-dashoffset", 0);
 
     // Add x-axis
     var xAxis = d3.axisBottom(xScale)
-                .ticks(10)
-                .tickFormat(d3.timeFormat("%Y"));
+                  .ticks(10)
+                  .tickFormat(d3.timeFormat("%Y"));
 
     chartGroup.append("g")
-                .attr("transform", "translate(0," + (h - padding) + ")") // Adjust for vertical placement
-                .call(xAxis);
+              .attr("transform", "translate(0," + (h - padding) + ")") // Adjust for vertical placement
+              .call(xAxis);
 
     // Add x-axis label
     chartGroup.append("text")
-            .attr("text-anchor", "middle")
-            .attr("x", w / 2 - 140) // Adjust x position due to the shift
-            .attr("y", h - 50)
-            .text("Year")
-            .style("font-size", "15px");
+              .attr("text-anchor", "middle")
+              .attr("x", w / 2 - 140) // Adjust x position due to the shift
+              .attr("y", h - 50)
+              .text("Year")
+              .style("font-size", "15px");
 
     // Add y-axis for emissions
     var yAxisEmissions = d3.axisLeft(yScaleEmissions)
-                        .ticks(10)
-                        .tickFormat(d => `${d} billion t`);
+                           .ticks(10)
+                           .tickFormat(d => `${d} billion t`);
                         
     svg.append("g")
-        .attr("transform", "translate(" + (padding - 10) + ",0)") // Match left padding
-        .call(yAxisEmissions);
+       .attr("transform", "translate(" + (padding - 10) + ",0)") // Match left padding
+       .call(yAxisEmissions);
 
     chartGroup.append("text")
-            .attr("text-anchor", "middle")
-            .attr("transform", "rotate(-90)")
-            .attr("x", -h / 2)
-            .attr("y", 0 - (padding - 10))
-            .text("Total Greenhouse Gas Emissions (Billion Tons)")
-            .style("font-size", "14px");
+              .attr("text-anchor", "middle")
+              .attr("transform", "rotate(-90)")
+              .attr("x", -h / 2)
+              .attr("y", 0 - (padding - 10))
+              .text("Total Greenhouse Gas Emissions (Billion Tons)")
+              .style("font-size", "14px");
 
     // Add y-axis for temperature
     var yAxisTemperature = d3.axisRight(yScaleTemperature)
-                            .ticks(10)
-                            .tickFormat(d => `${d}°C`);
+                             .ticks(10)
+                             .tickFormat(d => `${d}°C`);
 
     svg.append("g")
-    .attr("transform", "translate(" + (w - padding + 10) + ",0)") // Match right padding
-    .call(yAxisTemperature);
+       .attr("transform", "translate(" + (w - padding + 10) + ",0)") // Match right padding
+       .call(yAxisTemperature);
 
     chartGroup.append("text")
-            .attr("text-anchor", "middle")
-            .attr("transform", "rotate(-90)")
-            .attr("x", -h / 2)
-            .attr("y", w - padding - 20) // Adjust y position due to the shift
-            .text("Average Temperature Anomaly (°C)")
-            .style("font-size", "15px")
+              .attr("text-anchor", "middle")
+              .attr("transform", "rotate(-90)")
+              .attr("x", -h / 2)
+              .attr("y", w - padding - 20) // Adjust y position due to the shift
+              .text("Average Temperature Anomaly (°C)")
+              .style("font-size", "15px")
 
     
     // Add the legend
@@ -162,94 +162,91 @@ function lineChart(dataset) {
 
     // Add emissions legend
     legend.append("rect")
-        .attr("x", 90)
-        .attr("y", 0)
-        .attr("width", 10)
-        .attr("height", 10)
-        .attr("fill", "steelblue");
+          .attr("x", 90)
+          .attr("y", 0)
+          .attr("width", 10)
+          .attr("height", 10)
+          .attr("fill", "steelblue");
 
     legend.append("text")
-        .attr("x", 108)
-        .attr("y", 8)
-        .text("Total Greenhouse Gas Emissions")
-        .style("font-size", "10px")
-        .attr("alignment-baseline", "middle");
+          .attr("x", 108)
+          .attr("y", 8)
+          .text("Total Greenhouse Gas Emissions")
+          .style("font-size", "10px")
+          .attr("alignment-baseline", "middle");
 
     // Add temperature legend
     legend.append("rect")
-        .attr("x", 90)
-        .attr("y", 30)
-        .attr("width", 10)
-        .attr("height", 10)
-        .attr("fill", "orange");
+          .attr("x", 90)
+          .attr("y", 30)
+          .attr("width", 10)
+          .attr("height", 10)
+          .attr("fill", "orange");
 
     legend.append("text")
-        .attr("x", 108)
-        .attr("y", 37)
-        .text("Average Temperature Anomaly")
-        .style("font-size", "10px")
-        .attr("alignment-baseline", "middle");
-
+          .attr("x", 108)
+          .attr("y", 37)
+          .text("Average Temperature Anomaly")
+          .style("font-size", "10px")
+          .attr("alignment-baseline", "middle");
+  
     // Add vertical hover line
     var hoverLine = chartGroup.append("line")
-                            .attr("class", "hover-line")
-                            .attr("y1", padding)
-                            .attr("y2", h - padding)
-                            .attr("stroke", "gray")
-                            .attr("stroke-dasharray", "4 2")
-                            .attr("stroke-width", 1.5)
-                            .style("visibility", "hidden");
+                              .attr("class", "hover-line")
+                              .attr("y1", padding)
+                              .attr("y2", h - padding)
+                              .attr("stroke", "gray")
+                              .attr("stroke-dasharray", "4 2")
+                              .attr("stroke-width", 1.5)
+                              .style("visibility", "hidden");
 
-    // Tooltip box (styled)
-    var tooltip = d3.select("body")
-        .append("div")
-        .attr("class", "tooltip-vis1") // Ensure unique tooltip class
-        .style("position", "absolute")
-        .style("background-color", "#ffffff")
-        .style("border", "1px solid #ccc")
-        .style("box-shadow", "0px 4px 8px rgba(0, 0, 0, 0.1)")
-        .style("padding", "10px")
-        .style("border-radius", "8px")
-        .style("font-family", "Arial, sans-serif")
-        .style("font-size", "14px")
-        .style("pointer-events", "none")
-        .style("visibility", "hidden");
+    // Tooltip box 
+    var tooltip = d3.select(".tooltip-vis1");
+
+    // If no tooltip exists, create one
+    if (tooltip.empty()) {
+        tooltip = d3.select("body")
+            .append("div")
+            .attr("class", "tooltip-vis1")
+            .style("visibility", "hidden");
+        }
+                    
 
     // Overlay for hover detection
     chartGroup.append("rect")
-    .attr("width", w - padding * 2)
-    .attr("height", h - padding)
-    .attr("fill", "none")
-    .style("pointer-events", "all")
-    .on("mousemove", function (event) {
-        var mouseX = d3.pointer(event, this)[0];
-        var date = xScale.invert(mouseX);
+              .attr("width", w - padding * 2)
+              .attr("height", h - padding)
+              .attr("fill", "none")
+              .style("pointer-events", "all")
+              .on("mousemove", function (event) {
+                var mouseX = d3.pointer(event, this)[0];
+                var date = xScale.invert(mouseX);
 
-        // Find the closest data point
-        var closest = dataset.reduce((a, b) => {
-            return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
-        });
+                // Find the closest data point
+                var closest = dataset.reduce((a, b) => {
+                    return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
+                });
 
-        hoverLine
-            .attr("x1", xScale(closest.date))
-            .attr("x2", xScale(closest.date))
-            .style("visibility", "visible");
+                hoverLine
+                    .attr("x1", xScale(closest.date))
+                    .attr("x2", xScale(closest.date))
+                    .style("visibility", "visible");
 
-        tooltip
-            .style("visibility", "visible")
-            .style("opacity", 1)
-            .html(`
-                <strong>Year:</strong> ${d3.timeFormat("%Y")(closest.date)}<br>
-                <strong>Emissions:</strong> ${closest.emissions.toFixed(2)} billion t<br>
-                <strong>Temperature:</strong> ${closest.temperature.toFixed(2)}°C
-            `)
-            .style("top", (event.pageY - 60) + "px")
-            .style("left", (event.pageX + 20) + "px");
-    })
-    .on("mouseout", function () {
-        hoverLine.style("visibility", "hidden");
-        tooltip.style("visibility", "hidden").style("opacity", 0);
-    });
+                tooltip
+                    .style("visibility", "visible")
+                    .style("opacity", 1)
+                    .html(`
+                        <strong>Year:</strong> ${d3.timeFormat("%Y")(closest.date)}<br>
+                        <strong>Emissions:</strong> ${closest.emissions.toFixed(2)} billion t<br>
+                        <strong>Temperature:</strong> ${closest.temperature.toFixed(2)}°C
+                    `)
+                    .style("top", (event.pageY - 60) + "px")
+                    .style("left", (event.pageX + 20) + "px");
+            })
+            .on("mouseout", function () {
+                hoverLine.style("visibility", "hidden");
+                tooltip.style("visibility", "hidden").style("opacity", 0);
+            });
 }
 
 
