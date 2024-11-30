@@ -1,5 +1,5 @@
 var w = 1350; // Width
-var h = 600; // Height
+var h = 640; // Height
 var padding = 100;
 
 var dataset, xScale, yScaleEmissions, yScaleTemperature, lineEmissions, lineTemperature;
